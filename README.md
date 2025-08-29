@@ -10,17 +10,17 @@ Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo de
 
 ## Integrantes
 
-* Silas Cerqueira da Silva Santos
 * Angel Caroline Alves Silvério
-* Mário Júnior Duarte Silva
 * Bel Antônio de Aquino e Souza
 * Marco Tulio Crecencio Araujo
+* Mário Júnior Duarte Silva
 * João Pedro Dias Rocha
+* Silas Cerqueira da Silva Santos
 
 
 ## Orientador
 
-* Nome completo do professor 1
+* Diego Augusto de Faria Barros
 
 # Planejamento
 
