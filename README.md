@@ -6,7 +6,7 @@
 
 `SEMESTRE: 1º`
 
-Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo desenvolvido.
+O objetivo geral deste projeto é desenvolver um sistema digital colaborativo de caronas e encomendas, de forma gratuita ou com divisão de custos, voltado para moradores de regiões rurais isoladas no interior de Minas Gerais. A proposta busca facilitar o deslocamento até os centros urbanos próximos, de forma segura, econômica e simples de usar. Entre os objetivos específicos estão: criar uma plataforma com interface acessível, mesmo para quem tem pouca experiência com tecnologia e conexão limitada, que permitirá tanto motoristas se registrarem como disponíveis para oferecer caronas quanto moradores dessas regiões se colocarem como passageiros em busca de transporte, e com isso, incentivar a colaboração entre vizinhos, fortalecendo redes locais de apoio para reduzir custos e tempo de viagem.
 
 ## Integrantes
 
