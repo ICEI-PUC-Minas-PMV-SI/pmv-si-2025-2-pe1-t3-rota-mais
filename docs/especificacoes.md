@@ -63,14 +63,19 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 |RF-004| A aplicação deve permitir que o usuário avalie outros usuários que dividiu viagens | MÉDIA |
 |RF-005| A aplicação deve permitir que o usuário monitore o percurso das viagens em tempo real, seja ele o motorista ou apenas passageiro | MÉDIA |
 |RF-006| A aplicação deve permitir que o usuário converse com outros usuários por um chat de texto | BAIXA |
+|RF-007| A aplicação deve permitir que o usuário faça login com e-mail e senha | ALTA |
 
 ### Requisitos não Funcionais
 
 |ID     | Descrição do Requisito  |Prioridade |
 |-------|-------------------------|----|
-|RNF-001| A aplicação deverá ser leve para carregar com maior facilidade em conexões mais limitadas | MÉDIA | 
+|RNF-001| A aplicação deverá ser leve para carregar com maior facilidade em conexões mais limitadas | MÉDIA |
 |RNF-002| A aplicação deve ser responsiva | MÉDIA | 
 |RNF-003| A aplicação deve processar requisições do usuário em no máximo 3s |  BAIXA |
+|RNF-004| A aplicação deve funcionar nos principais navegadores (Chrome, Firefox, Edge) | MÉDIA |
+|RNF-005| A aplicação deve garantir a conformidade com as leis de proteção de dados | MÉDIA |
+|RNF-006| Os dados do usuário deverão ser salvos automaticamente no navegador, sem que ele precise fazer algo extra | ALTA |
+|RNF-007| A aplicação deve sempre solicitar confirmação antes de excluir informações, evitando exclusões acidentais | MÉDIA |
 
 ## Restrições
 
