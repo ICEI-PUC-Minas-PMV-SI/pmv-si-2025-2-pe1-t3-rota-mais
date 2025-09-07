@@ -16,13 +16,13 @@ Apesar dos benefícios, o projeto apresenta algumas limitações: a disponibilid
 
 Abordagens e Ferramentas:
 
--Análise de perfis de usuários, necessidades e comportamentos
+- Análise de perfis de usuários, necessidades e comportamentos
 
--Criação de cenários de uso para ilustrar como a aplicação atende às demandas
+- Criação de cenários de uso para ilustrar como a aplicação atende às demandas
 
--Definição de requisitos funcionais e não funcionais
+- Definição de requisitos funcionais e não funcionais
 
--Identificação de restrições técnicas, operacionais e de recursos
+- Identificação de restrições técnicas, operacionais e de recursos
 
 
 ## Personas
@@ -57,31 +57,20 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 
 |ID    | Descrição do Requisito  | Prioridade | 
 |------|-----------------------------------------|----| 
-|RF-001| A aplicação deve permitir que o usuário gerencie suas tarefas | ALTA |  
-|RF-002| A aplicação deve permitir a emissão de um relatório de tarefas realizadas no mês   | MÉDIA | 
-
+|RF-001| A aplicação deve permitir que o usuário publique sua viagem para encontrar pessoas interessadas em caronas | ALTA |  
+|RF-002| A aplicação deve permitir que o usuário publique uma solicitação para que alguém traga sua encomenda | ALTA | 
+|RF-003| A aplicação deve permitir que o usuário envie um alerta de emergência que deverá ser apresentado de forma destacada aos demais usuários | ALTA |
+|RF-004| A aplicação deve permitir que o usuário avalie outros usuários que dividiu viagens | MÉDIA |
+|RF-005| A aplicação deve permitir que o usuário monitore o percurso das viagens em tempo real, seja ele o motorista ou apenas passageiro | MÉDIA |
+|RF-006| A aplicação deve permitir que o usuário converse com outros usuários por um chat de texto | BAIXA |
 
 ### Requisitos não Funcionais
 
 |ID     | Descrição do Requisito  |Prioridade |
 |-------|-------------------------|----|
-|RNF-001| A aplicação deve ser responsiva | MÉDIA | 
-|RNF-002| A aplicação deve processar requisições do usuário em no máximo 3s |  BAIXA | 
-
-Com base nas Histórias de Usuário, enumere os requisitos da sua solução. Classifique esses requisitos em dois grupos:
-
-- [Requisitos Funcionais
- (RF)](https://pt.wikipedia.org/wiki/Requisito_funcional):
- correspondem a uma funcionalidade que deve estar presente na
-  plataforma (ex: cadastro de usuário).
-- [Requisitos Não Funcionais
-  (RNF)](https://pt.wikipedia.org/wiki/Requisito_n%C3%A3o_funcional):
-  correspondem a uma característica técnica, seja de usabilidade,
-  desempenho, confiabilidade, segurança ou outro (ex: suporte a
-  dispositivos iOS e Android).
-Lembre-se que cada requisito deve corresponder à uma e somente uma
-característica alvo da sua solução. Além disso, certifique-se de que
-todos os aspectos capturados nas Histórias de Usuário foram cobertos.
+|RNF-001| A aplicação deverá ser leve para carregar com maior facilidade em conexões mais limitadas | MÉDIA | 
+|RNF-002| A aplicação deve ser responsiva | MÉDIA | 
+|RNF-003| A aplicação deve processar requisições do usuário em no máximo 3s |  BAIXA |
 
 ## Restrições
 
@@ -91,10 +80,4 @@ O projeto está restrito pelos itens apresentados na tabela a seguir.
 |--|-------------------------------------------------------|
 |01| O projeto deverá ser entregue até o final do semestre |
 |02| Não pode ser desenvolvido um módulo de backend        |
-
-
-Enumere as restrições à sua solução. Lembre-se de que as restrições geralmente limitam a solução candidata.
-
-> **Links Úteis**:
-> - [O que são Requisitos Funcionais e Requisitos Não Funcionais?](https://codificar.com.br/requisitos-funcionais-nao-funcionais/)
-> - [O que são requisitos funcionais e requisitos não funcionais?](https://analisederequisitos.com.br/requisitos-funcionais-e-requisitos-nao-funcionais-o-que-sao/)
+|02| A divisão de custos das viagens deverá ser feita de forma externa, não havendo funções de pagamento dentro da aplicação        |
