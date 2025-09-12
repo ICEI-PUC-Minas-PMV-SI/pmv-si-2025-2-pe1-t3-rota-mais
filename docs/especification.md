@@ -57,11 +57,12 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 |------|-----------------------------------------|----| 
 |RF-001| A aplicação deve permitir que o usuário publique sua viagem para encontrar pessoas interessadas em caronas | ALTA |  
 |RF-002| A aplicação deve permitir que o usuário publique uma solicitação para que alguém traga sua encomenda | ALTA | 
-|RF-003| A aplicação deve permitir que o usuário envie um alerta de emergência que deverá ser apresentado de forma destacada aos demais usuários | ALTA |
-|RF-004| A aplicação deve permitir que o usuário avalie outros usuários que dividiu viagens | MÉDIA |
-|RF-005| A aplicação deve permitir que o usuário monitore o percurso das viagens em tempo real, seja ele o motorista ou apenas passageiro | MÉDIA |
-|RF-006| A aplicação deve permitir que o usuário converse com outros usuários por um chat de texto | BAIXA |
-|RF-007| A aplicação deve permitir que o usuário faça login com e-mail e senha | ALTA |
+|RF-003| A aplicação deve permitir que o usuário encontre opções de caronas disponíveis de forma fácil e intuitiva | ALTA |
+|RF-004| A aplicação deve permitir que o usuário envie um alerta de emergência que deverá ser apresentado de forma destacada aos demais usuários | ALTA |
+|RF-005| A aplicação deve permitir que o usuário avalie outros usuários que dividiu viagens | BAIXA |
+|RF-006| A aplicação deve permitir que o usuário visualize o seu histórico de viagens, caronas concedidas ou utilizadas e registros de encomendas | BAIXA |
+|RF-007| A aplicação deve prover alguma forma de comunicação entre as pessoas envolvidas na viagem, seja diretamente pela aplicação ou enviando para meios externos (como um link para WhatsApp) | ALTA |
+|RF-008| A aplicação deve permitir que o usuário faça login com e-mail e senha | ALTA |
 
 ### Requisitos não Funcionais
 
@@ -79,8 +80,8 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 
 O projeto está restrito pelos itens apresentados na tabela a seguir.
 
-|ID| Restrição                                             |
-|--|-------------------------------------------------------|
-|01| O projeto deverá ser entregue até o final do semestre |
-|02| Não pode ser desenvolvido um módulo de backend        |
+|ID| Restrição                                                                                                                      |
+|--|--------------------------------------------------------------------------------------------------------------------------------|
+|01| O projeto deverá ser entregue até o final do semestre                                                                          |
+|02| Não pode ser desenvolvido um módulo de backend                                                                                 |
 |02| A divisão de custos das viagens deverá ser feita de forma externa, não havendo funções de pagamento dentro da aplicação        |
