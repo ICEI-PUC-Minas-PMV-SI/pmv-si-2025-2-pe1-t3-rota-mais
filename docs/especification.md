@@ -70,8 +70,8 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 
 |ID     | Descrição do Requisito  |Prioridade |
 |-------|-------------------------|----|
-|RNF-001| A aplicação deverá ser leve para carregar com maior facilidade em conexões mais limitadas | MÉDIA |
-|RNF-002| A aplicação deve ser responsiva | MÉDIA | 
+|RNF-001| A aplicação deverá ser leve para carregar com maior facilidade em conexões mais limitadas | ALTA |
+|RNF-002| A aplicação deve ser responsiva | ALTA | 
 |RNF-003| A aplicação deve processar requisições do usuário em no máximo 3s |  BAIXA |
 |RNF-004| A aplicação deve funcionar nos principais navegadores (Chrome, Firefox, Edge) | MÉDIA |
 |RNF-005| A aplicação deve garantir a conformidade com as leis de proteção de dados | MÉDIA |
