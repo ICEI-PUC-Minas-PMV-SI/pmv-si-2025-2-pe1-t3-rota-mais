@@ -8,9 +8,9 @@ Solução:
 
 Uma aplicação web que facilita caronas e envio de encomendas conecta usuários da mesma comunidade, oferecendo uma experiência prática, econômica, segura e confiável. A plataforma permite autonomia, possibilitando que os usuários agendem caronas e entregas com facilidade, realizem compromissos, participem de atividades sociais e recebam ou enviem encomendas sem depender de familiares ou terceiros.
 
-Além disso, promove economia ao permitir a divisão de custos das viagens entre múltiplos usuários ou oferecer opções de caronas gratuitas, reduzindo despesas com transporte e entregas. A segurança e confiabilidade são garantidas por um sistema de avaliação de motoristas e passageiros, monitoramento em tempo real, penalidades, cancelamentos com justificativa e priorização de caronas com pessoas da própria comunidade.
+Além disso, promove economia ao permitir a divisão de custos das viagens entre múltiplos usuários ou oferecer opções de caronas gratuitas, reduzindo despesas com transporte e entregas. A segurança e confiabilidade são garantidas por um sistema de avaliação de motoristas e passageiros, penalidades, cancelamentos com justificativa e priorização de caronas com pessoas da própria comunidade.
 
-A pontualidade e flexibilidade são atendidas por meio do acompanhamento de status em tempo real, agendamento de caronas e entregas, e ajustes em casos de imprevistos. A plataforma também promove conexão social, integrando vizinhos e outros membros da comunidade para aumentar a confiança e o apoio mútuo. A usabilidade é um ponto-chave, com interface simples e intuitiva, considerando usuários com dificuldade em tecnologia ou mobilidade reduzida.
+A pontualidade e flexibilidade são atendidas por meio do agendamento de caronas e entregas e ajustes em casos de imprevistos. A plataforma também promove conexão social, integrando vizinhos e outros membros da comunidade para aumentar a confiança e o apoio mútuo. A usabilidade é um ponto-chave, com interface simples e intuitiva, considerando usuários com dificuldade em tecnologia ou mobilidade reduzida.
 
 Apesar dos benefícios, o projeto apresenta algumas limitações: a disponibilidade de internet em áreas rurais pode restringir o acesso à plataforma. A adesão dos usuários é essencial para que o compartilhamento de caronas e entregas funcione corretamente. Usuários com pouca familiaridade com tecnologia podem necessitar de suporte adicional.
 
@@ -59,11 +59,12 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 |RF-002| A aplicação deve permitir que o usuário publique uma solicitação para que alguém traga sua encomenda | ALTA | 
 |RF-003| A aplicação deve permitir que o usuário encontre opções de caronas disponíveis de forma fácil e intuitiva | ALTA |
 |RF-004| A aplicação deve permitir que o usuário visualize suas próximas viagens, encomendas que deve buscar ou que serão entregues por outros usuários | ALTA |
-|RF-005| A aplicação deve permitir que o usuário envie um alerta de emergência que deverá ser apresentado de forma destacada aos demais usuários | ALTA |
-|RF-006| A aplicação deve permitir que o usuário avalie outros usuários que dividiu viagens | MÉDIA |
-|RF-007| A aplicação deve permitir que o usuário visualize o seu histórico de viagens, caronas concedidas ou utilizadas e registros de encomendas | BAIXA |
-|RF-008| A aplicação deve prover alguma forma de comunicação entre as pessoas envolvidas na viagem, seja diretamente pela aplicação ou direcionando para meios externos (como um link para WhatsApp) | ALTA |
-|RF-009| A aplicação deve permitir que o usuário faça login com e-mail e senha | ALTA |
+|RF-005| A aplicação deve permitir que o usuário edite suas publicações e/ou solicitações em caso de mudanças | ALTA |
+|RF-006| A aplicação deve permitir que o usuário envie um alerta de emergência que deverá ser apresentado de forma destacada aos demais usuários | ALTA |
+|RF-007| A aplicação deve permitir que o usuário avalie outros usuários que dividiu viagens | MÉDIA |
+|RF-008| A aplicação deve permitir que o usuário visualize o seu histórico de viagens, caronas concedidas ou utilizadas e registros de encomendas | BAIXA |
+|RF-009| A aplicação deve prover alguma forma de comunicação entre as pessoas envolvidas na viagem, seja diretamente pela aplicação ou direcionando para meios externos (como um link para WhatsApp) | ALTA |
+|RF-010| A aplicação deve permitir que o usuário faça login com e-mail e senha | ALTA |
 
 ### Requisitos não Funcionais
 
