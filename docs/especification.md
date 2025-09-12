@@ -38,11 +38,12 @@ Com base na análise das personas foram identificadas as seguintes histórias de
 
 |EU COMO... `PERSONA`| QUERO/PRECISO ... `FUNCIONALIDADE`                                                 |PARA ... `MOTIVO/VALOR`                              |
 |--------------------|------------------------------------------------------------------------------------|-----------------------------------------------------|
-|Idoso               | Carona para minha consulta médica                                                  | Ir sozinho de forma segura e confiável              |
-|Estudante           | Carona para ir a escola                                                            | Não precisar de um familiar para me levar           |
-|Trabalhador         | Alguém para buscar minhas encomendas                                               | Evitar deslocamento à cidade quando não tenho tempo |
+|Idoso               | Carona para minha consulta médica                                                  | Chegar de forma segura e confiável                  |
+|Estudante           | Carona para ir a escola                                                            | Não precisar que um familiar me leve                |
+|Motorista           | Alguém com quem dividir os custos da viagem                                        | Reduzir os custos da viagem e economizar dinheiro   |
+|Trabalhador         | Alguém para buscar minhas encomendas                                               | Não precisar ir à cidade quando não tenho tempo     |
 |Passageiro          | Recurso para acompanhar as minhas caronas e ser notificado em caso de cancelamento | Me organizar melhor                                 | 
-|Dona de casa        | Uma carona para ir até a cidade e trazer minhas compras                            | Não precise ir e voltar andando ou adiar a ida      |
+|Dona de casa        | Uma carona para ir até a cidade e trazer minhas compras                            | Não precisar ir e voltar andando ou adiar minha ida |
 |Vizinha             | Recurso para compartilhar caronas com pessoas que moram próximas a mim             | Reduzir custos e aumentar a segurança no trajeto    |
 |Vendedor            | Meio facilitador de conseguir carona das minhas idas diárias á cidade              | Reduzir a fadiga de ir até a cidade                 |
 
