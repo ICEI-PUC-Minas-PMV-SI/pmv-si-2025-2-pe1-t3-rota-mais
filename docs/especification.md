@@ -58,11 +58,12 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 |RF-001| A aplicação deve permitir que o usuário publique sua viagem para encontrar pessoas interessadas em caronas | ALTA |  
 |RF-002| A aplicação deve permitir que o usuário publique uma solicitação para que alguém traga sua encomenda | ALTA | 
 |RF-003| A aplicação deve permitir que o usuário encontre opções de caronas disponíveis de forma fácil e intuitiva | ALTA |
-|RF-004| A aplicação deve permitir que o usuário envie um alerta de emergência que deverá ser apresentado de forma destacada aos demais usuários | ALTA |
-|RF-005| A aplicação deve permitir que o usuário avalie outros usuários que dividiu viagens | BAIXA |
-|RF-006| A aplicação deve permitir que o usuário visualize o seu histórico de viagens, caronas concedidas ou utilizadas e registros de encomendas | BAIXA |
-|RF-007| A aplicação deve prover alguma forma de comunicação entre as pessoas envolvidas na viagem, seja diretamente pela aplicação ou enviando para meios externos (como um link para WhatsApp) | ALTA |
-|RF-008| A aplicação deve permitir que o usuário faça login com e-mail e senha | ALTA |
+|RF-004| A aplicação deve permitir que o usuário visualize suas próximas viagens, encomendas que deve buscar ou que serão entregues por outros usuários | ALTA |
+|RF-005| A aplicação deve permitir que o usuário envie um alerta de emergência que deverá ser apresentado de forma destacada aos demais usuários | ALTA |
+|RF-006| A aplicação deve permitir que o usuário avalie outros usuários que dividiu viagens | BAIXA |
+|RF-007| A aplicação deve permitir que o usuário visualize o seu histórico de viagens, caronas concedidas ou utilizadas e registros de encomendas | BAIXA |
+|RF-008| A aplicação deve prover alguma forma de comunicação entre as pessoas envolvidas na viagem, seja diretamente pela aplicação ou enviando para meios externos (como um link para WhatsApp) | ALTA |
+|RF-009| A aplicação deve permitir que o usuário faça login com e-mail e senha | ALTA |
 
 ### Requisitos não Funcionais
 
