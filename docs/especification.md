@@ -50,31 +50,35 @@ Com base na análise das personas foram identificadas as seguintes histórias de
 As tabelas que se seguem apresentam os requisitos funcionais e não funcionais que detalham o escopo do projeto.
 
 ### Requisitos Funcionais
-
 |ID    | Descrição do Requisito  | Prioridade | 
 |------|-----------------------------------------|----| 
-|RF-001| A aplicação deve permitir que o usuário publique sua viagem para encontrar pessoas interessadas em caronas | ALTA |  
-|RF-002| A aplicação deve permitir que o usuário publique uma solicitação para que alguém traga sua encomenda | ALTA | 
-|RF-003| A aplicação deve permitir que o usuário encontre opções de caronas disponíveis de forma fácil e intuitiva | ALTA |
-|RF-004| A aplicação deve permitir que o usuário visualize suas próximas viagens, encomendas que deve buscar ou que serão entregues por outros usuários | ALTA |
-|RF-005| A aplicação deve permitir que o usuário edite suas publicações e/ou solicitações em caso de mudanças | ALTA |
-|RF-006| A aplicação deve permitir que o usuário envie um alerta de emergência que deverá ser apresentado de forma destacada aos demais usuários | ALTA |
-|RF-007| A aplicação deve permitir que o usuário avalie outros usuários que dividiu viagens | MÉDIA |
-|RF-008| A aplicação deve permitir que o usuário visualize o seu histórico de viagens, caronas concedidas ou utilizadas e registros de encomendas | BAIXA |
-|RF-009| A aplicação deve prover alguma forma de comunicação entre as pessoas envolvidas na viagem, seja diretamente pela aplicação ou direcionando para meios externos (como um link para WhatsApp) | ALTA |
-|RF-010| A aplicação deve permitir que o usuário faça login com e-mail e senha | ALTA |
+|RF-001| A aplicação deve permitir que o usuário publique uma oferta ou solicitação de viagem, indicando se será motorista ou passageiro | ALTA |  
+|RF-002| A aplicação deve permitir que o usuário selecione se a publicação se refere a carona, encomenda ou ambos | ALTA | 
+|RF-003| A aplicação deve permitir que o usuário informe origem, destino, data, horário e valor (quando aplicável) ao criar uma publicação | ALTA |
+|RF-004| A aplicação deve permitir que o usuário visualize seu histórico de publicações, incluindo tipo de participação (motorista/passageiro), carona/encomenda, origem, destino, data e valor acordado | ALTA |
+|RF-005| A aplicação deve permitir que o usuário edite ou exclua suas próprias publicações| ALTA |
+|RF-006| A aplicação deve permitir que o usuário marque a publicação como emergência e insira uma justificativa, que será destacada para outros usuários| ALTA |
+|RF-007| A aplicação deve permitir que o usuário avalie outros participantes com estrelas e comentários, e exibir a média no perfil | MÉDIA |
+|RF-008| A aplicação deve permitir que o usuário visualize seu histórico completo de interações concluídas, incluindo participação como motorista ou passageiro, e se a viagem incluiu entrega de encomendas ou não | ALTA |
+|RF-009| A aplicação deve permitir que o usuário se comunique com outros usuários envolvidos na publicação por meio de um fórum interno | ALTA |
+|RF-010| A aplicação deve permitir que o usuário faça login e visualize seu perfil | ALTA |
+|RF-011|A aplicação deve permitir ordenar e filtrar publicações por data, origem, destino e emergência | MÉDIA |
+|RF-012|A aplicação deve fornecer mensagens de alerta ou instruções nos formulários, garantindo que os campos obrigatórios sejam preenchidos
+
 
 ### Requisitos não Funcionais
-
 |ID     | Descrição do Requisito  |Prioridade |
 |-------|-------------------------|----|
-|RNF-001| A aplicação deve ser robusta, para carregar com maior facilidade em conexões mais limitadas | ALTA |
-|RNF-002| A aplicação deve ser responsiva | ALTA | 
+|RNF-001| A aplicação deverá ser robusta para possibilitar conexões lentas de internet | ALTA |
+|RNF-002| A aplicação deve ser responsiva, adaptando-se a computadores, tablets e celulares | ALTA | 
 |RNF-003| A aplicação deve processar requisições do usuário em no máximo 3s |  BAIXA |
 |RNF-004| A aplicação deve funcionar nos principais navegadores (Chrome, Firefox, Edge) | MÉDIA |
 |RNF-005| A aplicação deve garantir a conformidade com as leis de proteção de dados | MÉDIA |
-|RNF-006| Os dados do usuário deverão ser salvos automaticamente no navegador, sem que ele precise fazer algo extra | ALTA |
-|RNF-007| A aplicação deve sempre solicitar confirmação antes de excluir informações, evitando exclusões acidentais | MÉDIA |
+|RNF-006| A aplicação deve armazenar os dados automaticamente no navegador, permitindo que informações como publicações, histórico e avaliações sejam mantidas mesmo após recarregar a página | ALTA |
+|RNF-007|A aplicação deve ser desenvolvida apenas com HTML, CSS e JavaScript simples, sem back-end
+|RNF-008|A aplicação deve ser de baixo custo, utilizando apenas tecnologias gratuitas e abertas
+|RNF-009| A aplicação deve sempre solicitar confirmação antes de excluir informações, evitando exclusões acidentais | MÉDIA |
+
 
 ## Restrições
 
