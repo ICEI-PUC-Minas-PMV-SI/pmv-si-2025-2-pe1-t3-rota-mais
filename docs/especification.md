@@ -63,7 +63,7 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 |RF-009| A aplicação deve permitir que o usuário se comunique com outros usuários envolvidos na publicação por meio de um fórum interno | ALTA |
 |RF-010| A aplicação deve permitir que o usuário faça login e visualize seu perfil | ALTA |
 |RF-011|A aplicação deve permitir ordenar e filtrar publicações por data, origem, destino e emergência | MÉDIA |
-|RF-012|A aplicação deve fornecer mensagens de alerta ou instruções nos formulários, garantindo que os campos obrigatórios sejam preenchidos
+|RF-012|A aplicação deve fornecer mensagens de alerta ou instruções nos formulários, garantindo que os campos obrigatórios sejam preenchidos | MÉDIA |
 
 
 ### Requisitos não Funcionais
