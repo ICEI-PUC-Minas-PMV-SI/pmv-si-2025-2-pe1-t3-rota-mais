@@ -1,18 +1,14 @@
 # Especificações do Projeto
 
-Problema:
+Nas áreas rurais do interior de Minas Gerais, os moradores enfrentam grandes dificuldades de locomoção e de envio ou recebimento de encomendas, devido à ausência de meios de transporte que garantam acesso fácil às cidades ou permitam que as entregas cheguem até suas residências. Isso gera consequências como altos custos de deslocamento, dependência de terceiros, insegurança ao viajar com desconhecidos e dificuldades em cumprir compromissos essenciais. Além disso, prejudica o acesso a serviços de saúde e educação, restringe a participação em atividades sociais e culturais e limita as oportunidades de comercialização de produtos locais.
 
-Moradores de áreas rurais do interior de Minas Gerais enfrentam dificuldades de locomoção e de envio/recebimento de encomendas. Isso gera desafios como altos custos de transporte, dependência de terceiros, insegurança ao viajar com desconhecidos, dificuldade em cumprir compromissos essenciais e limitações no acesso a serviços, produtos, educação e atividades sociais.
+Com base nessa realidade, foi projetada uma aplicação web para facilitar a comunicação entre moradores das áreas rurais que precisam se deslocar até a cidade ou retornar dela. A solução conecta motoristas e passageiros, criando oportunidades de carona que oferecem ao passageiro um meio de transporte acessível e ao motorista a possibilidade de reduzir custos.
 
-Solução:
+Além disto, a plataforma amplia a autonomia dos usuários ao permitir o agendamento de caronas e entregas com praticidade, garantindo pontualidade e flexibilidade por meio de ajustes em caso de imprevistos. Isso facilita o cumprimento de compromissos, a participação em atividades sociais e o envio ou recebimento de encomendas. Além disso, promove economia com a divisão de despesas entre os participantes ou a oferta de caronas solidárias.
 
-Uma aplicação web que facilita caronas e envio de encomendas conecta usuários da mesma comunidade, oferecendo uma experiência prática, econômica, segura e confiável. A plataforma permite autonomia, possibilitando que os usuários agendem caronas e entregas com facilidade, realizem compromissos, participem de atividades sociais e recebam ou enviem encomendas sem depender de familiares ou terceiros.
+A segurança é garantida por meio de avaliações de motoristas e passageiros, aplicação de penalidades em casos de má conduta, cancelamentos com justificativa e priorização de viagens entre pessoas da própria comunidade. Outro ponto-chave é a usabilidade, a interface foi pensada para ser simples e intuitiva, considerando as necessidades de usuários com pouca familiaridade tecnológica ou mobilidade reduzida. A plataforma também fortalece os laços comunitários ao aproximar vizinhos e membros da região, estimulando a confiança e o apoio mútuo.
 
-Além disso, promove economia ao permitir a divisão de custos das viagens entre múltiplos usuários ou oferecer opções de caronas gratuitas, reduzindo despesas com transporte e entregas. A segurança e confiabilidade são garantidas por um sistema de avaliação de motoristas e passageiros, penalidades, cancelamentos com justificativa e priorização de caronas com pessoas da própria comunidade.
-
-A pontualidade e flexibilidade são atendidas por meio do agendamento de caronas e entregas e ajustes em casos de imprevistos. A plataforma também promove conexão social, integrando vizinhos e outros membros da comunidade para aumentar a confiança e o apoio mútuo. A usabilidade é um ponto-chave, com interface simples e intuitiva, considerando usuários com dificuldade em tecnologia ou mobilidade reduzida.
-
-Apesar dos benefícios, o projeto apresenta algumas limitações: a disponibilidade de internet em áreas rurais pode restringir o acesso à plataforma. A adesão dos usuários é essencial para que o compartilhamento de caronas e entregas funcione corretamente. Usuários com pouca familiaridade com tecnologia podem necessitar de suporte adicional.
+Apesar dos benefícios, o projeto apresenta algumas limitações. A baixa disponibilidade de internet em áreas rurais pode restringir o acesso à plataforma, e a adesão da comunidade é essencial para que o compartilhamento de caronas e entregas funcione de forma eficiente. Além disso, usuários com pouca familiaridade tecnológica podem necessitar de suporte adicional. Questões de segurança, como a confiabilidade dos motoristas e passageiros, também devem ser consideradas, assim como aspectos legais relacionados ao transporte e à responsabilidade em caso de incidentes.
 
 Abordagens e Ferramentas:
 
