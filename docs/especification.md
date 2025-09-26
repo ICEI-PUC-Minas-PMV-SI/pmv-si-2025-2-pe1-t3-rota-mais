@@ -75,8 +75,8 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 |RNF-004| A aplicação deve funcionar nos principais navegadores (Chrome, Firefox, Edge) | MÉDIA |
 |RNF-005| A aplicação deve garantir a conformidade com as leis de proteção de dados | MÉDIA |
 |RNF-006| A aplicação deve armazenar os dados automaticamente no navegador, permitindo que informações como solicitações, pedidos, histórico e avaliações sejam mantidas mesmo após recarregar a página | ALTA |
-|RNF-007| A aplicação deve ser desenvolvida apenas com HTML, CSS e JavaScript simples, sem back-end
-|RNF-008| A aplicação deve ser de baixo custo, utilizando apenas tecnologias gratuitas e abertas
+|RNF-007| A aplicação deve ser desenvolvida apenas com HTML, CSS e JavaScript simples, sem back-end  | ALTA |
+|RNF-008| A aplicação deve ser de baixo custo, utilizando apenas tecnologias gratuitas e abertas  | ALTA |
 |RNF-009| A aplicação deve sempre solicitar confirmação antes de excluir informações, evitando exclusões acidentais | MÉDIA |
 
 
