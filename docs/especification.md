@@ -52,18 +52,18 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 ### Requisitos Funcionais
 |ID    | Descrição do Requisito  | Prioridade | 
 |------|-----------------------------------------|----| 
-|RF-001| A aplicação deve permitir que o usuário publique uma oferta ou solicitação de viagem, indicando se será motorista ou passageiro | ALTA |  
-|RF-002| A aplicação deve permitir que o usuário selecione se a publicação se refere a carona, encomenda ou ambos | ALTA | 
-|RF-003| A aplicação deve permitir que o usuário informe origem, destino, data, horário e valor (quando aplicável) ao criar uma publicação | ALTA |
-|RF-004| A aplicação deve permitir que o usuário visualize seu histórico de publicações, incluindo tipo de participação (motorista/passageiro), carona/encomenda, origem, destino, data e valor acordado | ALTA |
-|RF-005| A aplicação deve permitir que o usuário edite ou exclua suas próprias publicações| ALTA |
-|RF-006| A aplicação deve permitir que o usuário marque a publicação como emergência e insira uma justificativa, que será destacada para outros usuários| ALTA |
+|RF-001| A aplicação deve permitir que o usuário solicite ou oferte uma viagem. Caso seja uma oferta, ele poderá especificar se aceita ou não efetuar o transporte de encomendas | ALTA |  
+|RF-002| A aplicação deve permitir que o usuário solicite ou oferte um transporte de encomenda | ALTA |  
+|RF-003| A aplicação deve permitir que o usuário informe origem, destino, data, horário e se a viagem será gratuita ou com divisão de custos ao criar uma solicitação | ALTA |
+|RF-004| A aplicação deve permitir que o usuário visualize seu histórico de solicitações e ofertas, incluindo informações como origem, destino, data, horário e se viagem será gratuita ou com divisão de custos | ALTA |
+|RF-005| A aplicação deve permitir que o usuário edite ou exclua suas próprias solicitações ou ofertas de viagens e encomendas | ALTA |
+|RF-006| A aplicação deve permitir que o usuário marque a publicação como emergência e insira uma justificativa, que será destacada para outros usuários | ALTA |
 |RF-007| A aplicação deve permitir que o usuário avalie outros participantes com estrelas e comentários, e exibir a média no perfil | MÉDIA |
 |RF-008| A aplicação deve permitir que o usuário visualize seu histórico completo de interações concluídas, incluindo participação como motorista ou passageiro, e se a viagem incluiu entrega de encomendas ou não | ALTA |
-|RF-009| A aplicação deve permitir que o usuário se comunique com outros usuários envolvidos na publicação por meio de um fórum interno | ALTA |
+|RF-009| A aplicação deve permitir que o usuário se comunique com outros usuários envolvidos na publicação por meio de um chat interno | ALTA |
 |RF-010| A aplicação deve permitir que o usuário faça login e visualize seu perfil | ALTA |
-|RF-011|A aplicação deve permitir ordenar e filtrar publicações por data, origem, destino e emergência | MÉDIA |
-|RF-012|A aplicação deve fornecer mensagens de alerta ou instruções nos formulários, garantindo que os campos obrigatórios sejam preenchidos | MÉDIA |
+|RF-011| A aplicação deve permitir ordenar e filtrar solicitações e ofertas por origem, destino e data | MÉDIA |
+|RF-012| A aplicação deve fornecer mensagens de alerta ou instruções nos formulários, garantindo que os campos obrigatórios sejam preenchidos | MÉDIA |
 
 
 ### Requisitos não Funcionais
@@ -74,9 +74,9 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 |RNF-003| A aplicação deve processar requisições do usuário em no máximo 3s |  BAIXA |
 |RNF-004| A aplicação deve funcionar nos principais navegadores (Chrome, Firefox, Edge) | MÉDIA |
 |RNF-005| A aplicação deve garantir a conformidade com as leis de proteção de dados | MÉDIA |
-|RNF-006| A aplicação deve armazenar os dados automaticamente no navegador, permitindo que informações como publicações, histórico e avaliações sejam mantidas mesmo após recarregar a página | ALTA |
-|RNF-007|A aplicação deve ser desenvolvida apenas com HTML, CSS e JavaScript simples, sem back-end
-|RNF-008|A aplicação deve ser de baixo custo, utilizando apenas tecnologias gratuitas e abertas
+|RNF-006| A aplicação deve armazenar os dados automaticamente no navegador, permitindo que informações como solicitações, pedidos, histórico e avaliações sejam mantidas mesmo após recarregar a página | ALTA |
+|RNF-007| A aplicação deve ser desenvolvida apenas com HTML, CSS e JavaScript simples, sem back-end
+|RNF-008| A aplicação deve ser de baixo custo, utilizando apenas tecnologias gratuitas e abertas
 |RNF-009| A aplicação deve sempre solicitar confirmação antes de excluir informações, evitando exclusões acidentais | MÉDIA |
 
 
