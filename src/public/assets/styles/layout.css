@@ -1,0 +1,167 @@
+aside::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 25%;
+    width: 4px; 
+    height: 100vh;
+    background: rgb(201, 201, 201);
+    z-index: 1100;
+}
+.sidebar {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+
+.sidebar i {
+    color: #71717a;
+}
+
+.sidebar-container {
+    width: 80%;
+}
+
+.sidebar-header {
+    padding: 2rem 1.5rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.community-selector {
+    padding: 1rem 1.5rem;
+    margin: 1rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    background: #e4e4e7;
+}
+
+.community-selector:hover {
+    background: #d4d4d8;
+}
+
+.sidebar-nav {
+    min-height: 90%;
+    flex: 1;
+    padding: 1rem 0;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item {
+    margin: 0.25rem 1rem;
+}
+
+.nav-item:hover {
+    color: black;
+    border-radius: 10px;
+    background: rgb(201, 201, 201);
+}
+
+.nav-link {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.3s;
+    font-weight: 500;
+    color: #71717a;
+}
+
+.nav-link i {
+    font-size: 1.2rem;
+    width: 20px;
+}
+
+.user-profile {
+    width: 80%;
+}
+
+.user-avatar {
+    width: 100%;
+    min-width: 40px;
+    max-width: 70px;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 25%;
+    height: 100vh;
+    overflow-y: auto;
+    background: #f8f9fa;
+    padding: 2rem;
+}
+
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.active {
+    color: black;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    .user-avatar {
+        width: 45px;
+        min-width: 32px;
+        max-width: 45px;
+    }
+    .user-name {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-avatar {
+        width: 32px;
+        min-width: 24px;
+        max-width: 32px;
+    }
+    .user-name {
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,17 @@
+@import url('./components.css');
+@import url('./layout.css');
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Nunito', sans-serif;
+    color: black;
+    display: flex;
+    min-height: 100vh;
+    overflow: hidden-x;
+}
