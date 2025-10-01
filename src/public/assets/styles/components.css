@@ -1,0 +1,156 @@
+.viagens-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.viagem-card {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-left: 4px solid transparent;
+  position: relative;
+}
+
+.viagem-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.viagem-card .card-title {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.viagem-card .card-subtitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.viagem-card .card-footer {
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.viagem-card .card-footer i {
+  color: #9ca3af;
+}
+
+.viagem-card .btn-info {
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.viagem-card .btn-info:hover {
+  transform: translateY(-50%) translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.cor-green {
+  border-left-color: 0E793C;
+}
+
+.cor-green .card-subtitle {
+  color: #10b981;
+}
+
+.cor-green .btn-info {
+  background-color: #A2E9C1;
+  color: #065f46;
+}
+
+.cor-green .btn-info:hover {
+  background-color: #a7f3d0;
+}
+
+.cor-blue {
+  border-left-color: #3b82f6;
+}
+
+.cor-blue .card-subtitle {
+  color: #3b82f6;
+}
+
+.cor-blue .btn-info {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.cor-blue .btn-info:hover {
+  background-color: #bfdbfe;
+}
+
+.cor-orange {
+  border-left-color: #f97316;
+}
+
+.cor-orange .card-subtitle {
+  color: #f97316;
+}
+
+.cor-orange .btn-info {
+  background-color: #fed7aa;
+  color: #c2410c;
+}
+
+.cor-orange .btn-info:hover {
+  background-color: #fdba74;
+}
+
+@media (max-width: 768px) {
+  .viagem-card {
+    padding: 1rem;
+  }
+  
+  .viagem-card .card-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .viagem-card .btn-info {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .viagem-card {
+    padding: 0.875rem;
+  }
+  
+  .viagem-card .card-subtitle {
+    font-size: 1rem;
+  }
+  
+  .viagem-card .card-footer {
+    font-size: 0.85rem;
+  }
+  
+  .viagem-card .btn-info {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+}
