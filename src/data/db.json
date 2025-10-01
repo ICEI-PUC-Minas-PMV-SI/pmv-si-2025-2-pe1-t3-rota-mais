@@ -1,3 +1,13 @@
 {
+    "viagens": [
+      {
+        "id": 1,
+        "title": "<strong>Você é motorista</strong> em uma carona",
+        "subtitle": "De Papagaios para Taquara",
+        "footer": "Dia 30/09 às 10:00",
+        "buttonText": "Conferir informações",
+        "buttonColor": "lightgreen",
+        "icon": "fa fa-car"
+      }
+    ]
 }
-
