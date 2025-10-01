@@ -1,36 +1,110 @@
 # Template padrão do site
 
-Layout padrão do site (HTML e CSS) que será utilizado em todas as páginas com a definição de identidade visual, aspectos de responsividade e iconografia.
-
-Explique as guias de estilo utilizadas no seu projeto.
+Este documento apresenta o layout padrão e os guias de estilo utilizados no projeto do site Rota+, incluindo identidade visual, responsividade, iconografia, tipografia e padrões de componentes.
 
 ## Design
 
-Detalhe os layouts que serão utilizados. Apresente onde será colocado o logo do sistema. Defina os menus padrões, entre outras coisas.
+![Tela Inicial](img/tela-inicial-site.png)
+
+O sistema utiliza um layout dividido em duas partes principais:
+
+Sidebar fixa (`<aside class="sidebar">`) à esquerda ocupando 25% da largura da tela (desktop).
+
+Área principal de conteúdo (`<main class="main-content">`) à direita, que ocupa os 75% restantes.
+
+O logo é carregado dinamicamente via JavaScript no topo da sidebar:
+`<img src="/assets/images/logo.png" alt="Logo" class="logo">`
+
+Menus padrões:
+
+Caronas:
+Ícone: `<i class="fa fa-car"></i>`
+
+Encomendas:
+Ícone: imagem SVG: /assets/images/encomendas.svg
+
+Comunidade:
+Ícone: `<i class="fa fa-users"></i>`
+
+Minhas viagens
+Ícone: `<i class="fa fa-bars"></i>`
 
 
 ## Cores
 
-Apresente a paleta de cores que será utilizada. Uma ferramenta interessante para a criação de palestas de cores é o *Adobe Color* ([https://color.adobe.com/pt/create/color-wheel](https://color.adobe.com/pt/create/color-wheel)).
+| Categoria                  | Cor principal     | Código Hex                      |
+| -------------------------- | ----------------- | ------------------------------- |
+| **Fundo geral**            | Cinza muito claro | `#f8f9fa`                       |
+| **Texto secundário**       | Cinza escuro      | `#6b7280` / `#71717a`           |
+| **Borda lateral**          | Cinza médio       | `rgb(201, 201, 201)`            |
+| **Botões e cards** | Verde claro       | `#A2E9C1`, `#10b981`, `#065f46` |
+|                            | Azul claro        | `#dbeafe`, `#3b82f6`, `#1e40af` |
+|                            | Laranja claro     | `#fed7aa`, `#f97316`, `#c2410c` |
+
 
 
 ## Tipografia
 
-Apresente as fontes que serão utilizadas e sua função no site. As principais funções são: Título de página, Título de Seção, Rótulos de componentes e Corpo de Texto.
+| Uso                 | Classe CSS       | Tamanho        | Peso   |
+| ------------------- | ---------------- | -------------- | ------ |
+| Subtítulo/descrição | `.card-subtitle` | 1.25rem        | 600    |
+| Título de Card      | `.card-title`    | 1rem           | 500    |
+| Rodapé de Card      | `.card-footer`   | 0.95rem        | normal |
+| Texto do menu       | `.nav-link`      | 1.2rem         | 500    |
+| Nome do usuário     | `.user-name`     | 2rem (desktop) | 600    |
+
 
 
 ## Iconografia
 
-Defina os ícones que serão utilizados e suas respectivas funções.
+Bibliotecas usadas:
 
-Apresente os estilos CSS criados para cada um dos elementos apresentados.
-Outras seções podem ser adicionadas neste documento para apresentar padrões de componentes, de menus, etc.
+Font Awesome:
+Incluída via CDN – usada nos menus e botões (`.fa, ex: .fa-car, .fa-users`)
+
+Bootstrap Icons:
+Ex: `bi bi-geo-alt-fill`
+
+Ícones personalizados:
+Imagens SVG como `repeat.svg` e `encomendas.svg`
 
 
-> **Links Úteis**:
->
-> -  [Como criar um guia de estilo de design da Web](https://edrodrigues.com.br/blog/como-criar-um-guia-de-estilo-de-design-da-web/#)
-> - [CSS Website Layout (W3Schools)](https://www.w3schools.com/css/css_website_layout.asp)
-> - [Website Page Layouts](http://www.cellbiol.com/bioinformatics_web_development/chapter-3-your-first-web-page-learning-html-and-css/website-page-layouts/)
-> - [Perfect Liquid Layout](https://matthewjamestaylor.com/perfect-liquid-layouts)
-> - [How and Why Icons Improve Your Web Design](https://usabilla.com/blog/how-and-why-icons-improve-you-web-design/)
+Estilização:
+
+Tamanho e cor definidos inline ou em CSS:
+
+`.nav-link i → font-size: 1.2rem; width: 20px;`
+
+`.card-footer i → color: #9ca3af;`
+
+Ícones nos botões e menus possuem espaçamento com gap
+
+
+Estilos CSS Criados para Elementos:
+
+Sidebar:
+
+`.sidebar, .sidebar-container, .sidebar-nav, .nav-list, .nav-link, .nav-item`
+
+Responsiva, com transições suaves e estilo fixo em desktop
+
+
+Cards:
+
+`.viagem-card, .card-title, .card-subtitle, .card-footer, .btn-info`
+
+Tem variações por cor: `.cor-green, .cor-blue, .cor-orange`
+
+
+Botões:
+
+`.btn-info: estilizado por cor do card, com hover, gap, padding e box-shadow`
+
+
+Perfil de Usuário:
+
+`.user-profile, .user-avatar, .user-name`
+
+Posicionado na parte inferior da sidebar
+
+
