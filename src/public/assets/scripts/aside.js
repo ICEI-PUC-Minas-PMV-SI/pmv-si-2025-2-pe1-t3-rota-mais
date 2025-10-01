@@ -10,7 +10,7 @@ function setupSidebar() {
     sidebar.innerHTML = `
         <div class="sidebar-container">
             <div class="sidebar-header">
-                <img src="./assets/images/logo.png" alt="Logo" class="logo">
+                <img src="/assets/images/logo.png" alt="Logo" class="logo">
             </div>
             
             <div class="community-selector d-flex align-items-center justify-content-between gap-2">
@@ -23,20 +23,20 @@ function setupSidebar() {
                     </div>
                 </div>
                 </div>
-                <img style="font-size: 2rem; transform: rotate(180deg);" src="./assets/images/repeat.svg"/>
+                <img style="font-size: 2rem; transform: rotate(180deg);" src="/assets/images/repeat.svg"/>
             </div>
             
             <nav class="sidebar-nav">
                 <ul class="nav-list">
                 <li class="nav-item active">
-                    <a href="./pages/caronas.html" class="nav-link">
+                    <a href="/pages/caronas.html" class="nav-link">
                     <i class="fa fa-car"></i>
                     <span>Caronas</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="./pages/encomendas.html" class="nav-link">
-                    <img src="./assets/images/encomendas.svg" alt="Encomendas" class="nav-link-icon" style="max-width: 90%;">
+                    <a href="/pages/encomendas.html" class="nav-link">
+                    <img src="/assets/images/encomendas.svg" alt="Encomendas" class="nav-link-icon" style="max-width: 90%;">
                     <span>Encomendas</span>
                     </a>
                 </li>
