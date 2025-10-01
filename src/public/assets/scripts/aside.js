@@ -29,13 +29,13 @@ function setupSidebar() {
             <nav class="sidebar-nav">
                 <ul class="nav-list">
                 <li class="nav-item active">
-                    <a href="/pages/caronas.html" class="nav-link">
+                    <a href="./pages/caronas.html" class="nav-link">
                     <i class="fa fa-car"></i>
                     <span>Caronas</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/pages/encomendas.html" class="nav-link">
+                    <a href="./pages/encomendas.html" class="nav-link">
                     <img src="./assets/images/encomendas.svg" alt="Encomendas" class="nav-link-icon" style="max-width: 90%;">
                     <span>Encomendas</span>
                     </a>
