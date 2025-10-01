@@ -1,38 +1,66 @@
 
 # Projeto de Interface
 
-Visão geral da interação do usuário pelas telas do sistema e protótipo interativo das telas com as funcionalidades que fazem parte do sistema (wireframes).
+As telas do nosso protótipo foram desenvolvidas para serem simples e intuitivas, visando atender pessoas com diferentes níveis de familiaridade com a tecnologia — uma característica identificada em nosso público-alvo durante as entrevistas.
 
- Apresente as principais interfaces da plataforma. Discuta como ela foi elaborada de forma a atender os requisitos funcionais, não funcionais e histórias de usuário abordados nas <a href="2-Especificação do Projeto.md"> Documentação de Especificação</a>.
+Além disso, a interface inclui funcionalidades pensadas para suprir as necessidades de transporte de moradores de áreas afastadas dos centros urbanos. Entre os recursos disponíveis estão: solicitação de caronas, envio de encomendas, chat entre usuários, sistema de avaliação e acesso a páginas da comunidade local, como comércios e outros serviços da região.
+
 
 ## User Flow
 
-![Exemplo de UserFlow](img/userflow.jpg)
-
-Fluxo de usuário (User Flow) é uma técnica que permite ao desenvolvedor mapear todo fluxo de telas do site ou app. Essa técnica funciona para alinhar os caminhos e as possíveis ações que o usuário pode fazer junto com os membros de sua equipe.
-
-> **Links Úteis**:
-> - [User Flow: O Quê É e Como Fazer?](https://medium.com/7bits/fluxo-de-usu%C3%A1rio-user-flow-o-que-%C3%A9-como-fazer-79d965872534)
-> - [User Flow vs Site Maps](http://designr.com.br/sitemap-e-user-flow-quais-as-diferencas-e-quando-usar-cada-um/)
-> - [Top 25 User Flow Tools & Templates for Smooth](https://www.mockplus.com/blog/post/user-flow-tools)
+![User Flow](img/flow.jpg)
 
 
 ## Wireframes
 
-São protótipos usados em design de interface para sugerir a estrutura de um site web e seu relacionamentos entre suas páginas. Um wireframe web é uma ilustração semelhante do layout de elementos fundamentais na interface e é fundamental sempre relacionar cada wireframe com o(s) requisito(s) que ele atende.
+Na tela inicial o usuário tem a opção de criar uma conta ou fazer o login.
 
-### Exemplo
+![Tela Inicial](img/tela_inicial.png)
 
-A tela inicial apresenta um menu lateral com as principais seções do portal, enquanto a navigation bar, ao topo, apresenta informações de envio de imagens ou navegação pela galeria de fotos. A área central apresenta a galeria de fotos na forma de uma grade. Nesta tela, são apresentados os seguintes requisitos
+![Tela criar conta](img/criar_conta.png)
 
-![Exemplo de Wireframe](img/wireframe-example.png)
+![Tela criar conta](img/criar_conta2.png)
 
- 
-> **Links Úteis**:
-> - [Protótipos vs Wireframes](https://www.nngroup.com/videos/prototypes-vs-wireframes-ux-projects/)
-> - [Ferramentas de Wireframes](https://rockcontent.com/blog/wireframes/)
-> - [MarvelApp](https://marvelapp.com/developers/documentation/tutorials/)
-> - [Figma](https://www.figma.com/)
-> - [Adobe XD](https://www.adobe.com/br/products/xd.html#scroll)
-> - [Axure](https://www.axure.com/edu) (Licença Educacional)
-> - [InvisionApp](https://www.invisionapp.com/) (Licença Educacional)
+![Tela criar conta](img/criar_conta3.png)
+
+![Tela de login](img/login.png)
+
+![Tela de caronas](img/caronas.png)
+
+![Tela de caronas](img/caronas2.png)
+
+![Tela de caronas](img/caronas3.png)
+
+![Tela de caronas](img/caronas4.png)
+
+![Tela de caronas](img/caronas5.png)
+
+![Tela de encomendas](img/encomendas.png)
+
+![Tela de encomendas](img/encomendas2.png)
+
+![Tela de encomendas](img/encomendas3.png)
+
+![Tela de encomendas](img/encomendas4.png)
+
+![Tela de encomendas](img/encomendas5.png)
+
+![Tela de comunidades](img/comunidade.png)
+
+![Tela de comunidades](img/comunidade2.png)
+
+![Tela de comunidades](img/comunidade3.png)
+
+![Tela de histórico de viagens](img/minhas_viagens.png)
+
+![Tela do perfil](img/perfil.png)
+
+![Tela do perfil](img/perfil2.png)
+
+![Tela do perfil](img/perfil3.png)
+
+![Tela de cancelamento](img/cancelamento.png)
+
+![Tela de exclusão](img/exclusao.png)
+
+
