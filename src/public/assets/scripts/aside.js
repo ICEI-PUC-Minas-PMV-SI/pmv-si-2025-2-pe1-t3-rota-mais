@@ -10,7 +10,7 @@ function setupSidebar() {
     sidebar.innerHTML = `
         <div class="sidebar-container">
             <div class="sidebar-header">
-                <img src="assets/images/logo.png" alt="Logo" class="logo">
+                <img src="./assets/images/logo.png" alt="Logo" class="logo">
             </div>
             
             <div class="community-selector d-flex align-items-center justify-content-between gap-2">
@@ -23,7 +23,7 @@ function setupSidebar() {
                     </div>
                 </div>
                 </div>
-                <img style="font-size: 2rem; transform: rotate(180deg);" src="/assets/images/repeat.svg"/>
+                <img style="font-size: 2rem; transform: rotate(180deg);" src="./assets/images/repeat.svg"/>
             </div>
             
             <nav class="sidebar-nav">
