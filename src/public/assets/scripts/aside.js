@@ -36,7 +36,7 @@ function setupSidebar() {
                 </li>
                 <li class="nav-item">
                     <a href="/pages/encomendas.html" class="nav-link">
-                    <img src="/assets/images/encomendas.svg" alt="Encomendas" class="nav-link-icon" style="max-width: 90%;">
+                    <img src="./assets/images/encomendas.svg" alt="Encomendas" class="nav-link-icon" style="max-width: 90%;">
                     <span>Encomendas</span>
                     </a>
                 </li>
