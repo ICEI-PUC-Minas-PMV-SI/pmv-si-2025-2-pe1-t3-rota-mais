@@ -1,0 +1,137 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+.welcome__container {
+  display: flex;  
+  align-items: stretch; 
+  margin-top: 80px;
+  padding: 0 50px;
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 40px;
+}
+
+.welcome__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.welcome__info {
+  display: flex;
+  flex-direction: column; 
+}
+
+.welcome__logo img {
+  width: 100%;
+  max-width: 329px;
+  height: auto;
+}
+
+.welcome__title {
+  font-size: 48px;
+  margin-top: 20px;
+  color: #0E793C;
+}
+
+.welcome__description {
+  max-width: 620px;
+  font-size: 28px;
+  margin-top: 20px;
+  color: black;
+  line-height: 1.5;      
+}
+
+.welcome__hero-image {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  max-width: 700px;
+  width: 100%;
+}
+
+.welcome__hero-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.btn {
+  width: 449.1162109375px;
+  height: 74px;
+  font-size: 28px;
+  cursor: pointer;
+  border-radius: 20.49px;
+  padding: 8px;
+  margin-top: 40px;
+  transition: all 0.3s ease;
+}
+
+.btn--primary {
+  color: white;
+  border: 1px solid #0E793C;
+  background: #0E793C;
+}
+
+.btn--primary:hover {
+  background: #0a5c2e;
+  border-color: #0a5c2e;
+}
+
+.btn--secondary {
+  color: #005BC4;
+  border: 1px solid #0E793C;
+  background: transparent;
+}
+
+.btn--secondary:hover {
+  background: rgba(14, 121, 60, 0.1);
+}
+
+@media (max-width: 1400px) {
+  .welcome__container {
+    padding: 0 30px;
+  }
+  
+  .welcome__hero-image {
+    max-width: 500px;
+  }
+}
+
+
+@media (max-width: 1000px) {
+  .welcome__container {
+    flex-direction: column;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .welcome__title {
+    font-size: 32px;
+  }
+
+  .welcome__description {
+    width: 100%;
+    font-size: 18px;
+    height: auto;
+  }
+
+  .btn {
+    width: 90%;
+    max-width: none;
+  }
+
+  .welcome__hero-image img {
+    display: none;
+  }
+}
