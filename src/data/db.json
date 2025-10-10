@@ -1,13 +1,126 @@
 {
-    "viagens": [
-      {
-        "id": 1,
-        "title": "<strong>Você é motorista</strong> em uma carona",
-        "subtitle": "De Papagaios para Taquara",
-        "footer": "Dia 30/09 às 10:00",
-        "buttonText": "Conferir informações",
-        "buttonColor": "lightgreen",
-        "icon": "fa fa-car"
-      }
-    ]
+  "caronas": [
+    {
+      "tipo": "pedindo",
+      "tipoCarona": "comum",
+      "usuario": {
+        "nome": "João Silva",
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png"
+      },
+      "rota": {
+        "origem": "Partida",
+        "destino": "Chegada"
+      },
+      "data": "06/10/2025",
+      "horario": "14:00",
+      "precisaRetorno": true,
+      "dataRetorno": "",
+      "horarioRetorno": "20:00",
+      "id": 1759797187367
+    },
+    {
+      "tipo": "oferecendo",
+      "usuario": {
+        "nome": "João Silva",
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png"
+      },
+      "rota": {
+        "origem": "Partida",
+        "destino": "Chegada"
+      },
+      "data": "06/10/2025",
+      "horario": "14:00",
+      "veiculo": "carro",
+      "vagas": 3,
+      "custo": "Viagem gratuita",
+      "podeTrazerEncomendas": true,
+      "incluiRetorno": true,
+      "dataRetorno": "06/10/2025",
+      "horarioRetorno": "20:00",
+      "id": 1759798061750
+    },
+    {
+      "tipo": "pedindo",
+      "usuario": {
+        "nome": "João Silva",
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png"
+      },
+      "rota": {
+        "origem": "Partida",
+        "destino": "Chegada"
+      },
+      "data": "06/10/2025",
+      "horario": "14:00",
+      "precisaRetorno": true,
+      "dataRetorno": "06/10/2025",
+      "horarioRetorno": "20:00",
+      "tipoCarona": "comum",
+      "subtitle": "De <strong>Partida</strong> para <strong>Chegada</strong>",
+      "id": 1759799198841
+    },
+    {
+      "tipo": "oferecendo",
+      "usuario": {
+        "nome": "João Silva",
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png"
+      },
+      "rota": {
+        "origem": "teste partida",
+        "destino": "teste chegada"
+      },
+      "data": "09/10/2025",
+      "horario": "22:00",
+      "veiculo": null,
+      "vagas": 1,
+      "custo": "",
+      "podeTrazerEncomendas": true,
+      "incluiRetorno": true,
+      "dataRetorno": "09/10/2025",
+      "horarioRetorno": "23:00",
+      "subtitle": "De <strong>teste partida</strong> para <strong>teste chegada</strong>",
+      "id": 1760060199121
+    },
+    {
+      "tipo": "oferecendo",
+      "usuario": {
+        "nome": "João Silva",
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png"
+      },
+      "rota": {
+        "origem": "Partida",
+        "destino": "Chegada"
+      },
+      "data": "06/10/2025",
+      "horario": "14:00",
+      "veiculo": null,
+      "vagas": 1,
+      "custo": "",
+      "podeTrazerEncomendas": true,
+      "incluiRetorno": true,
+      "dataRetorno": "09/10/2025",
+      "horarioRetorno": "20:00",
+      "subtitle": "De <strong>Partida</strong> para <strong>Chegada</strong>",
+      "id": 1760062409338
+    },
+    {
+      "tipo": "pedindo",
+      "usuario": {
+        "nome": "João Silva",
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png"
+      },
+      "rota": {
+        "origem": "Partida",
+        "destino": "Chegada"
+      },
+      "data": "09/10/2025",
+      "horario": "14:00",
+      "precisaRetorno": true,
+      "dataRetorno": "06/10/2025",
+      "horarioRetorno": "20:00",
+      "tipoCarona": "comum",
+      "subtitle": "De <strong>Partida</strong> para <strong>Chegada</strong>",
+      "id": 1760062420239
+    }
+  ],
+  "encomendas": []
 }
