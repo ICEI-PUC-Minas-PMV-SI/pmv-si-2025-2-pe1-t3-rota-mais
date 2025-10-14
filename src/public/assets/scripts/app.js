@@ -1,3 +1,30 @@
+function sanitizeText(text) {
+  if (typeof text !== 'string') return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function createSafeElement(tag, className = '', textContent = '') {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  if (textContent) element.textContent = textContent;
+  return element;
+}
+
+function createIcon(iconClass, style = '') {
+  const icon = document.createElement('i');
+  icon.className = iconClass;
+  if (style) icon.style.cssText = style;
+  return icon;
+}
+
+const clearChildren = (container) => {
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+}
+
 function getCurrentUser() {
   const savedUser = localStorage.getItem('currentUser');
   if (savedUser) return JSON.parse(savedUser);
@@ -49,14 +76,18 @@ async function loadCaronas() {
     const container = document.getElementById("caronas-container");
     if (!container) return;
 
-    container.innerHTML = "";
+    clearChildren(container);
 
     if (!caronas.length) {
-      container.innerHTML = `
-        <div class="text-center text-muted py-5">
-          <i class="bi bi-car-front" style="font-size: 3rem; color: #d1d5db;"></i>
-          <p class="mt-3">Nenhuma carona disponível no momento</p>
-        </div>`;
+      const emptyDiv = createSafeElement('div', 'text-center text-muted py-5');
+      
+      const icon = createIcon('bi bi-car-front', 'font-size: 3rem; color: #d1d5db;');
+      emptyDiv.appendChild(icon);
+      
+      const message = createSafeElement('p', 'mt-3', 'Nenhuma carona disponível no momento');
+      emptyDiv.appendChild(message);
+      
+      container.appendChild(emptyDiv);
       return;
     }
 
@@ -68,7 +99,15 @@ async function loadCaronas() {
     console.error("Erro ao carregar caronas:", err);
     const container = document.getElementById("caronas-container");
     if (container) {
-      container.innerHTML = '<div class="text-center text-danger py-5"><i class="bi bi-exclamation-triangle" style="font-size: 3rem;"></i><p class="mt-3">Erro ao carregar caronas</p></div>';
+      const errorDiv = createSafeElement('div', 'text-center text-danger py-5');
+      
+      const icon = createIcon('bi bi-exclamation-triangle', 'font-size: 3rem;');
+      errorDiv.appendChild(icon);
+      
+      const message = createSafeElement('p', 'mt-3', 'Erro ao carregar caronas');
+      errorDiv.appendChild(message);
+      
+      container.appendChild(errorDiv);
     }
   }
 }
@@ -83,79 +122,113 @@ function createCaronaCard(carona) {
   card.className = "carona-card p-4 rounded relative position-relative";
 
   const isOferecendo = carona.tipo === 'oferecendo';
-  const acaoTexto = isOferecendo ? ' <strong>está oferecendo uma carona</strong>' : ' <strong>está pedindo uma carona</strong>';
-  const rotaTexto = carona.subtitle
-    ? carona.subtitle 
-    : `De <strong>${carona.rota.origem}</strong> para <strong>${carona.rota.destino}</strong>`;
+  const acaoTexto = isOferecendo ? ' está oferecendo uma carona' : ' está pedindo uma carona';
   const rotaClass = isOferecendo ? 'oferecendo' : 'pedindo';
 
-  let detailsHTML = `
-    <div class="d-flex align-items-center gap-2">
-      <i class="bi bi-calendar3"></i>
-      <span>Dia ${carona.data || ''} ${carona.horario ? 'às ' + carona.horario : ''}</span>
-    </div>`;
+  const mainContainer = createSafeElement('div');
+  
+  const userHeader = createSafeElement('div', 'd-flex align-items-center gap-2 mb-4');
+  const userImg = document.createElement('img');
+  userImg.src = (carona.usuario && carona.usuario.avatar) || getCurrentUser().avatar;
+  userImg.alt = (carona.usuario && carona.usuario.nome) || 'Usuário';
+  userImg.className = 'user-avatar-card';
+  userHeader.appendChild(userImg);
+  
+  const userName = createSafeElement('span', 'carona-user');
+  userName.textContent = ((carona.usuario && carona.usuario.nome) || 'Usuário') + acaoTexto;
+  userHeader.appendChild(userName);
+  mainContainer.appendChild(userHeader);
+
+  const rotaDiv = createSafeElement('div', `carona-rota d-flex align-items-center gap-2 mb-4 ${rotaClass}`);
+  const rotaTitle = createSafeElement('h2');
+  
+  if (carona.subtitle) {
+    rotaTitle.textContent = carona.subtitle;
+  } else {
+    rotaTitle.appendChild(document.createTextNode('De '));
+    const origemStrong = document.createElement('strong');
+    origemStrong.textContent = carona.rota.origem;
+    rotaTitle.appendChild(origemStrong);
+    rotaTitle.appendChild(document.createTextNode(' para '));
+    const destinoStrong = document.createElement('strong');
+    destinoStrong.textContent = carona.rota.destino;
+    rotaTitle.appendChild(destinoStrong);
+  }
+  
+  rotaDiv.appendChild(rotaTitle);
+  mainContainer.appendChild(rotaDiv);
+
+  const detailsDiv = createSafeElement('div', 'carona-details d-flex flex-wrap gap-2 mb-4');
+  
+  const dataDiv = createSafeElement('div', 'd-flex align-items-center gap-2');
+  dataDiv.appendChild(createIcon('bi bi-calendar3'));
+  const dataSpan = createSafeElement('span');
+  dataSpan.textContent = `Dia ${carona.data || ''} ${carona.horario ? 'às ' + carona.horario : ''}`;
+  dataDiv.appendChild(dataSpan);
+  detailsDiv.appendChild(dataDiv);
 
   if (carona.veiculo) {
+    const veiculoDiv = createSafeElement('div', 'd-flex align-items-center gap-2');
     const veiculoIcon = carona.veiculo === 'moto' ? 'fa fa-motorcycle' : 'fa fa-car';
-    detailsHTML += `
-      <div class="d-flex align-items-center gap-2">
-        <i class="${veiculoIcon}"></i>
-        <span>Veículo: ${carona.veiculo}</span>
-      </div>`;
+    veiculoDiv.appendChild(createIcon(veiculoIcon));
+    const veiculoSpan = createSafeElement('span');
+    veiculoSpan.textContent = `Veículo: ${carona.veiculo}`;
+    veiculoDiv.appendChild(veiculoSpan);
+    detailsDiv.appendChild(veiculoDiv);
   }
 
   if (carona.vagas) {
-    detailsHTML += `
-      <div class="d-flex align-items-center gap-2">
-        <i class="bi bi-person"></i>
-        <span>${carona.vagas} vaga${carona.vagas > 1 ? 's' : ''}</span>
-      </div>`;
+    const vagasDiv = createSafeElement('div', 'd-flex align-items-center gap-2');
+    vagasDiv.appendChild(createIcon('bi bi-person'));
+    const vagasSpan = createSafeElement('span');
+    vagasSpan.textContent = `${carona.vagas} vaga${carona.vagas > 1 ? 's' : ''}`;
+    vagasDiv.appendChild(vagasSpan);
+    detailsDiv.appendChild(vagasDiv);
   }
 
   if (carona.incluiRetorno) {
-    detailsHTML += `
-      <div class="carona-detail">
-        <i class="bi bi-arrow-repeat"></i>
-        <span>Inclui retorno</span>
-      </div>`;
+    const retornoDiv = createSafeElement('div', 'carona-detail');
+    retornoDiv.appendChild(createIcon('bi bi-arrow-repeat'));
+    const retornoSpan = createSafeElement('span', '', 'Inclui retorno');
+    retornoDiv.appendChild(retornoSpan);
+    detailsDiv.appendChild(retornoDiv);
   }
 
   if (carona.podeTrazerEncomendas) {
-    detailsHTML += `
-      <div class="carona-detail">
-        <i class="bi bi-box"></i>
-        <span>Pode trazer encomendas</span>
-      </div>`;
+    const encomendasDiv = createSafeElement('div', 'carona-detail');
+    encomendasDiv.appendChild(createIcon('bi bi-box'));
+    const encomendasSpan = createSafeElement('span', '', 'Pode trazer encomendas');
+    encomendasDiv.appendChild(encomendasSpan);
+    detailsDiv.appendChild(encomendasDiv);
   }
 
-  const buttonHTML = isOferecendo
-    ? `<button class="btn-participar d-flex align-items-center gap-2 rounded-3 pointer border-0 p-3" onclick="participarViagem(${carona.id})">
-         <i class="bi bi-check-circle"></i> Participar da viagem
-       </button>`
-    : `<button class="btn-oferecer d-flex align-items-center gap-2 rounded-3 pointer border-0 p-3" onclick="oferecerCarona(${carona.id})">
-         <i class="bi bi-car-front"></i> Oferecer carona
-       </button>`;
+  mainContainer.appendChild(detailsDiv);
 
-  card.innerHTML = `
-    <div class="d-flex align-items-center gap-2 mb-4">
-      <img src="${(carona.usuario && carona.usuario.avatar) || getCurrentUser().avatar}" alt="${(carona.usuario && carona.usuario.nome) || 'Usuário'}" class="user-avatar-card">
-      <span class="carona-user">${(carona.usuario && carona.usuario.nome) || 'Usuário'} ${acaoTexto}</span>
-    </div>
+  if (carona.custo) {
+    const custoDiv = createSafeElement('div', 'carona-custo');
+    custoDiv.textContent = carona.custo;
+    mainContainer.appendChild(custoDiv);
+  }
 
-    <div class="carona-rota d-flex align-items-center gap-2 mb-4 ${rotaClass}">
-      <h2>${rotaTexto}</h2>
-    </div>
+  const buttonContainer = createSafeElement('div', 'd-flex justify-content-end');
+  const button = createSafeElement('button', isOferecendo ? 'btn-participar d-flex align-items-center gap-2 rounded-3 pointer border-0 p-3' : 'btn-oferecer d-flex align-items-center gap-2 rounded-3 pointer border-0 p-3');
+  
+  if (isOferecendo) {
+    button.appendChild(createIcon('bi bi-check-circle'));
+    const buttonText = createSafeElement('span', '', ' Participar da viagem');
+    button.appendChild(buttonText);
+    button.onclick = () => participarViagem(carona.id);
+  } else {
+    button.appendChild(createIcon('bi bi-car-front'));
+    const buttonText = createSafeElement('span', '', ' Oferecer carona');
+    button.appendChild(buttonText);
+    button.onclick = () => oferecerCarona(carona.id);
+  }
+  
+  buttonContainer.appendChild(button);
+  mainContainer.appendChild(buttonContainer);
 
-    <div class="carona-details d-flex flex-wrap gap-2 mb-4">
-      ${detailsHTML}
-    </div>
-
-    ${carona.custo ? `<div class="carona-custo">${carona.custo}</div>` : ''}
-
-    <div class="d-flex justify-content-end">
-      ${buttonHTML}
-    </div>
-  `;
+  card.appendChild(mainContainer);
   return card;
 }
 
@@ -185,7 +258,8 @@ async function filterCaronas(filter) {
 
     const container = document.getElementById("caronas-container");
     if (!container) return;
-    container.innerHTML = "";
+
+    clearChildren(container);
 
     if (filteredCaronas.length === 0) {
       const message = filter === 'todos'
@@ -194,7 +268,15 @@ async function filterCaronas(filter) {
           ? 'Nenhuma oferta de carona disponível'
           : 'Nenhum pedido de carona disponível';
 
-      container.innerHTML = `<div class="text-center text-muted py-5"><i class="bi bi-car-front" style="font-size: 3rem; color: #d1d5db;"></i><p class="mt-3">${message}</p></div>`;
+      const emptyDiv = createSafeElement('div', 'text-center text-muted py-5');
+      
+      const icon = createIcon('bi bi-car-front', 'font-size: 3rem; color: #d1d5db;');
+      emptyDiv.appendChild(icon);
+      
+      const messageP = createSafeElement('p', 'mt-3', message);
+      emptyDiv.appendChild(messageP);
+      
+      container.appendChild(emptyDiv);
       return;
     }
 
@@ -236,10 +318,19 @@ async function searchCaronas(origem, destino, data) {
 
     const container = document.getElementById("caronas-container");
     if (!container) return;
-    container.innerHTML = "";
+
+    clearChildren(container);
 
     if (filtered.length === 0) {
-      container.innerHTML = '<div class="text-center text-muted py-5"><i class="bi bi-search" style="font-size: 3rem; color: #d1d5db;"></i><p class="mt-3">Nenhuma carona encontrada com os critérios de busca</p></div>';
+      const emptyDiv = createSafeElement('div', 'text-center text-muted py-5');
+      
+      const icon = createIcon('bi bi-search', 'font-size: 3rem; color: #d1d5db;');
+      emptyDiv.appendChild(icon);
+      
+      const message = createSafeElement('p', 'mt-3', 'Nenhuma carona encontrada com os critérios de busca');
+      emptyDiv.appendChild(message);
+      
+      container.appendChild(emptyDiv);
     } else {
       filtered.forEach(carona => container.appendChild(createCaronaCard(carona)));
     }
@@ -341,9 +432,6 @@ function setupPedirCaronaForm() {
     };
 
     try {
-      // opcional: efeito de loading (simulado)
-      await new Promise(resolve => setTimeout(resolve, 700));
-
       await saveCaronaToDatabase(data);
 
       Swal.fire({
@@ -619,7 +707,7 @@ async function saveCaronaToDatabase(caronaData) {
     if (caronaData.rota && caronaData.rota.origem && caronaData.rota.destino) {
       const origem = caronaData.rota.origem;
       const destino = caronaData.rota.destino;
-      caronaData.subtitle = `De <strong>${origem}</strong> para <strong>${destino}</strong>`;
+      caronaData.subtitle = `De ${origem} para ${destino}`;
     }
 
     if (!caronaData.usuario) {
@@ -657,10 +745,18 @@ async function loadViagens() {
     const container = document.getElementById("viagens-container");
     if (!container) return;
 
-    container.innerHTML = "";
+    clearChildren(container);
 
     if (!viagens.length) {
-      container.innerHTML = `<div class="text-center text-muted py-5"><i class="bi bi-briefcase" style="font-size: 3rem; color: #d1d5db;"></i><p class="mt-3">Nenhuma viagem cadastrada</p></div>`;
+      const emptyDiv = createSafeElement('div', 'text-center text-muted py-5');
+      
+      const icon = createIcon('bi bi-briefcase', 'font-size: 3rem; color: #d1d5db;');
+      emptyDiv.appendChild(icon);
+      
+      const message = createSafeElement('p', 'mt-3', 'Nenhuma viagem cadastrada');
+      emptyDiv.appendChild(message);
+      
+      container.appendChild(emptyDiv);
       return;
     }
 
@@ -684,17 +780,37 @@ function createViagemCard({ title, subtitle, footer, buttonText, buttonColor, ic
     } else if (buttonColor === 'lightsalmon') {
       colorClass = 'cor-orange';
     }
-
   }
 
-  card.innerHTML = `
-    <p class="card-title">${title || ''}</p>
-    <h3 class="card-subtitle">${subtitle || ''}</h3>
-    <p class="card-footer">${icon ? `<i class="${icon}"></i>` : ''} ${footer || ''}</p>
-    <button class="btn-info" style="${buttonColor ? 'background:' + buttonColor + ';' : ''}">
-      ${icon ? `<i class="${icon}"></i>` : ''} ${buttonText || 'Ação'}
-    </button>
-  `;
+  const titleP = createSafeElement('p', 'card-title', title || '');
+  card.appendChild(titleP);
+
+  const subtitleH3 = createSafeElement('h3', 'card-subtitle', subtitle || '');
+  card.appendChild(subtitleH3);
+
+  const footerP = createSafeElement('p', 'card-footer');
+
+  if (icon) {
+    footerP.appendChild(createIcon(icon));
+    footerP.appendChild(document.createTextNode(' '));
+  }
+
+  footerP.appendChild(document.createTextNode(footer || ''));
+  card.appendChild(footerP);
+
+  const button = createSafeElement('button', 'btn-info');
+  
+  if (buttonColor) {
+    button.style.background = buttonColor;
+  }
+
+  if (icon) {
+    button.appendChild(createIcon(icon));
+    button.appendChild(document.createTextNode(' '));
+  }
+
+  button.appendChild(document.createTextNode(buttonText || 'Ação'));
+  card.appendChild(button);
 
   return card;
 }
@@ -713,7 +829,6 @@ async function loadPedidoData() {
     if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
     const pedidoData = await response.json();
 
-    // Preenche campos se existirem
     const el = id => document.getElementById(id);
     if (el('carona-id')) el('carona-id').value = pedidoData.id;
     if (el('origem')) el('origem').value = pedidoData.rota?.origem || '';

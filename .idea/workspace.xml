@@ -4,23 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ccb23022-1ef6-41b2-b6eb-453facc08678" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/assets/scripts/searchComponent.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/pages/caronas/oferecer-carona.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/pages/caronas/pedir-carona.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/src/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/db.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/db.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/assets/scripts/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/assets/scripts/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/assets/scripts/aside.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/assets/scripts/aside.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/assets/styles/components.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/assets/styles/components.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/assets/styles/layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/assets/styles/layout.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/assets/styles/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/assets/styles/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/pages/caronas.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/pages/caronas/caronas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/pages/encomendas.html" beforeDir="false" />
-    </list>
+    <list default="true" id="ccb23022-1ef6-41b2-b6eb-453facc08678" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -82,7 +66,7 @@
       <option name="presentableId" value="Default" />
       <updated>1760061219847</updated>
       <workItem from="1760061227789" duration="281000" />
-      <workItem from="1760061524186" duration="1116000" />
+      <workItem from="1760061524186" duration="1716000" />
     </task>
     <servers />
   </component>
