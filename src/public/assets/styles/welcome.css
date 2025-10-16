@@ -2,11 +2,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow:hidden;
 }
 
 body {
   font-family: Arial, sans-serif;
-  overflow-x: hidden;
 }
 
 .welcome__container {
@@ -73,30 +73,22 @@ body {
   cursor: pointer;
   border-radius: 20.49px;
   padding: 8px;
-  margin-top: 40px;
-  transition: all 0.3s ease;
+  margin-top: 20px;
 }
 
-.btn--primary {
+.btn--cadastro {
   color: white;
   border: 1px solid #0E793C;
   background: #0E793C;
 }
 
-.btn--primary:hover {
-  background: #0a5c2e;
-  border-color: #0a5c2e;
-}
-
-.btn--secondary {
+.btn--entrar {
   color: #005BC4;
   border: 1px solid #0E793C;
   background: transparent;
 }
 
-.btn--secondary:hover {
-  background: rgba(14, 121, 60, 0.1);
-}
+
 
 @media (max-width: 1400px) {
   .welcome__container {
