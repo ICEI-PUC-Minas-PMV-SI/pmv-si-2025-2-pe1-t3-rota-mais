@@ -261,3 +261,107 @@
   color: #9ca3af;
   pointer-events: none;
 }
+
+.comunidades-procurar-local{
+box-sizing: border-box;
+
+position: initial;
+width: 900px;
+height: 50px;
+left: 620px;
+top: 245px;
+
+background: #F4F4F5;
+border: 1px solid #D4D4D8;
+border-radius: 20px;
+}
+
+.comunidades-conhecer-local{
+position: absolute;
+width: 232.52px;
+height: 44.78px;
+left: 800px;
+top: 140px;
+
+background: #A2E9C1;
+border: 1px solid #D4D4D8;
+border-radius: 12px;
+}
+
+.comunidades-nome-local{
+position: absolute;
+width: 500px;
+height: 46px;
+left: 400px;
+top: 10px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 37px;
+line-height: 45px;
+
+color: #0E793C;
+}
+
+.comunidades-txt-tipo-local{
+  position: absolute;
+width: 366px;
+height: 23px;
+left: 400px;
+top: 70px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 19px;
+
+color: #1E1E1E;
+}
+
+.comunidades-txt-endereco-local{
+  position: absolute;
+width: 366px;
+height: 23px;
+left: 400px;
+top: 90px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 19px;
+
+color: #1E1E1E;
+}
+
+.comunidades-txt-quantidade-viagens{
+  position: absolute;
+width: 366px;
+height: 23px;
+left: 400px;
+top: 110px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 19px;
+
+color: #1E1E1E;
+}
+
+
+.comunidades-box-locais{
+  box-sizing: border-box;
+
+position: absolute;
+width: 1050px;
+height: 205px;
+left: 470px;
+top: 340px;
+
+border: 1px solid #D4D4D8;
+border-radius: 20px;
+}
