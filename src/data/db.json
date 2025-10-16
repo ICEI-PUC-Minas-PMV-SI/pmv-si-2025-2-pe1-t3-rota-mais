@@ -55,7 +55,7 @@
       "dataRetorno": "06/10/2025",
       "horarioRetorno": "20:00",
       "tipoCarona": "comum",
-      "subtitle": "De <strong>Partida</strong> para <strong>Chegada</strong>",
+      "subtitle": "De Partida para Chegada",
       "id": 1759799198841
     },
     {
@@ -77,7 +77,7 @@
       "incluiRetorno": true,
       "dataRetorno": "09/10/2025",
       "horarioRetorno": "23:00",
-      "subtitle": "De <strong>teste partida</strong> para <strong>teste chegada</strong>",
+      "subtitle": "De teste partida para teste chegada",
       "id": 1760060199121
     },
     {
@@ -99,7 +99,7 @@
       "incluiRetorno": true,
       "dataRetorno": "09/10/2025",
       "horarioRetorno": "20:00",
-      "subtitle": "De <strong>Partida</strong> para <strong>Chegada</strong>",
+      "subtitle": "De Partida para Chegada",
       "id": 1760062409338
     },
     {
@@ -118,7 +118,7 @@
       "dataRetorno": "06/10/2025",
       "horarioRetorno": "20:00",
       "tipoCarona": "comum",
-      "subtitle": "De <strong>Partida</strong> para <strong>Chegada</strong>",
+      "subtitle": "De Partida para Chegada",
       "id": 1760062420239
     }
   ],
