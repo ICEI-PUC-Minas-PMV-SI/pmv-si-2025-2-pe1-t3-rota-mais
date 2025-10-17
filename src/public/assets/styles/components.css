@@ -321,7 +321,7 @@
   margin-left: 5px;
 }
 
-.comunidades-box-locais {
+.comunidades-box-locais, .viagens-box-locais{
   position: relative;
   display: flex;
   gap: 20px;
@@ -350,7 +350,7 @@
   display: block;
 }
 
-.comunidades-info {
+.comunidades-info, .viagens-info {
   flex: 1;
   padding: 20px;
   display: flex;
@@ -359,13 +359,13 @@
   position: relative;
 }
 
-.comunidades-nome-local {
+.comunidades-nome-local, .viagens-origem-destino {
   font-size: 1.8rem;
   color: #0E793C;
   font-weight: 700;
 }
 
-.comunidades-conhecer-local {
+.comunidades-conhecer-local, .viagens-conferir-info {
   align-self: flex-end;
   background: #A2E9C1;
   border-radius: 12px;
@@ -374,7 +374,7 @@
   cursor: pointer;
   transition: 0.2s;
 }
-.comunidades-conhecer-local:hover {
+.comunidades-conhecer-local:hover, .viagens-conferir-info {
   background: #8cdba9;
 }
 
