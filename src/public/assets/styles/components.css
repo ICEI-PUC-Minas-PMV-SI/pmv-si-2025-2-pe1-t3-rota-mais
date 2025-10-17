@@ -262,106 +262,132 @@
   pointer-events: none;
 }
 
-.comunidades-procurar-local{
-box-sizing: border-box;
-
-position: initial;
-width: 900px;
-height: 50px;
-left: 620px;
-top: 245px;
-
-background: #F4F4F5;
-border: 1px solid #D4D4D8;
-border-radius: 20px;
+.comunidades-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.comunidades-conhecer-local{
-position: absolute;
-width: 232.52px;
-height: 44.78px;
-left: 800px;
-top: 140px;
-
-background: #A2E9C1;
-border: 1px solid #D4D4D8;
-border-radius: 12px;
+.comunidades-titulo {
+  font-family: 'Inter', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #18181B;
 }
 
-.comunidades-nome-local{
-position: absolute;
-width: 500px;
-height: 46px;
-left: 400px;
-top: 10px;
-
-font-family: 'Inter';
-font-style: normal;
-font-weight: 700;
-font-size: 37px;
-line-height: 45px;
-
-color: #0E793C;
+.comunidades-cadastrar-local {
+  background: #0E793C;
+  border-radius: 12px;
+  color: #fff;
+  padding: 10px 20px;
+  transition: 0.2s;
+}
+.comunidades-cadastrar-local:hover {
+  background: #0c6935;
 }
 
-.comunidades-txt-tipo-local{
-  position: absolute;
-width: 366px;
-height: 23px;
-left: 400px;
-top: 70px;
-
-font-family: 'Inter';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 19px;
-
-color: #1E1E1E;
+.comunidades-filtros {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #D4D4D8;
+  padding-bottom: 10px;
 }
 
-.comunidades-txt-endereco-local{
-  position: absolute;
-width: 366px;
-height: 23px;
-left: 400px;
-top: 90px;
-
-font-family: 'Inter';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 19px;
-
-color: #1E1E1E;
+.comunidades-busca {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 40px;
 }
 
-.comunidades-txt-quantidade-viagens{
-  position: absolute;
-width: 366px;
-height: 23px;
-left: 400px;
-top: 110px;
+.comunidades-procurar-local {
+  flex: 1;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
 
-font-family: 'Inter';
-font-style: normal;
-font-weight: 400;
-font-size: 16px;
-line-height: 19px;
+.comunidades-procurar-local:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  outline: none;
+}
 
-color: #1E1E1E;
+.comunidades-busca, .comunidades-box-locais {
+  width: 100%;
+  max-width: 1050px;
+  margin-left: 5px;
+}
+
+.comunidades-box-locais {
+  position: relative;
+  display: flex;
+  gap: 20px;
+  border: 1px solid #D4D4D8;
+  border-radius: 20px;
+  padding: 0;
+  background: #fff;
+  width: 90%;
+  max-width: 1050px;
+  align-items: stretch; 
+  overflow: hidden;
 }
 
 
-.comunidades-box-locais{
-  box-sizing: border-box;
+.comunidades-box-locais .comunidades-imagem {
+  flex: 0 0 40%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 20px 0 0 20px; 
+}
 
-position: absolute;
-width: 1050px;
-height: 205px;
-left: 470px;
-top: 340px;
+.comunidades-box-locais .comunidades-imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 
-border: 1px solid #D4D4D8;
-border-radius: 20px;
+.comunidades-info {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.comunidades-nome-local {
+  font-size: 1.8rem;
+  color: #0E793C;
+  font-weight: 700;
+}
+
+.comunidades-conhecer-local {
+  align-self: flex-end;
+  background: #A2E9C1;
+  border-radius: 12px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.comunidades-conhecer-local:hover {
+  background: #8cdba9;
+}
+
+@media (max-width: 768px) {
+  .comunidades-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .comunidades-box-locais {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .comunidades-box-locais img {
+    width: 100%;
+  }
 }

@@ -18,53 +18,53 @@
 
 </head>
 
-<body>
+<body class="body">
   <aside class="sidebar"></aside>
-  <main class="main-content">
 
-    <div class="content-wrapper">
+ <main class="main-content">
 
-      <h2 class="content-header-left"> Comunidade </h2>
+  <div class="content-wrapper">
 
-      <div class="content-header-right">
-        <button class="btn btn-success" id="bnt-cadastrar-local">Cadastrar novo local</button>
-      </div>
+    <header class="comunidades-header">
+      <h2 class="comunidades-titulo">Comunidade</h2>
+      <button class="btn btn-success comunidades-cadastrar-local" id="bnt-cadastrar-local">
+        Cadastrar novo local
+      </button>
+    </header>
 
-      <p class="border-bottom border-light my-4">
-        <button class="filter-tabs filter-tab active" id="bnt-locais-regiao">Locais da região</button>
-        <button class="filter-tabs filter-tab" id="bnt-locais-comunidade">Locais da comunidade selecionada</button>
-      </p>
-
-      <p>
-        <form>
-          <input class="comunidades-procurar-local txt-procurar-comunidade" type="text" name="local" value="Pesquisar local">
-          <button class="btn btn-success" id="bnt-procurar-local">Procurar</button>
-        </form>
-      </p>
-
+    <div class="comunidades-filtros">
+      <button class="filter-tab active" id="bnt-locais-regiao">Locais da região</button>
+      <button class="filter-tab" id="bnt-locais-comunidade">Locais da comunidade selecionada</button>
     </div>
 
-    <div class="comunidades-box-locais">
-      <h3 class="comunidades-nome-local">Nome do Local</h3>
+    <form class="comunidades-busca">
+      <input class="comunidades-procurar-local" type="text" name="local" placeholder="Pesquisar local">
+      <button class="btn btn-success comunidades-btn-procurar-local" id="bnt-procurar-local">
+        Procurar
+      </button>
+    </form>
 
-      <figure>
-        <img src="../../assets/images/imagem-exemplo.jpg" alt="Foto do local" width="350" height="200"/>
-      </figure>
+  <div class="comunidades-box-locais">
+  <div class="comunidades-imagem">
+    <img src="../../assets/images/imagem-exemplo.jpg" alt="Foto do local">
+  </div>
 
-      <p class="comunidades-txt-tipo-local">Tipo do local</p>
-      <p class="comunidades-txt-endereco-local">Endereço do local</p>
-      <p class="comunidades-txt-quantidade-viagens">Quantidade de viagens</p>
+  <div class="comunidades-info">
+    <h3 class="comunidades-nome-local">Nome do Local</h3>
+    <p class="comunidades-txt-tipo-local bi bi-shop-window"> Tipo do local</p>
+    <p class="comunidades-txt-endereco-local bi bi-geo-alt-fill"> Endereço do local</p>
+    <p class="comunidades-txt-quantidade-viagens bi-car-front-fill"> Quantidade de viagens</p>
 
-      <button class="comunidades-conhecer-local" id="bnt-conhecer-local">Conhecer local</button>
-
-    </div>
-
-
+    <button class="btn comunidades-conhecer-local" id="bnt-conhecer-local">
+      Conhecer local
+    </button>
+  </div>
+</div>
 
     <div id="caronas-container" class="caronas-list"></div>
 
-
-  </main>
+  </div>
+</main>
 
   <script src="../../assets/scripts/aside.js"></script>
   <script src="../../assets/scripts/searchComponent.js"></script>
