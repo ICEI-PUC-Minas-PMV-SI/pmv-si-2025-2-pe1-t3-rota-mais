@@ -42,14 +42,12 @@ function setupSidebar() {
 
   const sidebarContent = createEl("div", { class: "sidebar-container" }, [
 
-    // Header
     createEl("div", { class: "sidebar-header" }, [
       createEl("a", { href: "/index.html" }, [
         createEl("img", { src: "/assets/images/logo.png", alt: "Logo", class: "logo" })
       ])
     ]),
 
-    // Community selector
     createEl("div", { class: "community-selector d-flex align-items-center justify-content-between gap-2" }, [
       createEl("div", { class: "d-flex align-items-center gap-2" }, [
         createEl("i", { class: "bi bi-geo-alt-fill", style: { fontSize: "2rem", color: "black" } }),
@@ -63,7 +61,6 @@ function setupSidebar() {
       createEl("img", { src: "/assets/images/repeat.svg", style: { fontSize: "2rem", transform: "rotate(180deg)" } })
     ]),
 
-    // Navigation
     createEl("nav", { class: "sidebar-nav" }, [
       createEl("ul", { class: "nav-list" }, navItems.map((item, index) =>
         createEl("li", { class: `nav-item${index === 0 ? ' active' : ''}` }, [
@@ -75,7 +72,6 @@ function setupSidebar() {
       ))
     ]),
 
-    // Footer
     createEl("div", { class: "sidebar-footer" }, [
       createEl("div", { class: "user-profile d-flex" }, [
         createEl("div", { class: "user-avatar-container" }, [
@@ -93,5 +89,4 @@ function setupSidebar() {
   ]);
 
   sidebar.appendChild(sidebarContent);
-  setupSidebarNavigation();
 }

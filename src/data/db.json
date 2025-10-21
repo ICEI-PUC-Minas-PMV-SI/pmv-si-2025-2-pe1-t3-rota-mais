@@ -2,7 +2,6 @@
   "caronas": [
     {
       "tipo": "pedindo",
-      "tipoCarona": "comum",
       "usuario": {
         "nome": "João Silva",
         "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png"
@@ -13,6 +12,7 @@
       },
       "data": "06/10/2025",
       "horario": "14:00",
+      "tipoCarona": "comum",
       "precisaRetorno": true,
       "dataRetorno": "",
       "horarioRetorno": "20:00",
@@ -120,9 +120,65 @@
       "tipoCarona": "comum",
       "subtitle": "De Partida para Chegada",
       "id": 1760062420239
+    },
+    {
+      "tipo": "pedindo",
+      "usuario": {
+        "nome": "João Silva",
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png"
+      },
+      "rota": {
+        "origem": "12",
+        "destino": "12"
+      },
+      "data": "12",
+      "horario": "12",
+      "precisaRetorno": true,
+      "dataRetorno": "12",
+      "horarioRetorno": "12",
+      "tipoCarona": "comum",
+      "subtitle": "De 12 para 12",
+      "id": 1761007277950
+    },
+    {
+      "tipo": "pedindo",
+      "usuario": {
+        "nome": "João Silva",
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png"
+      },
+      "rota": {
+        "origem": "123",
+        "destino": "123"
+      },
+      "data": "123",
+      "horario": "123",
+      "precisaRetorno": true,
+      "dataRetorno": "123",
+      "horarioRetorno": "123",
+      "tipoCarona": "comum",
+      "subtitle": "De 123 para 123",
+      "id": 1761007324628
+    },
+    {
+      "tipo": "pedindo",
+      "usuario": {
+        "nome": "João Silva",
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png"
+      },
+      "rota": {
+        "origem": "Pediraaaaa",
+        "destino": "Caronaaaaa"
+      },
+      "data": "123",
+      "horario": "123",
+      "tipoCarona": "comum",
+      "precisaRetorno": true,
+      "dataRetorno": "123",
+      "horarioRetorno": "123",
+      "id": 1761008136430
     }
   ],
   "encomendas": [],
   "comunidades": [],
-  "viagens":[]
+  "viagens": []
 }
