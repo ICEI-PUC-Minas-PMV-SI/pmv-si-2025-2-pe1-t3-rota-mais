@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editar Transporte de Encomenda</title>
+  <link rel="stylesheet" href="../../assets/styles/editar-transporte-encomenda.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Editar transporte de encomenda</h1>
+
+    <div class="route-section">
+      <div class="location">
+        <label>Local de partida</label>
+        <input type="text" value="Farmácia do Antônio • Taquara" />
+      </div>
+      <div class="exchange">⇄</div>
+      <div class="location">
+        <label>Local de chegada</label>
+        <input type="text" value="Papagaios" />
+      </div>
+    </div>
+
+    <div class="trip-info">
+      <div>
+        <label>Data da viagem</label>
+        <input type="date" value="2025-09-26" />
+      </div>
+      <div>
+        <label>Horário de partida</label>
+        <input type="time" value="14:00" />
+      </div>
+      <div>
+        <label>Veículo</label>
+        <input type="text" value="Carro • BRA2E19" />
+      </div>
+    </div>
+
+    <h3>O transporte incluirá algum custo para o passageiro?</h3>
+    <div class="radio-group">
+      <label class="selected"><input type="radio" name="custo" checked /> Não, será gratuito</label>
+      <label><input type="radio" name="custo" /> Sim, haverá um custo</label>
+    </div>
+
+    <h3>Gostaria de incluir uma previsão de retorno?</h3>
+    <div class="radio-group">
+      <label class="selected"><input type="radio" name="retorno" checked /> Sim, incluir previsão de retorno</label>
+      <label><input type="radio" name="retorno" /> Não incluir previsão de retorno</label>
+    </div>
+
+    <div class="return-info">
+      <div>
+        <label>Data do retorno</label>
+        <input type="date" value="2025-09-26" />
+      </div>
+      <div>
+        <label>Horário previsto</label>
+        <input type="time" value="16:00" />
+      </div>
+    </div>
+
+    <button class="create-btn">Criar oferta</button>
+  </div>
+</body>
+</html>

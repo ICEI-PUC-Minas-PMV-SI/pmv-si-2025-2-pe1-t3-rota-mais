@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oferecer transporte de encomenda</title>
+  <link rel="stylesheet" href="../../assets/styles/transporte-encomendas.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>Oferecer transporte de encomenda</h1>
+
+    <label>Local de partida</label>
+    <input type="text" value="Farmácia do Antônio • Taquara">
+
+    <label>Local de chegada</label>
+    <input type="text" value="Papagaios">
+
+    <div class="inline">
+      <div>
+        <label>Data da viagem</label>
+        <input type="date" value="2025-09-26">
+      </div>
+      <div>
+        <label>Horário de partida</label>
+        <input type="time" value="14:00">
+      </div>
+    </div>
+
+    <div class="inline">
+      <div>
+        <label>Veículo</label>
+        <select>
+          <option>Carro</option>
+          <option>Moto</option>
+          <option>Caminhão</option>
+        </select>
+      </div>
+      <div>
+        <label>Placa</label>
+        <input type="text" value="BRA2E19">
+      </div>
+    </div>
+
+    <label class="sub-label">O transporte incluirá algum custo para o passageiro?</label>
+    <div class="options">
+      <div class="option active">Não, será gratuito</div>
+      <div class="option">Sim, haverá um custo</div>
+    </div>
+
+    <label class="sub-label">Gostaria de incluir uma previsão de retorno?</label>
+    <div class="options">
+      <div class="option active">Sim, incluir previsão de retorno</div>
+      <div class="option">Não incluir previsão de retorno</div>
+    </div>
+
+    <div class="inline">
+      <div>
+        <label>Data do retorno</label>
+        <input type="date" value="2025-09-26">
+      </div>
+      <div>
+        <label>Horário previsto</label>
+        <input type="time" value="16:00">
+      </div>
+    </div>
+
+    <button class="btn">Criar oferta</button>
+  </div>
+
+</body>
+</html>

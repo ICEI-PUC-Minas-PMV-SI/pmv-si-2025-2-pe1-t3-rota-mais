@@ -1,0 +1,118 @@
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #f9f9fb;
+  color: #1a1a1a;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.container {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  max-width: 650px;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  margin-top: 18px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: #fafafa;
+}
+
+.location-section {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.location {
+  flex: 1;
+}
+
+.exchange {
+  font-size: 1.4rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.info {
+  font-size: 0.9rem;
+  color: #777;
+  margin: 15px 0 20px;
+}
+
+h3 {
+  margin-top: 25px;
+  font-size: 1.1rem;
+}
+
+.radio-group {
+  display: flex;
+  gap: 15px;
+  margin: 10px 0 20px;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f2f2f2;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  accent-color: #7a3eff;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.disclaimer {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.save-btn {
+  width: 100%;
+  padding: 14px;
+  background-color: #7a3eff;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.save-btn:hover {
+  background-color: #5d2fd1;
+}

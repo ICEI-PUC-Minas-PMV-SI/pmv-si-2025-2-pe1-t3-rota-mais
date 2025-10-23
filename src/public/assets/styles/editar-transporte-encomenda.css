@@ -1,0 +1,116 @@
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #f9f9fb;
+  color: #1a1a1a;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.container {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  max-width: 700px;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: #fafafa;
+}
+
+.route-section {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.location {
+  flex: 1;
+}
+
+.exchange {
+  font-size: 1.5rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.trip-info,
+.return-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.return-info {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+h3 {
+  margin-top: 20px;
+  font-size: 1.1rem;
+}
+
+.radio-group {
+  display: flex;
+  gap: 15px;
+  margin: 12px 0 25px;
+  flex-wrap: wrap;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f2f2f2;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.radio-group label.selected {
+  background: #e6e6e6;
+}
+
+input[type="radio"] {
+  accent-color: #ff7a00;
+}
+
+.create-btn {
+  width: 180px;
+  padding: 14px;
+  background-color: #ff7a00;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.create-btn:hover {
+  background-color: #e66e00;
+}

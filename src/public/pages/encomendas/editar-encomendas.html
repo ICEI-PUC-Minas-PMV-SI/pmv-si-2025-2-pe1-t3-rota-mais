@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editar Pedido de Encomenda</title>
+  <link rel="stylesheet" href="../../assets/styles/editar-encomendas.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Editar pedido de encomenda</h1>
+
+    <label for="item">Descrição do item</label>
+    <input type="text" id="item" value="Saco de milho" />
+
+    <div class="location-section">
+      <div class="location">
+        <label>Local onde o item está</label>
+        <input type="text" value="Farmácia do Antônio • Taquara" />
+      </div>
+      <div class="exchange">⇄</div>
+      <div class="location">
+        <label>Local onde o item deve ser entregue</label>
+        <input type="text" value="Papagaios" />
+      </div>
+    </div>
+
+    <p class="info">
+      Endereços específicos, como nomes de ruas e bairros, deverão ser informados ao motorista via chat de texto.
+    </p>
+
+    <h3>O destinatário da encomenda é você?</h3>
+    <div class="radio-group">
+      <label><input type="radio" name="destinatario" /> Sim, sou eu</label>
+      <label><input type="radio" name="destinatario" checked /> Não, o destinatário é outro</label>
+    </div>
+
+    <div class="details">
+      <div>
+        <label>Nome do destinatário</label>
+        <input type="text" value="Pedro Alves" />
+      </div>
+      <div>
+        <label>Data para receber</label>
+        <input type="date" value="2025-09-26" />
+      </div>
+      <div>
+        <label>Horário limite</label>
+        <input type="time" value="14:00" />
+      </div>
+    </div>
+
+    <p class="disclaimer">
+      Ao confirmar o pedido você confirma que está ciente que o motorista poderá cobrar algum valor pelo transporte da encomenda.
+    </p>
+
+    <button class="save-btn">Salvar alterações</button>
+  </div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pedir para trazer encomenda</title>
+  <link rel="stylesheet" href="../../assets/styles/pedir-encomenda.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Pedir para trazer encomenda</h1>
+
+    <label for="descricao">Descrição do item</label>
+    <input type="text" id="descricao" placeholder="Saco de milho" />
+
+    <div class="row">
+      <div class="campo">
+        <label>Local onde o item está</label>
+        <input type="text" placeholder="Farmácia do Antônio • Taquara" />
+      </div>
+      <div class="troca">↔</div>
+      <div class="campo">
+        <label>Local onde o item deve ser entregue</label>
+        <input type="text" placeholder="Papagaios" />
+      </div>
+    </div>
+
+    <p class="info">Endereços específicos, como nomes de ruas e bairros, deverão ser informados ao motorista via chat de texto.</p>
+
+    <h3>O destinatário da encomenda é você?</h3>
+    <div class="opcoes">
+      <label><input type="radio" name="destinatario" /> Sim, sou eu</label>
+      <label><input type="radio" name="destinatario" checked /> Não, o destinatário é outro</label>
+    </div>
+
+    <div class="row">
+      <div class="campo">
+        <label>Nome do destinatário</label>
+        <input type="text" placeholder="Pedro Alves" />
+      </div>
+      <div class="campo">
+        <label>Data para receber</label>
+        <input type="date" value="2025-09-26" />
+      </div>
+      <div class="campo">
+        <label>Horário limite</label>
+        <input type="time" value="14:00" />
+      </div>
+    </div>
+
+    <p class="info">Ao confirmar o pedido você confirma que está ciente que o motorista poderá cobrar algum valor pelo transporte da encomenda.</p>
+
+    <button class="btn">Criar pedido de transporte de encomenda</button>
+  </div>
+</body>
+</html>
