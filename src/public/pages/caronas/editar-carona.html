@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/styles/main.css">
+    
+    <title>Rota + | Editar Carona</title>
+</head>
+<body>
+    <aside class="sidebar"></aside>
+    <main class="main-content">
+      <div class="content-wrapper">
+        <div class="content-header d-flex align-items-center justify-content-between">
+          <h1 id="page-title"><strong>Editar Carona</strong></h1>
+        </div>
+        
+        <div id="loading-message" style="text-align: center; padding: 20px;">
+          <p>Carregando dados da carona...</p>
+        </div>
+        
+        <div id="form-pedido-container" style="display: none;">
+          <form id="form-editar-pedido" class="carona-form">
+            <input type="hidden" id="carona-id" name="carona-id">
+            
+            <div class="form-section">
+              <h3><i class="bi bi-car-front"></i> Tipo de Carona</h3>
+              <div class="radio-group d-flex gap-4">
+                <div class="radio-option">
+                  <input type="radio" id="carona-comum" name="tipo-carona" value="comum" checked>
+                  <label for="carona-comum" class="radio-label">
+                    <span class="radio-circle"></span>
+                    <span class="radio-text">Carona comum</span>
+                  </label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="carona-emergencial" name="tipo-carona" value="emergencial">
+                  <label for="carona-emergencial" class="radio-label emergency">
+                    <span class="radio-circle"></span>
+                    <span class="radio-text">Carona emergencial</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3><i class="bi bi-geo-alt"></i> Rota</h3>
+              <div class="d-flex align-items-end gap-4 mb-4">
+                <div class="route-field">
+                  <label for="origem-pedido" class="form-label">Local de partida</label>
+                  <div class="input-with-icon">
+                    <input type="text" class="form-control" id="origem-pedido" name="origem" placeholder="Farmácia do Antônio • Taquara" required>
+                    <i class="bi bi-search input-icon"></i>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-center p-2 pointer transition-all duration-200 ease">
+                  <i class="bi bi-arrow-left-right"></i>
+                </div>
+                <div class="route-field">
+                  <label for="destino-pedido" class="form-label">Local de chegada</label>
+                  <div class="input-with-icon">
+                    <input type="text" class="form-control" id="destino-pedido" name="destino" placeholder="Papagaios" required>
+                    <i class="bi bi-search input-icon"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3><i class="bi bi-calendar3"></i> Data e Horário da Viagem</h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="data-pedido" class="form-label">Data da viagem</label>
+                  <input type="text" class="form-control" id="data-pedido" name="data" placeholder="26/09/2025" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="horario-pedido" class="form-label">Horário de partida</label>
+                  <input type="text" class="form-control" id="horario-pedido" name="horario" placeholder="14:00" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3><i class="bi bi-arrow-repeat"></i> Necessidade de Retorno</h3>
+              <div class="radio-group d-flex my-4 gap-4">
+                <div class="radio-option">
+                  <input type="radio" id="precisa-retorno" name="precisa-retorno" value="sim" checked>
+                  <label for="precisa-retorno" class="radio-label">
+                    <span class="radio-circle"></span>
+                    <span class="radio-text">Sim, vou precisar</span>
+                  </label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="nao-precisa-retorno" name="precisa-retorno" value="nao">
+                  <label for="nao-precisa-retorno" class="radio-label">
+                    <span class="radio-circle"></span>
+                    <span class="radio-text">Não vou precisar</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-section">
+              <div id="retorno-fields-pedido" class="retorno-fields d-flex">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="data-retorno-pedido" class="form-label">Data do retorno</label>
+                    <input type="text" class="form-control" id="data-retorno-pedido" name="data-retorno" placeholder="26/09/2025">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="horario-retorno-pedido" class="form-label">Horário do retorno</label>
+                    <input type="text" class="form-control" id="horario-retorno-pedido" name="horario-retorno" placeholder="16:00">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-lg btn-primary">
+                <i class="bi bi-check-circle"></i> Salvar alterações
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div id="form-oferta-container" style="display: none;">
+          <form id="form-editar-oferta" class="carona-form">
+            <input type="hidden" id="carona-id-oferta" name="carona-id">
+            
+            <div class="form-section">
+              <h3><i class="bi bi-geo-alt"></i> Rota</h3>
+              <div class="d-flex align-items-end gap-4 mb-4">
+                <div class="route-field">
+                  <label for="origem-oferta" class="form-label">Local de partida</label>
+                  <div class="input-with-icon">
+                    <input type="text" class="form-control" id="origem-oferta" name="origem" placeholder="Farmácia do Antônio • Taquara" required>
+                    <i class="bi bi-search input-icon"></i>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center justify-content-center p-2 pointer transition-all duration-200 ease">
+                  <i class="bi bi-arrow-left-right"></i>
+                </div>
+                <div class="route-field">
+                  <label for="destino-oferta" class="form-label">Local de chegada</label>
+                  <div class="input-with-icon">
+                    <input type="text" class="form-control" id="destino-oferta" name="destino" placeholder="Papagaios" required>
+                    <i class="bi bi-search input-icon"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3><i class="bi bi-calendar3"></i> Data e Horário da Viagem</h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="data-oferta" class="form-label">Data da viagem</label>
+                  <input type="text" class="form-control" id="data-oferta" name="data" placeholder="26/09/2025" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="horario-oferta" class="form-label">Horário de partida</label>
+                  <input type="text" class="form-control" id="horario-oferta" name="horario" placeholder="14:00" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="mb-3">
+                <label for="rideVehicle" class="form-label">Veículo</label>
+                <select class="form-select" id="rideVehicle" name="veiculo">
+                  <option value="">Selecione um veículo</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="rideSeats" class="form-label">Vagas</label>
+                <input type="number" class="form-control" id="rideSeats" name="vagas" min="1" max="4" disabled />
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3><i class="bi bi-currency-dollar"></i> Custo para o Passageiro</h3>
+              <div class="radio-group d-flex gap-4">
+                <div class="radio-option">
+                  <input type="radio" id="custo-gratuito" name="custo" value="gratuito" checked>
+                  <label for="custo-gratuito" class="radio-label ">
+                    <span class="radio-circle"></span>
+                    <span class="radio-text">Não, a viagem será gratuita</span>
+                  </label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="custo-divisao" name="custo" value="divisao">
+                  <label for="custo-divisao" class="radio-label">
+                    <span class="radio-circle"></span>
+                    <span class="radio-text">Sim, vamos dividir os custos</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3><i class="bi bi-box"></i> Disponibilidade para Encomendas</h3>
+              <div class="radio-group d-flex gap-4">
+                <div class="radio-option">
+                  <input type="radio" id="pode-encomendas-sim" name="pode-encomendas" value="sim" checked>
+                  <label for="pode-encomendas-sim" class="radio-label">
+                    <span class="radio-circle"></span>
+                    <span class="radio-text">Sim, posso buscar e trazer encomendas</span>
+                  </label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="pode-encomendas-nao" name="pode-encomendas" value="nao">
+                  <label for="pode-encomendas-nao" class="radio-label">
+                    <span class="radio-circle"></span>
+                    <span class="radio-text">Não tenho essa disponibilidade</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3><i class="bi bi-arrow-repeat"></i> Previsão de Retorno</h3>
+              <div class="radio-group d-flex gap-4">
+                <div class="radio-option">
+                  <input type="radio" id="incluir-retorno" name="incluir-retorno" value="sim" checked>
+                  <label for="incluir-retorno" class="radio-label">
+                    <span class="radio-circle"></span>
+                    <span class="radio-text">Sim, incluir previsão de retorno</span>
+                  </label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="nao-incluir-retorno" name="incluir-retorno" value="nao">
+                  <label for="nao-incluir-retorno" class="radio-label">
+                    <span class="radio-circle"></span>
+                    <span class="radio-text">Não incluir previsão de retorno</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-section">
+              <div id="retorno-fields-oferta" class="retorno-fields d-flex">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="data-retorno-oferta" class="form-label">Data do retorno</label>
+                    <input type="text" class="form-control" id="data-retorno-oferta" name="data-retorno" placeholder="26/09/2025">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="horario-retorno-oferta" class="form-label">Horário previsto</label>
+                    <input type="text" class="form-control" id="horario-retorno-oferta" name="horario-retorno" placeholder="16:00">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-lg btn-success">
+                <i class="bi bi-check-circle"></i> Salvar alterações
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../../assets/scripts/aside.js"></script>
+  <script src="../../assets/scripts/caronas/caronas.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" 
+    crossorigin="anonymous">
+  </script>
+  <script src="../../assets/scripts/vehicles/vehicles.js"></script>
+</body>
+</html>
