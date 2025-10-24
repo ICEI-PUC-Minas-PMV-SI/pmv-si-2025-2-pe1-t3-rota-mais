@@ -134,3 +134,32 @@ aside::after {
 .main-content{
     background-color: #ffffff;
 }
+
+.chat-message-other-message {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.chat-message-me-message {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.chat-input-container {
+    bottom: 0;
+    left: 25%;
+}
+
+.hr {
+    width: 10%;
+    height: 1px;
+    background-color: #ccc; 
+    margin: 8px 0;
+}
+
+.hr-large {
+    width: 55%;
+    height: 1px;
+    background-color: #ccc; 
+    margin: 8px 0;
+}

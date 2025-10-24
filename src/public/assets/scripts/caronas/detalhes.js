@@ -37,11 +37,12 @@ $(document).ready(async function () {
         const diaDiv = createEl('div');
         diaDiv.innerHTML = `<i class="bi bi-calendar-event"></i> Dia <strong>${carona.data}</strong> às <strong>${carona.horario}</strong>`;
 
-        const vr = createEl('div', 'vr');
+        const hr = createEl('div', 'hr');
+        const hrLarge = createEl('div', 'hr-large');
         const retornoDiv = createEl('div');
         retornoDiv.innerHTML = `Retorno previsto para as <strong>${carona.horarioRetorno || '—'}</strong>`;
 
-        infoDiv.append(diaDiv, vr, retornoDiv);
+        infoDiv.append(diaDiv, hr, retornoDiv, hrLarge);
         wrapper.appendChild(infoDiv);
 
         const ul = createEl('ul', 'list-unstyled mb-4');
@@ -53,11 +54,16 @@ $(document).ready(async function () {
             `<i class="bi bi-currency-dollar"></i> ${carona.custo ? carona.custo : 'Viagem gratuita'}`
         ];
 
-        listItems.forEach(itemHTML => {
-            const li = createEl('li');
-            li.innerHTML = itemHTML;
-            ul.appendChild(li);
-        });
+
+        let isDetails = window.location.pathname.includes('detalhes');
+        
+        if(isDetails){
+            listItems.forEach(itemHTML => {
+                const li = createEl('li');
+                li.innerHTML = itemHTML;
+                ul.appendChild(li);
+            });
+        }
 
         wrapper.appendChild(ul);
         container.appendChild(wrapper);
