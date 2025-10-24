@@ -335,7 +335,6 @@
   overflow: hidden;
 }
 
-
 .comunidades-box-locais .comunidades-imagem {
   flex: 0 0 40%;
   height: 100%;
@@ -350,6 +349,45 @@
   display: block;
 }
 
+.comunidades-box-local {
+  position: relative;
+  width: 90%;
+  max-width: 1050px;
+  max-height: 300px;
+  border: 1px solid #D4D4D8;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.comunidades-box-local img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.comunidades-box-local2 {
+  position: relative;
+  width: 90%;
+  max-width: 1050px;
+  max-height: 300px;
+  border: 1px;
+  border-radius: 20px;
+  overflow:visible;
+  background: #fff;
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  padding: 0;
+}
+
+
 .comunidades-info, .viagens-info {
   flex: 1;
   padding: 20px;
@@ -359,10 +397,54 @@
   position: relative;
 }
 
+.local-info {
+  flex: 1;
+  font-size: 0.8rem;
+  padding: 20px;
+  display:inline;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  margin-top: 60px;
+  margin-left: -170px;
+  
+}
+
+.local-info2 {
+  flex: 1;
+  font-size: 0.8rem;
+  padding: 20px;
+  display:inline;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  margin-top: 10px;
+  margin-left: -20px;
+  
+}
+
 .comunidades-nome-local, .viagens-origem-destino {
   font-size: 1.8rem;
   color: #0E793C;
   font-weight: 700;
+}
+
+.comunidades-nome-local2 {
+  font-size: 1.8rem;
+  color: #0E793C;
+  font-weight: 700;
+  margin-top: 30px;
+}
+
+.comunidades-contato {
+  position:absolute;
+  top: 15px;
+  right: 0px;    
+  border-radius: 12px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 .comunidades-conhecer-local, .viagens-conferir-info {
