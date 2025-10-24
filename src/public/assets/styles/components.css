@@ -456,7 +456,7 @@
   cursor: pointer;
   transition: 0.2s;
 }
-.comunidades-conhecer-local:hover, .viagens-conferir-info {
+.viagens-conferir-info:hover {
   background: #8cdba9;
 }
 

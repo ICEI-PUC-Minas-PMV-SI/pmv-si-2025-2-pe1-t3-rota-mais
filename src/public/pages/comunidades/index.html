@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="../../assets/styles/main.css">
 
-  <title>Rota + | Minhas Viagens</title>
+  <title>Rota + | Comunidades</title>
 
 </head>
 
@@ -26,29 +26,38 @@
   <div class="content-wrapper">
 
     <header class="comunidades-header">
-      <h2 class="comunidades-titulo">Minhas viagens</h2>
+      <h2 class="comunidades-titulo">Comunidade</h2>
+      <a href="/pages/comunidades/comunidade-cadastro.html" class="btn btn-success comunidades-cadastrar-local" id="bnt-cadastrar-local">
+        Cadastrar novo local
+      </a>
     </header>
 
     <div class="comunidades-filtros">
-      <button class="filter-tab active" id="bnt-locais-regiao">Todas</button>
-      <button class="filter-tab" id="bnt-locais-comunidade">Caronas</button>
-      <button class="filter-tab" id="bnt-locais-comunidade">Encomendas</button>
+      <button class="filter-tab active" id="bnt-locais-regiao">Locais da região</button>
+      <button class="filter-tab" id="bnt-locais-comunidade">Locais da comunidade selecionada</button>
     </div>
 
-  <div class="viagens-box-locais">
-  <div class="viagens-info">
+    <form class="comunidades-busca">
+      <input class="comunidades-procurar-local" type="text" name="local" placeholder="Pesquisar local">
+      <button class="btn btn-success comunidades-btn-procurar-local" id="bnt-procurar-local">
+        Procurar
+      </button>
+    </form>
 
-   <p>Você é <strong>motorista</strong> de uma <strong>carona</strong>.</p>
+  <div class="comunidades-box-locais">
+  <div class="comunidades-imagem">
+    <img src="../../assets/images/imagem-exemplo.jpg" alt="Foto do local">
+  </div>
 
-<p class="viagens-origem-destino">De <strong>Origem</strong> para <strong>Destino</strong>.</p>
+  <div class="comunidades-info">
+    <h3 class="comunidades-nome-local">Nome do Local</h3>
+    <p class="comunidades-txt-tipo-local bi bi-shop-window"> Tipo do local</p>
+    <p class="comunidades-txt-endereco-local bi bi-geo-alt-fill"> Endereço do local</p>
+    <p class="comunidades-txt-quantidade-viagens bi-car-front-fill"> Quantidade de viagens</p>
 
-<p class="viagens-data bi bi-calendar3">
-<strong>Dia <time datetime="2025-11-25T14:00:00">25 de novembro de 2024 às 14:00.</time></strong>
-</p>
-
-    <button class="btn viagens-conferir-info" id="bnt-conhecer-local">
-      Conferir informações
-    </button>
+    <a href="/pages/comunidades/comunidade-local.html" class="btn comunidades-conhecer-local" id="bnt-conhecer-local">
+      Conhecer local
+    </a>
   </div>
 </div>
 

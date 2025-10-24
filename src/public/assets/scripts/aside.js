@@ -7,6 +7,10 @@ function createEl(tag, attrs = {}, children = []) {
   const el = document.createElement(tag);
 
   Object.entries(attrs).forEach(([key, value]) => {
+    if (typeof key === 'number' || !isNaN(parseInt(key))) {
+      return;
+    }
+    
     if (key === "class") {
       el.className = value;
     } else if (key === "style" && typeof value === "object") {
@@ -34,10 +38,10 @@ function setupSidebar() {
   if (!sidebar) return;
 
   const navItems = [
-    { href: "/pages/caronas/caronas.html", icon: createEl("i", { class: "fa fa-car" }), label: "Caronas" },
-    { href: "/pages/encomendas/encomendas.html", icon: createEl("img", { src: "/assets/images/encomendas.svg", class: "nav-link-icon", style: "max-width: 90%;" }), label: "Encomendas" },
-    { href: "#", icon: createEl("i", { class: "fa fa-users" }), label: "Comunidade" },
-    { href: "#", icon: createEl("i", { class: "fa fa-bars" }), label: "Minhas viagens" }
+    { href: "/pages/caronas/index.html", icon: createEl("i", { class: "fa fa-car" }), label: "Caronas" },
+    { href: "/pages/encomendas/index.html", icon: createEl("img", { src: "/assets/images/encomendas.svg", class: "nav-link-icon", style: "max-width: 90%;" }), label: "Encomendas" },
+    { href: "/pages/comunidades/index.html", icon: createEl("i", { class: "fa fa-users" }), label: "Comunidade" },
+    { href: "/pages/viagens/index.html", icon: createEl("i", { class: "fa fa-bars" }), label: "Minhas viagens" },
   ];
 
   const sidebarContent = createEl("div", { class: "sidebar-container" }, [
@@ -75,10 +79,12 @@ function setupSidebar() {
     createEl("div", { class: "sidebar-footer" }, [
       createEl("div", { class: "user-profile d-flex" }, [
         createEl("div", { class: "user-avatar-container" }, [
+          createEl("a", { href: "/pages/autenticacao/perfil.html" }, [
           createEl("img", {
-            src: "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
-            class: "user-avatar"
-          })
+              src: "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+              class: "user-avatar"
+            })
+          ])
         ]),
         createEl("div", { class: "user-name-container" }, [
           createEl("span", { class: "user-name" }, " João Silva ")

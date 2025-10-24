@@ -165,7 +165,7 @@ function createCaronaCard(carona) {
 
   const detailsButton = createSafeElement('button', 'btn btn-secondary d-flex align-items-center gap-2 rounded-3 pointer border-0 p-3');
   detailsButton.appendChild(createIcon('bi bi-info-circle'));
-  detailsButton.onclick = () => window.location.href = `/pages/caronas/detalhes.html?id=${carona.id}`;
+  detailsButton.onclick = () => window.location.href = `/pages/viagens/detalhes.html?id=${carona.id}`;
   detailsButton.appendChild(createSafeElement('span', '', 'Detalhes'));
   buttonContainer.appendChild(detailsButton);
 
@@ -399,7 +399,7 @@ function setupPedirCaronaForm() {
         text: 'Seu pedido de carona foi criado com sucesso.',
         icon: 'success'
       }).then(() => {
-        window.location.href = 'caronas.html';
+        window.location.href = 'caronas/index.html';
       });
     } catch (error) {
       console.error(error);
@@ -461,7 +461,7 @@ function setupOferecerCaronaForm() {
         text: 'Sua oferta de carona foi criada com sucesso.',
         icon: 'success'
       }).then(() => {
-        window.location.href = 'caronas.html';
+        window.location.href = 'caronas/index.html';
       });
     } catch (error) {
       console.error(error);
@@ -797,7 +797,7 @@ async function handlePedidoSubmit(e) {
       text: 'Seu pedido de carona foi atualizado com sucesso.',
       icon: 'success'
     }).then(() => {
-      window.location.href = 'caronas.html';
+      window.location.href = 'caronas/index.html';
     });
   } catch (error) {
     console.error('Erro ao salvar pedido:', error);
@@ -847,7 +847,7 @@ async function handleOfertaSubmit(e) {
       text: 'Sua oferta de carona foi atualizada com sucesso.',
       icon: 'success'
     }).then(() => {
-      window.location.href = 'caronas.html';
+      window.location.href = 'caronas/index.html';
     });
   } catch (error) {
     console.error('Erro ao salvar oferta:', error);
@@ -935,7 +935,7 @@ function createViagemCard({ title, subtitle, footer, buttonText, buttonColor, ic
 document.addEventListener("DOMContentLoaded", () => {
   const currentPath = window.location.pathname;
   
-  if (currentPath.includes('caronas.html')) {
+  if (currentPath.includes('caronas/index.html')) {
     loadCaronas();
     setupFilters();
     setupSearch();
