@@ -460,6 +460,46 @@
   background: #8cdba9;
 }
 
+.comunidades-cadastro2 {
+ flex: 1; 
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.comunidades-cadastro-descricao{
+display: block;
+  margin-bottom: 8px;
+ font-size: 0.9rem;
+  color: #a7a7a7;
+  font-weight: 700;
+  margin-top: 30px;
+}
+
+.comunidades-cadastro-div{
+ display: flex; 
+  flex-wrap: wrap; 
+  justify-content: space-between; 
+  gap: 20px; 
+}
+
+.btn-adicionar-arquivo {
+
+  width: 30%; /* Largura total do contêiner pai */
+  min-height: 20px;
+  margin-top:20px;
+  background-color:#ffffff;
+  font-size: 0.9rem;
+  color: black;
+
+}
+
+.btn-adicionar-arquivo:hover {
+  background-color: #047857;
+  transform: translateY(-1px);
+}
+
+
 @media (max-width: 768px) {
   .comunidades-header {
     flex-direction: column;
