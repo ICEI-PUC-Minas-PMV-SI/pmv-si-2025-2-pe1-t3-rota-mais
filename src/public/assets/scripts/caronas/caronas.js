@@ -161,7 +161,14 @@ function createCaronaCard(carona) {
 
   const buttonContainer = createSafeElement('div', 'd-flex justify-content-end gap-2');
   
-  const editButton = createSafeElement('button', 'btn btn-outline-secondary d-flex align-items-center gap-2 rounded-3 pointer border-0 p-3');
+  const editButton = createSafeElement('button', 'btn btn-success d-flex align-items-center gap-2 rounded-3 pointer border-0 p-3');
+
+  const detailsButton = createSafeElement('button', 'btn btn-secondary d-flex align-items-center gap-2 rounded-3 pointer border-0 p-3');
+  detailsButton.appendChild(createIcon('bi bi-info-circle'));
+  detailsButton.onclick = () => window.location.href = `/pages/caronas/detalhes.html?id=${carona.id}`;
+  detailsButton.appendChild(createSafeElement('span', '', 'Detalhes'));
+  buttonContainer.appendChild(detailsButton);
+
   editButton.appendChild(createIcon('bi bi-pencil'));
   editButton.appendChild(createSafeElement('span', '', 'Editar'));
   editButton.onclick = () => editarCarona(carona.id, carona.tipo);
