@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../assets/styles/editar-perfil.css">
+</head>
+<body>
+    <div class="container-perfil">
+        <h1>Editar perfil</h1>
+
+        <div class="profile-photo-section">
+            <div class="photo-container">
+                <span class="photo-label">Foto de perfil</span>
+                <div class="photo-wrapper">
+                    <img src="" id="profilePhoto">
+                </div>
+                <input type="file" id="photoInput" accept="image/*" style="display: none;">
+            </div>
+
+            <div style="flex: 1;">
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" placeholder="João Silva">
+                </div>
+                <div class="form-group">
+                    <label for="username">Nome de usuário</label>
+                    <input type="text" id="username" placeholder="joao_silvaribeiro">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" placeholder="joao_ribeiro@gmail.com">
+            </div>
+            <div class="form-group">
+                <label for="telefone">Telefone</label>
+                <input type="tel" id="telefone" placeholder="31 99999-9999">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="comunidade">Comunidade</label>
+
+                <div class="search-input">
+                    <input type="text" id="comunidade" placeholder="Taquara">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M31.2422 26.6658L23.8852 19.4405C25.1352 17.4863 25.8607 15.1764 25.8607 12.6976C25.8607 5.68449 20.0713 0 12.9301 0C5.78885 0 0 5.68449 0 12.6976C0 19.7109 5.78858 25.3949 12.9301 25.3949C15.6771 25.3949 18.2216 24.5515 20.3154 23.1184L27.5849 30.2577C28.09 30.7532 28.7522 31 29.4135 31C30.0757 31 30.7371 30.7532 31.243 30.2577C32.2525 29.2653 32.2525 27.6579 31.2422 26.6658ZM12.9301 21.281C8.10326 21.281 4.18996 17.4384 4.18996 12.6981C4.18996 7.95781 8.10326 4.11489 12.9301 4.11489C17.7572 4.11489 21.6702 7.95781 21.6702 12.6981C21.6702 17.4384 17.7572 21.281 12.9301 21.281Z" fill="#B3B3B3"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cidade">Cidade</label>
+                <div class="search-input">
+                    <input type="text" id="cidade" placeholder="Papagaios, MG">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M31.2422 26.6658L23.8852 19.4405C25.1352 17.4863 25.8607 15.1764 25.8607 12.6976C25.8607 5.68449 20.0713 0 12.9301 0C5.78885 0 0 5.68449 0 12.6976C0 19.7109 5.78858 25.3949 12.9301 25.3949C15.6771 25.3949 18.2216 24.5515 20.3154 23.1184L27.5849 30.2577C28.09 30.7532 28.7522 31 29.4135 31C30.0757 31 30.7371 30.7532 31.243 30.2577C32.2525 29.2653 32.2525 27.6579 31.2422 26.6658ZM12.9301 21.281C8.10326 21.281 4.18996 17.4384 4.18996 12.6981C4.18996 7.95781 8.10326 4.11489 12.9301 4.11489C17.7572 4.11489 21.6702 7.95781 21.6702 12.6981C21.6702 17.4384 17.7572 21.281 12.9301 21.281Z" fill="#B3B3B3"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group full">
+                <label for="rua">Rua</label>
+                <input type="text" id="rua" placeholder="Rua Augusta">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group" style="flex: 0 0 30%;">
+                <label for="numero">Número</label>
+                <input type="text" id="numero" placeholder="164">
+            </div>
+            <div class="form-group" style="flex: 0 0 30%;">
+                <label for="complemento">Complemento</label>
+                <input type="text" id="complemento" placeholder="B">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="bairro">Bairro</label>
+                <input type="text" id="bairro" placeholder="Sem bairro">
+            </div>
+            <div class="form-group">
+                <label for="referencia">Ponto de referência</label>
+                <input type="text" id="referencia" placeholder="Sem ponto de referência">
+            </div>
+        </div>
+
+        <div class="vehicles-section">
+            <h3>Veículos cadastrados</h3>
+            <div class="vehicle-item">
+                <div class="form-group">
+                    <label>Veículo</label>
+                    <select>
+                        <option>Carro</option>
+                        <option>Moto</option>
+                        <option>Caminhão</option>
+                        <option>Van</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Placa</label>
+                    <input type="text" placeholder="RVA97L3">
+                </div>
+                <button class="delete-btn">
+                    <svg width="74" height="74" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="74" height="74" rx="20.4942" fill="#D4D4D8"/>
+                        <g clip-path="url(#clip0_87_609)">
+                        <path d="M49.6562 23.2188H43.3854L42.6999 21.163C42.2683 19.8693 41.0622 19 39.6985 19H34.3015C32.9378 19 31.7317 19.8693 31.2991 21.163L30.6144 23.2188H24.3438C22.599 23.2188 21.1797 24.6381 21.1797 26.3828V28.4922C21.1797 29.667 22.2373 29.5469 23.3722 29.5469C33.1143 29.5469 41.947 29.5469 51.7656 29.5469C52.3486 29.5469 52.8203 29.0751 52.8203 28.4922V26.3828C52.8203 24.6381 51.401 23.2188 49.6562 23.2188ZM32.8384 23.2188L33.3004 21.8304C33.4446 21.3988 33.8473 21.1094 34.3015 21.1094H39.6985C40.1527 21.1094 40.5555 21.3988 40.6986 21.8304L41.1611 23.2188H32.8384Z" fill="#71717A"/>
+                        <path d="M23.5469 31.7969L25.2285 52.1222C25.3779 53.763 26.7323 55 28.3792 55H45.6209C47.2679 55 48.6223 53.763 48.7726 52.113L50.4534 31.7969H23.5469ZM31.7266 49.7266C31.7266 51.1169 29.6172 51.1225 29.6172 49.7266V34.9609C29.6172 33.5706 31.7266 33.565 31.7266 34.9609V49.7266ZM38.0547 49.7266C38.0547 51.1169 35.9454 51.1225 35.9454 49.7266V34.9609C35.9454 33.5706 38.0547 33.565 38.0547 34.9609V49.7266ZM44.3829 49.7266C44.3829 51.1169 42.2735 51.1225 42.2735 49.7266V34.9609C42.2735 34.378 42.7452 33.9062 43.3282 33.9062C43.9111 33.9062 44.3829 34.378 44.3829 34.9609V49.7266Z" fill="#71717A"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_87_609">
+                        <rect width="36" height="36" fill="white" transform="translate(19 19)"/>
+                        </clipPath>
+                        </defs>
+                    </svg>
+
+                </button>
+            </div>
+
+            <button class="add-vehicle-btn">Cadastrar novo veículo</button>
+        </div>
+
+        <div class="button-group">
+            <button class="btn-save">Salvar alterações</button>
+            <button class="btn-logout">Sair da conta</button>
+        </div>
+    </div>
+
+</body>
+</html>
