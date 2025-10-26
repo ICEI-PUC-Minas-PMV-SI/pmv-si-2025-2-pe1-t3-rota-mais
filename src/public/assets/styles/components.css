@@ -499,6 +499,49 @@ display: block;
   transform: translateY(-1px);
 }
 
+.bnt-pedir-transporte{
+background: #FF7700;
+border-color: #FF7700;
+}
+
+.bnt-pedir-transporte:hover{
+background: #ff5500;
+border-color: #ff5500;
+transform: translateY(-1px);
+}
+
+
+.bnt-oferecer-transporte{
+background: #7828C8;
+border-color: #7828C8;
+}
+
+.bnt-oferecer-transporte:hover{
+background: #6f14ca;
+border-color: #6f14ca;
+transform: translateY(-1px);
+}
+
+
+.encomendas-mais-info {
+  align-self: flex-end;
+  background: #c49ceb;
+  border-radius: 12px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.encomendas-mais-info:hover {
+  background:#c49ceb;
+}
+
+.encomendas-origem-destino {
+  font-size: 1.8rem;
+  color: #7828C8;
+  font-weight: 700;
+}
+
 
 @media (max-width: 768px) {
   .comunidades-header {
