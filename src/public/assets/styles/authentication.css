@@ -4,16 +4,32 @@
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
 }
-
 body {
     background-color: #f6f6f6;
-    height: 100vh;
+    min-height: 100vh;  
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;  
+    padding: 40px 20px;  
 }
-
-.login {
+p {
+    text-align:left;
+    font-size:0.6em;
+    color:#666;
+    margin:-12px 0 15px 0;
+    line-height: 1.4;
+}
+label {
+    display: block;
+    text-align: left;
+    font-size: 0.8em;
+    font-weight: 500;
+    color:#666;
+    margin-bottom: 6px;
+    margin-top: 8px;
+}
+.login,
+.register {
     background: white;
     padding: 50px 60px;
     border-radius: 20px;
@@ -21,19 +37,25 @@ body {
     width: 400px;
     text-align: center;
 }
-
-.login img {
+.login img,
+.register img {
     width: 180px;
     margin-bottom: 25px;
 }
-
-.login h1 {
+.login h1,
+.register h1 {
     font-size: 1.2rem;
     color: #222;
     font-weight: 600;
     margin-bottom: 25px;
 }
-
+.login h2,
+.register h2 {
+    font-size: 1.0rem;
+    color: #222;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
 input[type="text"],
 input[type="password"] {
     width: 100%;
@@ -45,12 +67,10 @@ input[type="password"] {
     outline: none;
     transition: border 0.2s;
 }
-
 input[type="text"]:focus,
 input[type="password"]:focus {
     border-color: #0f8340;
 }
-
 button {
     width: 100%;
     background-color: #0f8340;
@@ -61,19 +81,35 @@ button {
     border-radius: 10px;
     cursor: pointer;
 }
-
 button:hover {
     background-color: #0c6e35;
 }
-
-.login a {
+.login a,
+.register a {
     display: block;
     margin-top: 20px;
     color: #0074e4;
     text-decoration: none;
     font-size: 0.95rem;
 }
-
-.login a:hover {
-    text-decoration: underline;
+.input-row {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+.input-group {
+    flex: 1;
+}
+.input-group label {
+    margin-top: 0;
+}
+select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1.5px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    font-size: 0.95rem;
+    outline: none;
+    background-color: white;
 }
