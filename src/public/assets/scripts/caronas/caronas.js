@@ -165,7 +165,7 @@ function createCaronaCard(carona) {
 
   const detailsButton = createSafeElement('button', 'btn btn-secondary d-flex align-items-center gap-2 rounded-3 pointer border-0 p-3');
   detailsButton.appendChild(createIcon('bi bi-info-circle'));
-  detailsButton.onclick = () => window.location.href = `/pages/viagens/detalhes.html?id=${carona.id}`;
+  detailsButton.onclick = () => window.location.href = `/pages/viagens/detalhes.html?id=${carona.id}&tipo=${carona.tipo}`;
   detailsButton.appendChild(createSafeElement('span', '', 'Detalhes'));
   buttonContainer.appendChild(detailsButton);
 

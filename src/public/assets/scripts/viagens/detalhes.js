@@ -24,6 +24,12 @@ $(document).ready(async function () {
         const container = document.getElementById('detalhes-container');
         createDetailsComponent(carona, container);
 
+        if(carona.tipo === 'pedindo'){
+            $('#detalhes-container-passageiro').hide();
+        } else {
+            $('#detalhes-container-motorista').hide()
+        }
+
         $('.conclude-trip').on('click', function () {
             Swal.fire({
                 title: 'Concluir viagem?',
