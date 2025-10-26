@@ -13,10 +13,14 @@ $(document).ready(async function () {
             return;
         }
 
-        document.getElementById('chat-btn').addEventListener('click', () => {
+        $('.chat-btn').on('click', () => {
             window.location.href = `../../pages/viagens/negociar.html?id=${carona.id}`;
         });
 
+        $("#edit-travel").on('click',()=>{
+            window.location.href = `../../pages/caronas/editar-carona.html?id=${carona.id}&tipo=${carona.tipo}`;
+        })
+            
         const container = document.getElementById('detalhes-container');
         createDetailsComponent(carona, container);
 

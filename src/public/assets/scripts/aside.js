@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  
+
   setupSidebar();
 });
 
@@ -10,7 +10,7 @@ function createEl(tag, attrs = {}, children = []) {
     if (typeof key === 'number' || !isNaN(parseInt(key))) {
       return;
     }
-    
+
     if (key === "class") {
       el.className = value;
     } else if (key === "style" && typeof value === "object") {
@@ -77,17 +77,16 @@ function setupSidebar() {
     ]),
 
     createEl("div", { class: "sidebar-footer" }, [
-      createEl("div", { class: "user-profile d-flex" }, [
+      createEl("a", { href: "/pages/user/index.html", class: "user-profile d-flex align-items-center user-link" }, [
         createEl("div", { class: "user-avatar-container" }, [
-          createEl("a", { href: "/pages/autenticacao/perfil.html" }, [
           createEl("img", {
-              src: "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
-              class: "user-avatar"
-            })
-          ])
+            src: "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+            class: "user-avatar",
+            alt: "Foto do usuário"
+          })
         ]),
         createEl("div", { class: "user-name-container" }, [
-          createEl("span", { class: "user-name" }, " João Silva ")
+          createEl("span", { class: "user-name text-dark" }, "João Silva")
         ])
       ])
     ])
