@@ -15,42 +15,49 @@
 
     <div class="row">
       <div class="campo">
-        <label>Local onde o item está</label>
-        <input type="text" placeholder="Farmácia do Antônio • Taquara" />
+        <label for="localOrigem">Local onde o item está</label>
+        <input type="text" id="localOrigem" placeholder="Farmácia do Antônio • Taquara" />
       </div>
       <div class="troca">↔</div>
       <div class="campo">
-        <label>Local onde o item deve ser entregue</label>
-        <input type="text" placeholder="Papagaios" />
+        <label for="localDestino">Local onde o item deve ser entregue</label>
+        <input type="text" id="localDestino" placeholder="Papagaios" />
       </div>
     </div>
 
-    <p class="info">Endereços específicos, como nomes de ruas e bairros, deverão ser informados ao motorista via chat de texto.</p>
+    <p class="info">
+      Endereços específicos, como nomes de ruas e bairros, deverão ser informados ao motorista via chat de texto.
+    </p>
 
     <h3>O destinatário da encomenda é você?</h3>
     <div class="opcoes">
-      <label><input type="radio" name="destinatario" /> Sim, sou eu</label>
-      <label><input type="radio" name="destinatario" checked /> Não, o destinatário é outro</label>
+      <label><input type="radio" name="destinatario" value="sim" id="dest-sim" /> Sim, sou eu</label>
+      <label><input type="radio" name="destinatario" value="nao" id="dest-nao" checked /> Não, o destinatário é outro</label>
     </div>
 
-    <div class="row">
+    <div class="row" id="campoNomeDestinatario">
       <div class="campo">
-        <label>Nome do destinatário</label>
-        <input type="text" placeholder="Pedro Alves" />
+        <label for="nomeDestinatario">Nome do destinatário</label>
+        <input type="text" id="nomeDestinatario" placeholder="Pedro Alves" />
       </div>
       <div class="campo">
-        <label>Data para receber</label>
-        <input type="date" value="2025-09-26" />
+        <label for="dataReceber">Data para receber</label>
+        <input type="date" id="dataReceber" value="2025-09-26" />
       </div>
       <div class="campo">
-        <label>Horário limite</label>
-        <input type="time" value="14:00" />
+        <label for="horaLimite">Horário limite</label>
+        <input type="time" id="horaLimite" value="14:00" />
       </div>
     </div>
 
-    <p class="info">Ao confirmar o pedido você confirma que está ciente que o motorista poderá cobrar algum valor pelo transporte da encomenda.</p>
+    <p class="info">
+      Ao confirmar o pedido você confirma que está ciente que o motorista poderá cobrar algum valor pelo transporte da encomenda.
+    </p>
 
-    <button class="btn">Criar pedido de transporte de encomenda</button>
+    <button class="btn" id="btnCriarPedido">Criar pedido de transporte de encomenda</button>
   </div>
+
+  <!-- JavaScript -->
+  <script src="../../assets/scripts/encomendas/pedir-encomendas.js"></script>
 </body>
 </html>
