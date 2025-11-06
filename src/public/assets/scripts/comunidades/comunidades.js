@@ -13,9 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
         cancelButtonText: "Cancelar",
       }).then((result) => {
         if (result.isConfirmed) {
-          // Substitua o número abaixo pelo número do local
-          const numeroWhatsApp = "5531999999999";
-          const link = https://wa.me/${numeroWhatsApp}?text=${mensagem};
+        
+          const numeroWhatsApp = "5535984722078";
+          const link = "https://wa.me/${numeroWhatsApp}?text=${mensagem}";
           window.open(link, "_blank");
         }
       });
