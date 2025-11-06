@@ -1,76 +1,74 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../../assets/styles/main.css">
-    
-    <title>Rota + | Pedir Carona</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="../../assets/styles/main.css">
+
+  <title>Rota + | Pedir Carona</title>
 </head>
+
 <body>
-    <aside class="sidebar"></aside>
-    <main class="main-content">
-      <div class="content-wrapper">
-        <div class="content-header d-flex align-items-center justify-content-between">
-          <h1><strong>Pedir Uma Carona</strong></h1>
-        </div>
-        
-        <div>
-          <form id="form-pedir-carona" class="carona-form">
-            <div class="form-section">
-              <h3><i class="bi bi-car-front"></i> Tipo de Carona</h3>
-              <div class="radio-group d-flex gap-4">
-                <div class="radio-option">
-                  <input type="radio" id="carona-comum" name="tipo-carona" value="comum" checked>
-                  <label for="carona-comum" class="radio-label">
-                    <span class="radio-circle"></span>
-                    <span class="radio-text">Carona comum</span>
-                  </label>
-                </div>
-                <div class="radio-option">
-                  <input type="radio" id="carona-emergencial" name="tipo-carona" value="emergencial">
-                  <label for="carona-emergencial" class="radio-label emergency">
-                    <span class="radio-circle"></span>
-                    <span class="radio-text">Carona emergencial</span>
-                  </label>
-                </div>
+  <aside class="sidebar"></aside>
+  <main class="main-content">
+    <div class="content-wrapper">
+      <div class="content-header d-flex align-items-center justify-content-between">
+        <h1><strong>Pedir Uma Carona</strong></h1>
+      </div>
+
+      <div>
+        <form id="form-pedir-carona" class="carona-form">
+          <div class="form-section">
+            <h3><i class="bi bi-car-front"></i> Tipo de Carona</h3>
+            <div class="radio-group d-flex gap-4">
+              <div class="radio-option">
+                <input type="radio" id="carona-comum" name="tipo-carona" value="comum" checked>
+                <label for="carona-comum" class="radio-label">
+                  <span class="radio-circle"></span>
+                  <span class="radio-text">Carona comum</span>
+                </label>
+              </div>
+              <div class="radio-option">
+                <input type="radio" id="carona-emergencial" name="tipo-carona" value="emergencial">
+                <label for="carona-emergencial" class="radio-label emergency">
+                  <span class="radio-circle"></span>
+                  <span class="radio-text">Carona emergencial</span>
+                </label>
               </div>
             </div>
+          </div>
 
+          <!-- Formulário Comum -->
+          <div id="form-comum-container" class="form-comum-fields">
             <div class="form-section">
               <h3><i class="bi bi-geo-alt"></i> Rota</h3>
               <div class="d-flex align-items-end gap-4 mb-4">
                 <div class="route-field">
                   <label for="origem" class="form-label">Local de partida</label>
                   <div class="input-with-icon">
-                    <input type="text" class="form-control" id="origem" name="origem" placeholder="Farmácia do Antônio • Taquara" required>
+                    <input type="text" class="form-control" id="origem" name="origem"
+                      placeholder="Farmácia do Antônio • Taquara" required>
                     <i class="bi bi-search input-icon"></i>
                   </div>
                 </div>
-                <div class="d-flex align-items-center justify-content-center p-2 pointer transition-all duration-200 ease">
+                <div
+                  class="d-flex align-items-center justify-content-center p-2 pointer transition-all duration-200 ease">
                   <i class="bi bi-arrow-left-right"></i>
                 </div>
                 <div class="route-field">
                   <label for="destino" class="form-label">Local de chegada</label>
                   <div class="input-with-icon">
-                    <input type="text" class="form-control" id="destino" name="destino" placeholder="Papagaios" required>
+                    <input type="text" class="form-control" id="destino" name="destino" placeholder="Papagaios"
+                      required>
                     <i class="bi bi-search input-icon"></i>
                   </div>
                 </div>
@@ -111,38 +109,97 @@
               </div>
             </div>
             <div class="form-section">
-              <div id="retorno-fields" class="retorno-fields d-flex">
+              <div id="retorno-fields" class="retorno-fields">
                 <div class="row">
                   <div class="col-md-6">
                     <label for="data-retorno" class="form-label">Data do retorno</label>
-                    <input type="text" class="form-control" id="data-retorno" name="data-retorno" placeholder="26/09/2025">
+                    <input type="text" class="form-control" id="data-retorno" name="data-retorno"
+                      placeholder="26/09/2025">
                   </div>
                   <div class="col-md-6">
                     <label for="horario-retorno" class="form-label">Horário do retorno</label>
-                    <input type="text" class="form-control" id="horario-retorno" name="horario-retorno" placeholder="16:00">
+                    <input type="text" class="form-control" id="horario-retorno" name="horario-retorno"
+                      placeholder="16:00">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="form-emergencial-container" class="form-emergencial-fields" style="display: none;">
+            <div class="form-section">
+              <h3><i class="bi bi-geo-alt"></i> Rota</h3>
+              <div class="d-flex align-items-end gap-4 mb-4">
+                <div class="route-field">
+                  <label for="origem-emergencial" class="form-label">Local de partida</label>
+                  <div class="input-with-icon">
+                    <input type="text" class="form-control" id="origem-emergencial" name="origem-emergencial"
+                      placeholder="Farmácia do Antônio • Taquara" required>
+                    <i class="bi bi-search input-icon"></i>
+                  </div>
+                </div>
+                <div
+                  class="d-flex align-items-center justify-content-center p-2 pointer transition-all duration-200 ease">
+                  <i class="bi bi-arrow-left-right"></i>
+                </div>
+                <div class="route-field">
+                  <label for="destino-emergencial" class="form-label">Local de chegada</label>
+                  <div class="input-with-icon">
+                    <input type="text" class="form-control" id="destino-emergencial" name="destino-emergencial"
+                      placeholder="Papagaios" required>
+                    <i class="bi bi-search input-icon"></i>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="form-actions">
-              <button type="submit" class="btn btn-lg btn-primary">
-                <i class="bi bi-check-circle"></i> Pedir carona
-              </button>
+            <div class="form-section">
+              <h3><i class="bi bi-calendar3"></i> Data e Horário da Viagem</h3>
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="data-emergencial" class="form-label">Data da viagem</label>
+                  <input type="text" class="form-control" id="data-emergencial" name="data-emergencial"
+                    placeholder="26/09/2025" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="horario-emergencial" class="form-label">Horário de partida</label>
+                  <input type="text" class="form-control" id="horario-emergencial" name="horario-emergencial"
+                    value="Agora" readonly style="background-color: #f8f9fa; cursor: not-allowed;">
+                  <input type="hidden" id="horario-emergencial-value" name="horario-emergencial-value">
+                </div>
+              </div>
             </div>
-          </form>
-        </div>
-      </div>
-    </main>
 
-  <script src="../../assets/scripts/aside.js"></script>
-  <script src="../../assets/scripts/app.js"></script>
-  <script src="../../assets/scripts/caronas/caronas.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <div class="form-section">
+              <h3><i class="bi bi-chat-dots"></i> Motivo da Carona</h3>
+              <label for="motivo-emergencial" class="form-label">Descreva o motivo da sua necessidade</label>
+              <textarea class="form-control" id="motivo-emergencial" name="motivo-emergencial" rows="4"
+                placeholder="Sofri um acidente e preciso ir ao hospital." required></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-lg btn-primary">
+              <i class="bi bi-check-circle"></i> Pedir carona
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" 
-    crossorigin="anonymous">
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.21.0/dist/jquery.validate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
+    </script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../../assets/scripts/aside.js"></script>
+  <script src="../../assets/scripts/searchComponent.js"></script>
+  <script src="../../assets/scripts/caronas/caronas.js"></script>
+  <script src="../../assets/scripts/app.js"></script>
+  <script src="../../assets/scripts/vehicles/vehicles.js"></script>
 </body>
+
 </html>
