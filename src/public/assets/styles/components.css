@@ -484,20 +484,36 @@ display: block;
 }
 
 .btn-adicionar-arquivo {
-
-  width: 30%; /* Largura total do contêiner pai */
-  min-height: 20px;
-  margin-top:20px;
-  background-color:#ffffff;
-  font-size: 0.9rem;
-  color: black;
-
+  background-color: #0E793C; 
+  color: white;              
+  padding: 10px 20px;      
+  border: none;
+  border-radius: 8px;       
+  cursor: pointer;
+  font-size: 14px;
 }
 
-.btn-adicionar-arquivo:hover {
-  background-color: #047857;
-  transform: translateY(-1px);
+
+.btn-adicionar-arquivo::-webkit-file-upload-button {
+  visibility: hidden;
 }
+
+.btn-adicionar-arquivo::before {
+  content: "Selecionar arquivo"; 
+  display: inline-block;
+  background:  #0E793C;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+
+.btn-adicionar-arquivo:hover::before {
+  background-color:  #0c6935;
+}
+
 
 .bnt-pedir-transporte{
 background: #FF7700;
