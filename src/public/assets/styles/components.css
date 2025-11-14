@@ -483,15 +483,6 @@ display: block;
   gap: 20px; 
 }
 
-.btn-adicionar-arquivo {
-  background-color: #0E793C; 
-  color: white;              
-  padding: 10px 20px;      
-  border: none;
-  border-radius: 8px;       
-  cursor: pointer;
-  font-size: 14px;
-}
 
 
 .btn-adicionar-arquivo::-webkit-file-upload-button {
