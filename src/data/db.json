@@ -238,5 +238,19 @@
   "encomendas": [],
   "comunidades": [],
   "viagens": [],
-  "vehicles": []
+  "vehicles": [],
+  "messages": [
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Maria Augusta",
+      "role": "motorista"
+    },
+    {
+      "id": 2,
+      "name": "Carlos",
+      "role": "passageiro"
+    }
+  ]
 }

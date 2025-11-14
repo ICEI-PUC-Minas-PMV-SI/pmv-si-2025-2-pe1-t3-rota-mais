@@ -169,3 +169,7 @@ aside::after {
 #retorno-fields-pedido {
     display: flex;
 }
+
+#chat-container{
+    padding: 4em 0;
+}
