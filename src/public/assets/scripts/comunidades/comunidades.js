@@ -56,14 +56,36 @@ document.addEventListener("DOMContentLoaded", () => {
           if (inputArquivo) {
             inputArquivo.addEventListener('change', (event) => {
               const arquivoSelecionado = event.target.files[0];
-              console.log(arquivoSelecionado); 
-              console.log(arquivoSelecionado.name); 
+              console.log(arquivoSelecionado);
+              console.log(arquivoSelecionado.name);
               console.log(arquivoSelecionado.type);
             });
           }
 
-        }
-      });
-    });
-  }
-});
+
+          const btnCadastrar = document.getElementById("bnt-cadastrar-local");
+          if (btnCadastrar) {
+            btnCadastrar.addEventListener("click", () => {
+              Swal.fire({
+                title: "Cadastrar local?",
+                text: "Deseja cadastrar este local?",
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonText: "Confirmar",
+                cancelButtonText: "Cancelar",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  Swal.fire({
+                    icon: "success",
+                    title: "Local cadastrado!",
+                    text: "O local foi adicionado a comunidade.",
+                    timer: 3000,
+                    showConfirmButton: false
+                  });
+
+
+                }
+              });
+            });
+          }
+        });
