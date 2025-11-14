@@ -4,7 +4,8 @@
       "tipo": "pedindo",
       "usuario": {
         "nome": "João Silva",
-        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png"
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+        "email": ""
       },
       "rota": {
         "origem": "aaaaaa",

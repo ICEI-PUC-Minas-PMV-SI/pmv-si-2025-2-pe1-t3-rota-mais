@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  
+
 
   const btnContato = document.getElementById("bnt-contato");
   if (btnContato) {
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cancelButtonText: "Cancelar",
       }).then((result) => {
         if (result.isConfirmed) {
-        
+
           const numeroWhatsApp = "5535984722078";
           const link = "https://wa.me/${numeroWhatsApp}?text=${mensagem}";
           window.open(link, "_blank");
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
- 
+
   const btnParticipar = document.getElementById("bnt-conhecer-local");
   if (btnParticipar) {
     btnParticipar.addEventListener("click", () => {
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             showConfirmButton: false
           });
 
-         
+
           const container = document.getElementById("caronas-container");
           if (container) {
             const msg = document.createElement("div");
@@ -51,6 +51,17 @@ document.addEventListener("DOMContentLoaded", () => {
             msg.textContent = "Você agora participa desta viagem!";
             container.appendChild(msg);
           }
+
+          const inputArquivo = document.getElementById('bnt-adicionar-arquivo');
+          if (inputArquivo) {
+            inputArquivo.addEventListener('change', (event) => {
+              const arquivoSelecionado = event.target.files[0];
+              console.log(arquivoSelecionado); 
+              console.log(arquivoSelecionado.name); 
+              console.log(arquivoSelecionado.type);
+            });
+          }
+
         }
       });
     });
