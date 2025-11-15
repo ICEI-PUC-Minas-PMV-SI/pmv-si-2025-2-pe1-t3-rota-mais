@@ -1,0 +1,271 @@
+.comunidades-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.comunidades-titulo {
+    font-family: 'Inter', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #18181B;
+}
+
+.comunidades-cadastrar-local {
+    background: #0E793C;
+    border-radius: 12px;
+    color: #fff;
+    padding: 10px 20px;
+    transition: 0.2s;
+}
+
+.comunidades-cadastrar-local:hover {
+    background: #0c6935;
+}
+
+.comunidades-filtros {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #D4D4D8;
+    padding-bottom: 10px;
+}
+
+.comunidades-busca {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.comunidades-procurar-local {
+    flex: 1;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comunidades-procurar-local:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    outline: none;
+}
+
+.comunidades-busca,
+.comunidades-box-locais {
+    width: 100%;
+    max-width: 1050px;
+    margin-left: 5px;
+}
+
+.comunidades-box-locais,
+.viagens-box-locais {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    border: 1px solid #D4D4D8;
+    border-radius: 20px;
+    padding: 0;
+    background: #fff;
+    width: 90%;
+    max-width: 1050px;
+    align-items: stretch;
+    overflow: hidden;
+}
+
+.comunidades-box-locais .comunidades-imagem {
+    flex: 0 0 40%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 20px 0 0 20px;
+}
+
+.comunidades-box-locais .comunidades-imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.comunidades-box-local {
+    position: relative;
+    width: 90%;
+    max-width: 1050px;
+    max-height: 300px;
+    border: 1px solid #D4D4D8;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.comunidades-box-local img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.comunidades-box-local2 {
+    position: relative;
+    width: 90%;
+    max-width: 1050px;
+    max-height: 300px;
+    border: 1px;
+    border-radius: 20px;
+    overflow: visible;
+    background: #fff;
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    padding: 0;
+}
+
+
+.comunidades-info,
+.viagens-info {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.local-info {
+    flex: 1;
+    font-size: 0.8rem;
+    padding: 20px;
+    display: inline;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    margin-top: 60px;
+    margin-left: -170px;
+
+}
+
+.local-info2 {
+    flex: 1;
+    font-size: 0.8rem;
+    padding: 20px;
+    display: inline;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    margin-top: 10px;
+    margin-left: -20px;
+
+}
+
+.comunidades-nome-local,
+.viagens-origem-destino {
+    font-size: 1.8rem;
+    color: #0E793C;
+    font-weight: 700;
+}
+
+.comunidades-nome-local2 {
+    font-size: 1.8rem;
+    color: #0E793C;
+    font-weight: 700;
+    margin-top: 30px;
+}
+
+.comunidades-contato {
+    position: absolute;
+    top: 15px;
+    right: 0px;
+    border-radius: 12px;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.comunidades-conhecer-local,
+.viagens-conferir-info {
+    align-self: flex-end;
+    background: #A2E9C1;
+    border-radius: 12px;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.viagens-conferir-info:hover {
+    background: #8cdba9;
+}
+
+.comunidades-cadastro2 {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+.comunidades-cadastro-descricao {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #a7a7a7;
+    font-weight: 700;
+    margin-top: 30px;
+}
+
+.comunidades-cadastro-div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.btn-adicionar-arquivo {
+    direction: rtl;
+    /* inverte o lado do texto e do botão */
+    text-align: left;
+    /* mantém o texto alinhado */
+    margin-left: 0;
+}
+
+.btn-adicionar-arquivo::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.btn-adicionar-arquivo::before {
+    content: "Selecionar arquivo";
+    display: inline-block;
+    background: #0E793C;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+
+.btn-adicionar-arquivo:hover::before {
+    background-color: #0c6935;
+}
+
+@media (max-width: 768px) {
+    .comunidades-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .comunidades-box-locais {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .comunidades-box-locais img {
+        width: 100%;
+    }
+}

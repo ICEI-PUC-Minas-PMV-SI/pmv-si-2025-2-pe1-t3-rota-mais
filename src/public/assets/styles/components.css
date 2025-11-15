@@ -262,7 +262,7 @@
   pointer-events: none;
 }
 
-.comunidades-header {
+/*.comunidades-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -483,7 +483,11 @@ display: block;
   gap: 20px; 
 }
 
-
+.btn-adicionar-arquivo {
+  direction: rtl; 
+  text-align: left; 
+  margin-left: 0;
+}
 
 .btn-adicionar-arquivo::-webkit-file-upload-button {
   visibility: hidden;
@@ -562,4 +566,4 @@ transform: translateY(-1px);
   .comunidades-box-locais img {
     width: 100%;
   }
-}
+}*/

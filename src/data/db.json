@@ -234,14 +234,36 @@
       "horarioRetorno": "",
       "subtitle": "De teste para teste2",
       "id": 1762395063676
+    },
+    {
+      "tipo": "pedindo",
+      "usuario": {
+        "nome": "João Silva",
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+        "email": ""
+      },
+      "rota": {
+        "origem": "farmacia",
+        "destino": "papagaios"
+      },
+      "data": "15/11/2025",
+      "horario": "09:24",
+      "tipoCarona": "emergencial",
+      "motivo": "Sofri um acidente e preciso ir ao hospital",
+      "precisaRetorno": false,
+      "dataRetorno": "",
+      "horarioRetorno": "",
+      "subtitle": "De farmacia para papagaios",
+      "id": 1763209489775
     }
   ],
-  "encomendas": [],
+  "encomendas": [
+   
+  ],
   "comunidades": [],
   "viagens": [],
   "vehicles": [],
-  "messages": [
-  ],
+  "messages": [],
   "users": [
     {
       "id": 1,
