@@ -9,7 +9,7 @@ async function fetchJSON(path, options = {}) {
 function checkAuth() {
   const userId = localStorage.getItem("userId");
   if (!userId) {
-    window.location.href = "../../autenticacao/login.html";
+    window.location.href = "../../pages/autenticacao/login.html";
     return false;
   }
   return true;

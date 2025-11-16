@@ -344,6 +344,24 @@
       },
       "vehicles": [],
       "id": 6
+    },
+    {
+      "nome": "thor",
+      "email": "thor",
+      "senha": "thor",
+      "usuario": "",
+      "telefone": "",
+      "comunidade": "",
+      "cidade": "",
+      "endereco": {
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "id": 7
     }
   ]
 }

@@ -15,26 +15,14 @@ document.getElementById("btn-criar-conta").addEventListener("click", async funct
     const bairro = document.getElementById("bairro").value;
     const referencia = document.getElementById("referencia").value;
 
-    const checkEmail = await fetch(`http://localhost:3000/users?email=${email}`);
-    const emailExists = await checkEmail.json();
+    const checkResponse = await fetch(`http://localhost:3000/users?email=${email}`);
+    const existing = await checkResponse.json();
 
-    if (emailExists.length > 0) {
-        Swal.fire({
-            icon: "warning",
-            title: "E-mail já cadastrado!",
-            text: "Já existe uma conta com esse e-mail."
-        });
-        return;
-    }
-
-    const checkUsuario = await fetch(`http://localhost:3000/users?usuario=${usuario}`);
-    const usuarioExists = await checkUsuario.json();
-
-    if (usuarioExists.length > 0) {
+    if (existing.length > 0) {
         Swal.fire({
             icon: "warning",
             title: "Usuário já existe!",
-            text: "Escolha outro nome de usuário."
+            text: "Já existe uma conta com esse e-mail."
         });
         return;
     }
@@ -65,6 +53,11 @@ document.getElementById("btn-criar-conta").addEventListener("click", async funct
         });
 
         if (!response.ok) throw new Error("Erro ao criar conta");
+
+        const newUser = await response.json();
+
+        localStorage.setItem("user", JSON.stringify(newUser));
+        localStorage.setItem("userId", newUser.id);
 
         Swal.fire({
             icon: "success",

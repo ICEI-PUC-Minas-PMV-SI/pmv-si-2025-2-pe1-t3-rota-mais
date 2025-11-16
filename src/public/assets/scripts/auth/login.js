@@ -15,8 +15,9 @@ document.getElementById("btn-login").addEventListener("click", async () => {
             alert("Usuário ou senha incorretos");
             return;
         }
-
         localStorage.setItem("user", JSON.stringify(data[0]));
+        localStorage.setItem("userId", data[0].id);
+
         window.location.href = "/pages/caronas/index.html";
 
     } catch (error) {
