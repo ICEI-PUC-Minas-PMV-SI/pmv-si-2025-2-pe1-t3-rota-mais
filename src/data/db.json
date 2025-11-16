@@ -255,6 +255,73 @@
       "horarioRetorno": "",
       "subtitle": "De farmacia para papagaios",
       "id": 1763209489775
+    },
+    {
+      "tipo": "pedindo",
+      "usuario": {
+        "nome": "João Silva",
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+        "email": ""
+      },
+      "criadorId": 7,
+      "passageiroId": 7,
+      "motoristaId": null,
+      "rota": {
+        "origem": "Farmacia",
+        "destino": "Papagaios"
+      },
+      "data": "17/11/2025",
+      "horario": "19:00",
+      "tipoCarona": "emergencial",
+      "motivo": "Testes",
+      "precisaRetorno": false,
+      "dataRetorno": "",
+      "horarioRetorno": "",
+      "motoristasCandidatos": [],
+      "passageiros": [],
+      "encomendas": [],
+      "statusViagem": "agendada",
+      "id": 1763321515481
+    },
+    {
+      "tipo": "pedindo",
+      "usuario": {
+        "nome": "thor",
+        "email": "thor",
+        "senha": "thor",
+        "usuario": "",
+        "telefone": "",
+        "comunidade": "",
+        "cidade": "",
+        "endereco": {
+          "rua": "",
+          "numero": "",
+          "complemento": "",
+          "bairro": "",
+          "referencia": ""
+        },
+        "vehicles": [],
+        "id": 7
+      },
+      "criadorId": 7,
+      "passageiroId": 7,
+      "motoristaId": null,
+      "rota": {
+        "origem": "Farmacia",
+        "destino": "Papagaios"
+      },
+      "data": "17/11/2025",
+      "horario": "19:00",
+      "tipoCarona": "comum",
+      "precisaRetorno": false,
+      "dataRetorno": "",
+      "horarioRetorno": "",
+      "motoristasCandidatos": [],
+      "passageiros": [],
+      "encomendas": [],
+      "statusViagem": "agendada",
+      "subtitle": "De Farmacia para Papagaios",
+      "id": 1763321749794
     }
   ],
   "encomendas": [],
@@ -362,6 +429,129 @@
       },
       "vehicles": [],
       "id": 7
+    },
+    {
+      "nome": "validacao1",
+      "email": "validacao1@gmail.com",
+      "senha": "validacao1",
+      "usuario": "validacao1",
+      "telefone": "",
+      "comunidade": "",
+      "cidade": "",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+      "endereco": {
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "dataCriacao": "2025-11-16T19:48:07.274Z",
+      "ativo": true,
+      "id": 8
+    },
+    {
+      "nome": "novo1",
+      "email": "novo1@gmail.com",
+      "senha": "novo1",
+      "usuario": "novo1",
+      "telefone": "",
+      "comunidade": "",
+      "cidade": "",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+      "endereco": {
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "dataCriacao": "2025-11-16T19:49:42.105Z",
+      "ativo": true,
+      "id": 9
+    },
+    {
+      "id": 10,
+      "name": "caminhao",
+      "email": "caminhao@gmail.com",
+      "senha": "caminhao1",
+      "usuario": "caminhao",
+      "telefone": "",
+      "comunidade": "",
+      "cidade": "",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+      "endereco": {
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "dataCriacao": "2025-11-16T19:51:39.268Z",
+      "ativo": true
+    },
+    {
+      "id": 11,
+      "nome": "gta",
+      "email": "gta@gmail.com",
+      "senha": "gtagta",
+      "usuario": "gta",
+      "telefone": "",
+      "comunidade": "",
+      "cidade": "",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+      "endereco": {
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "dataCriacao": "2025-11-16T19:58:06.036Z",
+      "ativo": true
+    },
+    {
+      "id": 12,
+      "nome": "mooca",
+      "email": "mooca@gmail.com",
+      "senha": "mooca",
+      "usuario": "mooca",
+      "telefone": "",
+      "comunidade": "",
+      "cidade": "",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+      "endereco": {
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "dataCriacao": "2025-11-16T20:01:32.724Z",
+      "ativo": true
+    },
+    {
+      "name": "testenome",
+      "email": "testenome@gmail.com",
+      "senha": "testenome",
+      "usuario": "testenome",
+      "telefone": "",
+      "comunidade": "",
+      "cidade": "",
+      "endereco": {
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "id": 13
     }
   ]
 }

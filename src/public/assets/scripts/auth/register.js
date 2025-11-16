@@ -28,7 +28,7 @@ document.getElementById("btn-criar-conta").addEventListener("click", async funct
     }
 
     const user = {
-        nome,
+        name: nome,
         email,
         senha,
         usuario,
@@ -56,7 +56,19 @@ document.getElementById("btn-criar-conta").addEventListener("click", async funct
 
         const newUser = await response.json();
 
-        localStorage.setItem("user", JSON.stringify(newUser));
+        const userParaSalvar = {
+            id: newUser.id,
+            name: newUser.name,
+            email: newUser.email,
+            usuario: newUser.usuario,
+            telefone: newUser.telefone,
+            comunidade: newUser.comunidade,
+            cidade: newUser.cidade,
+            avatar: newUser.avatar,
+            endereco: newUser.endereco
+        };
+
+        localStorage.setItem("user", JSON.stringify(userParaSalvar));
         localStorage.setItem("userId", newUser.id);
 
         Swal.fire({
