@@ -57,7 +57,8 @@ label {
     margin-bottom: 25px;
 }
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="tel"] {
     width: 100%;
     padding: 12px 15px;
     border: 1.5px solid #ddd;
@@ -68,7 +69,8 @@ input[type="password"] {
     transition: border 0.2s;
 }
 input[type="text"]:focus,
-input[type="password"]:focus {
+input[type="password"]:focus,
+input[type="tel"]:focus {
     border-color: #0f8340;
 }
 

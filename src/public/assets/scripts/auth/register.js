@@ -15,6 +15,30 @@ document.getElementById("btn-criar-conta").addEventListener("click", async funct
     const bairro = document.getElementById("bairro").value;
     const referencia = document.getElementById("referencia").value;
 
+    const checkEmail = await fetch(`http://localhost:3000/users?email=${email}`);
+    const emailExists = await checkEmail.json();
+
+    if (emailExists.length > 0) {
+        Swal.fire({
+            icon: "warning",
+            title: "E-mail já cadastrado!",
+            text: "Já existe uma conta com esse e-mail."
+        });
+        return;
+    }
+
+    const checkUsuario = await fetch(`http://localhost:3000/users?usuario=${usuario}`);
+    const usuarioExists = await checkUsuario.json();
+
+    if (usuarioExists.length > 0) {
+        Swal.fire({
+            icon: "warning",
+            title: "Usuário já existe!",
+            text: "Escolha outro nome de usuário."
+        });
+        return;
+    }
+
     const user = {
         nome,
         email,
@@ -44,7 +68,7 @@ document.getElementById("btn-criar-conta").addEventListener("click", async funct
 
         Swal.fire({
             icon: "success",
-            title: "Conta criada com sucesso!",
+            title: "Conta criada com sucesso!"
         });
 
         window.location.href = "/pages/caronas/index.html";
