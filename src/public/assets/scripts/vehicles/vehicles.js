@@ -1,15 +1,34 @@
 $(document).ready(function () {
-    const API_URL = 'http://localhost:3000';
+    const currentUserId = Number(localStorage.getItem('userId'));
+    let editingVehicleId = null;
 
-    async function fetchJSON(url, options = {}) {
-        const res = await fetch(url, options);
-        if (!res.ok) throw new Error(`Erro HTTP: ${res.status}`);
+    async function fetchJSON(url, opts = {}) {
+        const res = await fetch(url, opts);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return await res.json();
+    }
+
+    async function atualizarRoleUsuario() {
+        try {
+            const veiculos = await fetchJSON(`${API_BASE}/vehicles?motoristaId=${currentUserId}`);
+            const temVeiculo = veiculos && veiculos.length > 0;
+            const novaRole = temVeiculo ? 'motorista' : 'passageiro';
+
+            const user = await fetchJSON(`${API_BASE}/users/${currentUserId}`);
+            if (user.role !== novaRole) {
+                await fetchJSON(`${API_BASE}/users/${currentUserId}`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ role: novaRole })
+                });
+            }
+        } catch (err) {
+            console.error('Erro ao atualizar role do usuário:', err);
+        }
     }
 
     function validateVehicleForm() {
         let isValid = true;
-
         $('.invalid-feedback').hide();
         $('.form-control, .form-select').removeClass('is-invalid');
 
@@ -81,9 +100,7 @@ $(document).ready(function () {
         } else {
             $seatsInput.attr('max', 4).removeAttr('readonly');
             $seatsHelp.text('Carro: até 4 assentos. Motocicleta: apenas 1 assento.');
-            if ($seatsInput.val() === '1') {
-                $seatsInput.val('');
-            }
+            if ($seatsInput.val() === '1') $seatsInput.val('');
         }
     });
 
@@ -93,12 +110,62 @@ $(document).ready(function () {
         $(this).val(value);
     });
 
+    function resetForm() {
+        editingVehicleId = null;
+        $('#vehicleForm')[0].reset();
+        $('#availableSeats').removeAttr('readonly');
+        $('#staticBackdropLabel').text('Cadastro de Veículo');
+        $('input[name="type"][value="CAR"]').prop('checked', true);
+        $('#car').trigger('change');
+    }
+
+    function loadVehicleData(vehicle) {
+        editingVehicleId = vehicle.id;
+        $('#staticBackdropLabel').text('Editar Veículo');
+
+        $(`input[name="type"][value="${vehicle.type}"]`).prop('checked', true);
+        $('#car').trigger('change');
+
+        $('#brand').val(vehicle.brand || '');
+
+        $('#model').val(vehicle.model || '');
+
+        $('#color').val(vehicle.color || '');
+
+        $('#licensePlate').val(vehicle.licensePlate || '');
+
+        $('#availableSeats').val(vehicle.availableSeats || 1);
+    }
+
+    $(document).on('click', '.edit-vehicle', async function () {
+        const vehicleId = $(this).data('id');
+
+        try {
+            const vehicle = await fetchJSON(`${API_BASE}/vehicles/${vehicleId}`);
+            loadVehicleData(vehicle);
+
+            const modalElement = document.getElementById('modal-vehicle');
+            if (modalElement) {
+                const modal = new bootstrap.Modal(modalElement);
+                modal.show();
+            }
+        } catch (err) {
+            console.error(err);
+            Swal.fire('Erro', 'Não foi possível carregar os dados do veículo.', 'error');
+        }
+    });
+
+    $('#modal-vehicle').on('hidden.bs.modal', function () {
+        resetForm();
+    });
+
+    $('[data-bs-target="#modal-vehicle"]').on('click', function () {
+        resetForm();
+    });
+
     $('#vehicleForm').on('submit', async function (e) {
         e.preventDefault();
-
-        if (!validateVehicleForm()) {
-            return;
-        }
+        if (!validateVehicleForm()) return;
 
         try {
             const type = $('input[name="type"]:checked').val();
@@ -109,124 +176,97 @@ $(document).ready(function () {
             const availableSeats = parseInt($('#availableSeats').val());
 
             const vehicleData = {
-                type: type,
-                brand: brand,
-                model: model,
-                color: color,
-                licensePlate: licensePlate,
-                availableSeats: availableSeats,
-                id: Date.now()
+                motoristaId: currentUserId || null,
+                type,
+                brand,
+                model,
+                color,
+                licensePlate,
+                availableSeats
             };
 
-            await fetchJSON(`${API_URL}/vehicles`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(vehicleData)
-            });
-
-            if (typeof Swal !== 'undefined') {
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'Sucesso!',
-                    text: 'Veículo cadastrado com sucesso!',
-                    timer: 2000,
-                    showConfirmButton: false
+            if (editingVehicleId) {
+                await fetchJSON(`${API_BASE}/vehicles/${editingVehicleId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(vehicleData)
                 });
+
+                await Swal.fire({ icon: 'success', title: 'Sucesso!', text: 'Veículo atualizado com sucesso!', timer: 1500, showConfirmButton: false });
+            } else {
+                vehicleData.id = Date.now();
+
+                await fetchJSON(`${API_BASE}/vehicles`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(vehicleData)
+                });
+
+                await atualizarRoleUsuario();
+
+                await Swal.fire({ icon: 'success', title: 'Sucesso!', text: 'Veículo cadastrado com sucesso!', timer: 1500, showConfirmButton: false });
             }
 
             const modalElement = document.getElementById('modal-vehicle');
             if (modalElement) {
-                const modal = bootstrap.Modal.getInstance(modalElement);
-                if (modal) {
-                    $(modalElement).one('hidden.bs.modal', function () {
-                        $('.modal-backdrop').remove();
-                        $('body').removeClass('modal-open');
-                        $('body').css({
-                            'overflow': '',
-                            'padding-right': ''
-                        });
-                    });
-                    modal.hide();
-                } else {
-                    $(modalElement).modal('hide');
-                }
+                const modal = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+                modal.hide();
             }
 
-            setTimeout(() => {
-                const $backdrop = $('.modal-backdrop');
-                if ($backdrop.length) {
-                    $backdrop.remove();
-                    $('body').removeClass('modal-open');
-                    $('body').css({
-                        'overflow': '',
-                        'padding-right': ''
-                    });
-                }
-            }, 500);
+            resetForm();
+            loadVehicles();
 
-            $('#vehicleForm')[0].reset();
-            $('#availableSeats').removeAttr('readonly');
-
-            if (typeof loadVehicles === 'function') {
-                loadVehicles();
-            }
-
-        } catch (error) {
-            console.error('Erro ao cadastrar veículo:', error);
-            if (typeof Swal !== 'undefined') {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Erro!',
-                    text: 'Não foi possível cadastrar o veículo. Tente novamente.'
-                });
-            } else {
-                alert('Erro ao cadastrar veículo: ' + error.message);
-            }
+        } catch (err) {
+            console.error(err);
+            Swal.fire('Erro', editingVehicleId ? 'Não foi possível atualizar o veículo.' : 'Não foi possível cadastrar o veículo.', 'error');
         }
     });
 
     async function loadVehicles() {
         try {
-            const vehicles = await fetchJSON(`${API_URL}/vehicles`);
+            const list = await fetchJSON(`${API_BASE}/vehicles?motoristaId=${currentUserId}`);
             const $container = $('#vehicles-list');
+            $container.empty();
 
-            if (!vehicles || vehicles.length === 0) {
+            if (!list || list.length === 0) {
                 $container.html('<p class="text-muted">Nenhum veículo cadastrado.</p>');
                 return;
             }
 
-            let html = '';
-            vehicles.forEach(vehicle => {
+            list.forEach(vehicle => {
                 const typeText = vehicle.type === 'CAR' ? 'Carro' : 'Motocicleta';
-                html += `
+                const $item = $(`
                     <div class="d-flex gap-3 align-items-center mb-2 vehicle-item" data-id="${vehicle.id}">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <select class="form-select" disabled>
                                 <option ${vehicle.type === 'CAR' ? 'selected' : ''}>Carro</option>
                                 <option ${vehicle.type === 'MOTORCYCLE' ? 'selected' : ''}>Moto</option>
                             </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" value="${vehicle.brand || ''} ${vehicle.model || ''}" disabled>
+                        </div>
+                        <div class="col-md-2">
                             <input type="text" class="form-control" value="${vehicle.licensePlate}" disabled>
                         </div>
+                        <button type="button" class="btn btn-outline-primary edit-vehicle" data-id="${vehicle.id}">
+                            <i class="bi bi-pencil"></i>
+                        </button>
                         <button type="button" class="btn btn-outline-danger delete-vehicle" data-id="${vehicle.id}">
                             <i class="bi bi-trash"></i>
                         </button>
                     </div>
-                `;
+                `);
+                $container.append($item);
             });
 
-            $container.html(html);
-        } catch (error) {
-            console.error('Erro ao carregar veículos:', error);
+        } catch (err) {
+            console.error('Erro carregar veículos', err);
         }
     }
 
-    window.loadVehicles = loadVehicles;
-
-    $(document).on('click', '.delete-vehicle', async function () {
+    $(document).on('click', '.delete-vehicle', function () {
         const vehicleId = $(this).data('id');
-
 
         Swal.fire({
             title: 'Excluir veículo?',
@@ -239,26 +279,20 @@ $(document).ready(function () {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    await fetchJSON(`${API_URL}/vehicles/${vehicleId}`, {
-                        method: 'DELETE'
-                    });
+                    await fetchJSON(`${API_BASE}/vehicles/${vehicleId}`, { method: 'DELETE' });
+
+                    await atualizarRoleUsuario();
+
                     loadVehicles();
-                } catch (error) {
-                    console.error('Erro ao excluir veículo:', error);
-                    if (typeof Swal !== 'undefined') {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Erro!',
-                            text: 'Não foi possível excluir o veículo.'
-                        });
-                    }
+                } catch (err) {
+                    console.error(err);
+                    Swal.fire('Erro', 'Não foi possível excluir o veículo.', 'error');
                 }
             }
         });
     });
 
+    window.loadVehicles = loadVehicles;
 
-    if ($('#vehicles-list').length > 0) {
-        loadVehicles();
-    }
+    loadVehicles();
 });

@@ -1,6 +1,29 @@
-document.addEventListener("DOMContentLoaded", () => {
+const API_BASE = "http://localhost:3000";
 
-  setupSidebar();
+async function fetchJSON(path, options = {}) {
+  const res = await fetch(API_BASE + path, options);
+  if (!res.ok) throw new Error(`Erro HTTP ${res.status}`);
+  return await res.json();
+}
+
+function checkAuth() {
+  const userId = localStorage.getItem("userId");
+  if (!userId) {
+    window.location.href = "../../autenticacao/login.html";
+    return false;
+  }
+  return true;
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  if (!checkAuth()) return;
+  try {
+    const currentUserId = Number(localStorage.getItem("userId"));
+    const user = await fetchJSON(`/users/${currentUserId}`);
+    setupSidebar(user);
+  } catch (e) {
+    setupSidebar();
+  }
 });
 
 function createEl(tag, attrs = {}, children = []) {
@@ -33,9 +56,16 @@ function createEl(tag, attrs = {}, children = []) {
   return el;
 }
 
-function setupSidebar() {
+function setupSidebar(user = null) {
   const sidebar = document.querySelector(".sidebar");
   if (!sidebar) return;
+
+  const userAvatar =
+    (user && user.avatar) ||
+    "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png";
+  const userName =
+    (user && (user.name || user.username || "Usuário")) ||
+    "Usuário";
 
   const navItems = [
     { href: "/pages/caronas/index.html", icon: createEl("i", { class: "fa fa-car" }), label: "Caronas" },
@@ -77,16 +107,16 @@ function setupSidebar() {
     ]),
 
     createEl("div", { class: "sidebar-footer" }, [
-      createEl("a", { href: "/pages/user/index.html", class: "user-profile d-flex align-items-center user-link" }, [
+      createEl("a", { href: "/pages/user/index.html", class: "user-profile d-flex align-items-center user-link gap-2" }, [
         createEl("div", { class: "user-avatar-container" }, [
           createEl("img", {
-            src: "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+            src: userAvatar,
             class: "user-avatar",
             alt: "Foto do usuário"
           })
         ]),
         createEl("div", { class: "user-name-container" }, [
-          createEl("span", { class: "user-name text-dark" }, "João Silva")
+          createEl("span", { class: "user-name text-dark" }, userName)
         ])
       ])
     ])

@@ -6,12 +6,13 @@ $(document).ready(async function () {
 async function initCarona() {
     const urlParams = new URLSearchParams(window.location.search);
     const caronaId = urlParams.get('id');
+    const userIdParam = urlParams.get('userId');
 
     if (!caronaId) {
         return Swal.fire('Erro', 'ID da carona não informado.', 'error');
     }
 
-    const response = await fetch(`http://localhost:3000/caronas/${caronaId}`);
+    const response = await fetch(`${API_BASE}/caronas/${caronaId}`);
     const carona = await response.json();
 
     if (!carona) {
@@ -25,12 +26,32 @@ async function initCarona() {
 
     const currentUserId = Number(localStorage.getItem("userId"));
 
-    let otherUserId =
-        currentUserId === carona.motoristaId
-            ? carona.passageiroId
-            : carona.motoristaId;
+    let otherUserId = null;
 
-    const otherRes = await fetch(`http://localhost:3000/users/${otherUserId}`);
+    if (userIdParam) {
+        otherUserId = Number(userIdParam);
+    } else {
+        if (carona.tipo === 'pedindo') {
+            if (carona.passageiroId === currentUserId) {
+                otherUserId = carona.motoristaId;
+            } else if (carona.motoristaId === currentUserId) {
+                otherUserId = carona.passageiroId;
+            }
+        } else {
+            otherUserId = currentUserId === carona.motoristaId
+                ? carona.passageiroId
+                : carona.motoristaId;
+        }
+    }
+
+    if (!otherUserId) {
+        return Swal.fire('Erro', 'Não foi possível determinar o outro participante.', 'error');
+    }
+
+    const otherRes = await fetch(`${API_BASE}/users/${otherUserId}`);
+    if (!otherRes.ok) {
+        return Swal.fire('Erro', 'Usuário não encontrado.', 'error');
+    }
     const otherUser = await otherRes.json();
 
 
@@ -44,7 +65,7 @@ const chatContainer = document.getElementById("chat-container");
 const input = document.querySelector(".chat-input-container input");
 const sendBtn = document.querySelector(".chat-input-container button");
 
-const API_URL = "http://localhost:3000/messages";
+const API_URL = `${API_BASE}/messages`;
 
 function initChat() {
     loadMessages();
@@ -69,14 +90,12 @@ function createMessageElement(msg, isMe) {
     bubble.className =
         `chat-message-content-text ${isMe ? "bg-primary" : "bg-secondary"} text-white p-3 rounded-pill`;
 
-    // texto
     const textSpan = document.createElement("span");
     textSpan.textContent = msg.text;
     textSpan.classList.add("msg-text");
     textSpan.dataset.id = msg.id;
     bubble.appendChild(textSpan);
 
-    // botões do autor
     if (isMe) {
         const editBtn = document.createElement("button");
         editBtn.className = "btn btn-sm btn-light ms-2 edit-btn";
@@ -105,12 +124,29 @@ function createMessageElement(msg, isMe) {
 async function loadMessages() {
     if (!window.CARONA_ID) return;
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const userIdParam = urlParams.get('userId');
+    const isPrivate = !!userIdParam;
+    const recipientId = userIdParam ? Number(userIdParam) : null;
+
     const res = await fetch(`${API_URL}?caronaId=${window.CARONA_ID}`);
-    const messages = await res.json();
+    const allMessages = await res.json();
 
     const currentUserId = Number(localStorage.getItem("userId"));
 
-    chatContainer.textContent = ""; // limpa
+    let messages;
+    if (isPrivate && recipientId) {
+        messages = allMessages.filter(msg => {
+            return msg.isPrivate === true && (
+                (msg.authorId === currentUserId && msg.recipientId === recipientId) ||
+                (msg.authorId === recipientId && msg.recipientId === currentUserId)
+            );
+        });
+    } else {
+        messages = allMessages.filter(msg => !msg.isPrivate);
+    }
+
+    chatContainer.textContent = "";
 
     messages.forEach(msg => {
         const isMe = msg.authorId === currentUserId;
@@ -186,6 +222,11 @@ async function sendMessage() {
         return Swal.fire("Erro", "Usuário não está logado.", "error");
     }
 
+    const urlParams = new URLSearchParams(window.location.search);
+    const userIdParam = urlParams.get('userId');
+    const isPrivate = !!userIdParam;
+    const recipientId = userIdParam ? Number(userIdParam) : null;
+
     await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -194,7 +235,9 @@ async function sendMessage() {
             authorId,
             authorName,
             text,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            isPrivate: isPrivate,
+            recipientId: recipientId || null
         })
     });
 

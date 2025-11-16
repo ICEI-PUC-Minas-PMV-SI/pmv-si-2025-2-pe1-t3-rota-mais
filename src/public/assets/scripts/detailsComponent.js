@@ -5,7 +5,7 @@ function createElDetailsComponent(tag, className, text) {
     return el;
 }
 
-function createDetailsComponent(carona, container) {
+async function createDetailsComponent(carona, container, vehicle = null) {
     const wrapper = createElDetailsComponent('div', 'container my-4 p-4');
 
     const headerDiv = createElDetailsComponent('div', 'mb-4');
@@ -30,14 +30,30 @@ function createDetailsComponent(carona, container) {
     wrapper.appendChild(infoDiv);
 
     const ul = createElDetailsComponent('ul', 'list-unstyled mb-4');
+
+    const vagasTotais = vehicle ? vehicle.availableSeats : (carona.vagas || 1);
+    const aprovados = carona.passageiros ? carona.passageiros.filter(p => p.status === 'aprovado').length : 0;
+    const vagasRestantes = vagasTotais - aprovados;
+
+    let veiculoTexto = 'Não informado';
+    if (vehicle) {
+        const tipoVeiculo = vehicle.type === 'CAR' ? 'Carro' : 'Motocicleta';
+        veiculoTexto = `${vehicle.brand} ${vehicle.model} (${tipoVeiculo})`;
+    } else if (carona.veiculo) {
+        veiculoTexto = carona.veiculo;
+    }
+
+    const textoVagas = vagasRestantes === 1
+        ? `<strong>${vagasRestantes}</strong> de <strong>${vagasTotais}</strong> vaga disponível`
+        : `<strong>${vagasRestantes}</strong> de <strong>${vagasTotais}</strong> vagas disponíveis`;
+
     const listItems = [
-        `<i class="bi bi-person-plus"></i> <strong>${carona.vagas || 1} vaga${carona.vagas > 1 ? 's' : ''}</strong> disponível`,
-        `<i class="bi bi-car-front"></i> Veículo: <strong>${carona.veiculo || 'Não informado'}</strong>`,
+        `<i class="bi bi-person-plus"></i> ${textoVagas}`,
+        `<i class="bi bi-car-front"></i> Veículo: <strong>${veiculoTexto}</strong>`,
         `<i class="bi bi-box-seam"></i> ${carona.podeTrazerEncomendas ? 'Pode trazer encomendas' : 'Não pode trazer encomendas'}`,
         `<i class="bi bi-arrow-repeat"></i> ${carona.incluiRetorno ? 'Inclui retorno' : 'Não inclui retorno'}`,
         `<i class="bi bi-currency-dollar"></i> ${carona.custo ? carona.custo : 'Viagem gratuita'}`
     ];
-
 
     let isDetails = window.location.pathname.includes('detalhes');
 
