@@ -23,12 +23,11 @@
   "author": "Seu Nome",
   "license": "MIT",
   "devDependencies": {
-    "json-server": "^0.17.4",
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "json-server": "^0.17.4"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/seu-usuario/template-json-server.git"
   }
 }
-

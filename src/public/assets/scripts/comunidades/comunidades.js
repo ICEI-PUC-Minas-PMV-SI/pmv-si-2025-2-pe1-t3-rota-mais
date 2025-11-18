@@ -85,4 +85,59 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     })
   }
+
+
+  function buildComunidadeCard(local) {
+    // Cria o card principal
+    const $card = $('<div>').addClass('comunidades-box-locais');
+
+    // IMAGEM
+    const $imagemBox = $('<div>').addClass('comunidades-imagem');
+    const $img = $('<img>')
+      .attr('src', local.imagem || '../../assets/images/imagem-exemplo.jpg')
+      .attr('alt', local.nome || 'Imagem do local');
+    $imagemBox.append($img);
+
+    // INFO DO CARD
+    const $info = $('<div>').addClass('comunidades-info');
+
+    const $titulo = $('<h3>')
+      .addClass('comunidades-nome-local')
+      .text(local.nome || 'Nome do Local');
+
+    const $tipo = $('<p>')
+      .addClass('comunidades-txt-tipo-local bi bi-shop-window')
+      .text(` ${local.tipo || 'Tipo do local'}`);
+
+    const $endereco = $('<p>')
+      .addClass('comunidades-txt-endereco-local bi bi-geo-alt-fill')
+      .text(` ${local.endereco || 'Endereço do local'}`);
+
+    const $qtdViagens = $('<p>')
+      .addClass('comunidades-txt-quantidade-viagens bi bi-car-front-fill')
+      .text(` ${local.quantidadeViagens || 0} viagens cadastradas`);
+
+    // BOTÃO "CONHECER"
+    const $btnConhecer = $('<a>')
+      .addClass('btn comunidades-conhecer-local')
+      .attr('href', local.link || `/pages/comunidades/comunidade-local.html?id=${local.id}`)
+      .text('Conhecer local');
+
+    // Efeito de clique no botão
+    $btnConhecer.on('mousedown', function () {
+      $(this).css('background', '#8cdba9');
+    });
+    $btnConhecer.on('mouseup mouseleave', function () {
+      $(this).css('background', '#A2E9C1');
+    });
+
+    // Montagem final
+    $info.append($titulo, $tipo, $endereco, $qtdViagens, $btnConhecer);
+    $card.append($imagemBox, $info);
+
+    return $card;
+  }
+
+
+
 })

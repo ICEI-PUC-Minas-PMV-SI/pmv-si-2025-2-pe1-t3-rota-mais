@@ -353,6 +353,7 @@
   ],
   "encomendas": [],
   "comunidades": [],
+  "locais": [],
   "viagens": [],
   "vehicles": [],
   "messages": [],
@@ -597,6 +598,24 @@
       },
       "vehicles": [],
       "id": 14
+    },
+    {
+      "name": "Angel",
+      "email": "angelcas98@outlook.com",
+      "senha": "123456+",
+      "usuario": "angelcas",
+      "telefone": "",
+      "comunidade": "Taquara",
+      "cidade": "Papagaios, MG",
+      "endereco": {
+        "rua": "Rua das Rosas",
+        "numero": "134",
+        "complemento": "N",
+        "bairro": "Sem bairro",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "id": 15
     }
   ]
 }

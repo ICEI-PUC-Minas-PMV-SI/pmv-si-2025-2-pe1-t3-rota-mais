@@ -75,7 +75,7 @@ $(function () {
         const idade = agora - (encomenda.id || 0);
         const ehRecente = idade < 300000;
 
-        if (ehRecente || encomenda.urgente) {
+        /*if (ehRecente || encomenda.urgente) {
             $card.css({
                 'border-left': '5px solid #dc3545',
                 'background-color': '#ffeaea',
@@ -96,7 +96,7 @@ $(function () {
                 .text(badgeText);
 
             $card.prepend($badge);
-        }
+        }*/
 
         const $info = el('div', 'viagens-info');
 
