@@ -353,7 +353,24 @@
   ],
   "encomendas": [],
   "comunidades": [],
-  "locais": [],
+   "locais": [
+    {
+      "id": 1,
+      "nome": "Mercado Central",
+      "tipo": "Mercado",
+      "endereco": "Rua das Flores, 123 - Centro",
+      "quantidadeViagens": 14,
+      "imagem": "../../assets/images/mercado_central.jpg"
+    },
+    {
+      "id": 2,
+      "nome": "Posto de Saúde Bela Vista",
+      "tipo": "Posto de Saúde",
+      "endereco": "Avenida Principal, 890 - Bela Vista",
+      "quantidadeViagens": 7,
+      "imagem": "../../assets/images/posto_de_saude.jpeg"
+    }
+  ],
   "viagens": [],
   "vehicles": [],
   "messages": [],

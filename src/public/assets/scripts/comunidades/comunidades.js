@@ -86,58 +86,83 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
+  function buildLocalCard(local) {
+  // Container principal (wrapper do card)
+  const box = document.createElement("div");
+  box.classList.add("comunidades-box-locais");
 
-  function buildComunidadeCard(local) {
-    // Cria o card principal
-    const $card = $('<div>').addClass('comunidades-box-locais');
+  // --- IMAGEM ---
+  const imagemWrapper = document.createElement("div");
+  imagemWrapper.classList.add("comunidades-imagem");
 
-    // IMAGEM
-    const $imagemBox = $('<div>').addClass('comunidades-imagem');
-    const $img = $('<img>')
-      .attr('src', local.imagem || '../../assets/images/imagem-exemplo.jpg')
-      .attr('alt', local.nome || 'Imagem do local');
-    $imagemBox.append($img);
+  const img = document.createElement("img");
+  img.src = local.imagem || "../../assets/images/imagem-exemplo.jpg";
+  img.alt = `Foto de ${local.nome || "local"}`;
 
-    // INFO DO CARD
-    const $info = $('<div>').addClass('comunidades-info');
+  imagemWrapper.appendChild(img);
 
-    const $titulo = $('<h3>')
-      .addClass('comunidades-nome-local')
-      .text(local.nome || 'Nome do Local');
+  // --- INFO ---
+  const info = document.createElement("div");
+  info.classList.add("comunidades-info");
 
-    const $tipo = $('<p>')
-      .addClass('comunidades-txt-tipo-local bi bi-shop-window')
-      .text(` ${local.tipo || 'Tipo do local'}`);
+  // Nome
+  const nomeEl = document.createElement("h3");
+  nomeEl.classList.add("comunidades-nome-local");
+  nomeEl.textContent = local.nome || "Nome do local";
 
-    const $endereco = $('<p>')
-      .addClass('comunidades-txt-endereco-local bi bi-geo-alt-fill')
-      .text(` ${local.endereco || 'Endereço do local'}`);
+  // Tipo
+  const tipoEl = document.createElement("p");
+  tipoEl.classList.add("comunidades-txt-tipo-local", "bi", "bi-shop-window");
+  tipoEl.textContent = " " + (local.tipo || "Tipo não informado");
 
-    const $qtdViagens = $('<p>')
-      .addClass('comunidades-txt-quantidade-viagens bi bi-car-front-fill')
-      .text(` ${local.quantidadeViagens || 0} viagens cadastradas`);
+  // Endereço
+  const enderecoEl = document.createElement("p");
+  enderecoEl.classList.add("comunidades-txt-endereco-local", "bi", "bi-geo-alt-fill");
+  enderecoEl.textContent = " " + (local.endereco || "Endereço não informado");
 
-    // BOTÃO "CONHECER"
-    const $btnConhecer = $('<a>')
-      .addClass('btn comunidades-conhecer-local')
-      .attr('href', local.link || `/pages/comunidades/comunidade-local.html?id=${local.id}`)
-      .text('Conhecer local');
+  // Quantidade de viagens
+  const qtdEl = document.createElement("p");
+  qtdEl.classList.add("comunidades-txt-quantidade-viagens", "bi-car-front-fill");
+  qtdEl.textContent =
+    " " +
+    (local.quantidadeViagens !== undefined
+      ? `${local.quantidadeViagens} viagens`
+      : "0 viagens");
 
-    // Efeito de clique no botão
-    $btnConhecer.on('mousedown', function () {
-      $(this).css('background', '#8cdba9');
+  // Botão "Conhecer Local"
+  const btn = document.createElement("a");
+  btn.classList.add("btn", "comunidades-conhecer-local");
+  btn.id = "btn-conhecer-local";
+  btn.textContent = "Conhecer local";
+  btn.href = `/pages/comunidades/comunidade-local.html?id=${local.id}`;
+
+  // Montando o bloco info
+  info.appendChild(nomeEl);
+  info.appendChild(tipoEl);
+  info.appendChild(enderecoEl);
+  info.appendChild(qtdEl);
+  info.appendChild(btn);
+
+  // Final: juntar imagem + info no container principal
+  box.appendChild(imagemWrapper);
+  box.appendChild(info);
+
+  return box;
+}
+
+
+  async function carregarLocais() {
+    const lista = document.getElementById("container-locais"); // o ID do seu container
+
+    const locais = await fetch("http://localhost:3000/locais")
+      .then(res => res.json());
+
+    locais.forEach(local => {
+      const card = buildLocalCard(local);
+      lista.appendChild(card);
     });
-    $btnConhecer.on('mouseup mouseleave', function () {
-      $(this).css('background', '#A2E9C1');
-    });
-
-    // Montagem final
-    $info.append($titulo, $tipo, $endereco, $qtdViagens, $btnConhecer);
-    $card.append($imagemBox, $info);
-
-    return $card;
   }
 
-
+  carregarLocais();
 
 })
