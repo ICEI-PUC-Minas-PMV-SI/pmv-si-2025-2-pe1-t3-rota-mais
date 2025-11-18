@@ -43,39 +43,8 @@ body {
 }
 
 /* ===========================
-   TABS / FILTROS
-=========================== */
-
-.comunidades-filtros {
-  display: flex;
-  gap: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #d4d4d8;
-  margin-bottom: 20px;
-}
-
-.filter-tab {
-  background: transparent;
-  border: none;
-  padding: 8px 16px;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 6px;
-  color: #52525b;
-  transition: 0.2s;
-}
-
-.filter-tab.active,
-.filter-tab:hover {
-  background: #e5f7ed;
-  color: #0e793c;
-  font-weight: 600;
-}
-
-/* ===========================
    CAMPO DE BUSCA
 =========================== */
-
 .comunidades-busca {
   display: flex;
   gap: 20px;
