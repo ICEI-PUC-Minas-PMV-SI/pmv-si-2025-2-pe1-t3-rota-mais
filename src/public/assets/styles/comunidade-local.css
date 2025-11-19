@@ -1,0 +1,206 @@
+/* comunidade-local.css
+   Estilos específicos da página "Local"
+   Nomes em português, limpos e fáceis de manter.
+*/
+
+:root {
+  --verde-primario: #0e793c;
+  --verde-claro: #a2e9c1;
+  --cinza-claro: #d4d4d8;
+  --texto: #18181b;
+  --fundo: #f8fafc;
+}
+
+body {
+  background: var(--fundo);
+  font-family: "Nunito", sans-serif;
+}
+
+.content-wrapper {
+  padding: 20px;
+}
+
+/* Banner */
+.local-cabecalho {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.local-banner {
+  width: 100%;
+  max-width: 1050px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--cinza-claro);
+  background: #fff;
+}
+
+.local-banner img {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Informações principais */
+.local-principal {
+  max-width: 1050px;
+  margin-top: 18px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.local-acao {
+  display: flex;
+  align-items: start;
+}
+
+.local-botao-contato {
+  border-radius: 12px;
+  padding: 10px 16px;
+  background: var(--verde-primario);
+  color: #fff;
+  font-weight: 600;
+}
+
+.local-titulo {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.local-nome {
+  font-size: 2rem;
+  color: var(--verde-primario);
+  margin: 0 0 8px 0;
+  font-weight: 800;
+}
+
+.local-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  color: #4b5563;
+  align-items: center;
+  font-size: 0.98rem;
+}
+
+/* Carona destaque (opcional) */
+.carona-destaque {
+  width: 100%;
+  max-width: 1050px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* Lista de caronas */
+.secao-titulo {
+  max-width: 1050px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  color: var(--texto);
+}
+
+.lista-caronas {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 1050px;
+}
+
+/* Card de carona (simplificado) */
+.card-carona {
+  display: flex;
+  gap: 18px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid var(--cinza-claro);
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.card-carona:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.08);
+}
+
+.card-carona .carona-info {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex: 1;
+}
+
+.user-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+
+.carona-dados {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.carona-acao {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Botões no card */
+.btn-participar,
+.btn-detalhes {
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-participar {
+  background: var(--verde-primario);
+  color: #fff;
+}
+
+.btn-detalhes {
+  background: transparent;
+  border: 1px solid var(--cinza-claro);
+  color: #374151;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .local-banner img { height: 200px; }
+
+  .local-principal {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .local-acao {
+    align-self: flex-start;
+  }
+
+  .card-carona {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .carona-acao {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+}

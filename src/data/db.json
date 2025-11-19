@@ -360,7 +360,9 @@
       "tipo": "Mercado",
       "endereco": "Rua das Flores, 123 - Centro",
       "quantidadeViagens": 14,
-      "imagem": "../../assets/images/mercado_central.jpg"
+      "imagem": "../../assets/images/mercado_central.jpg",
+      "criador": "Marcos Antônio",
+      "contato": "+553199999999"
     },
     {
       "id": 2,
@@ -368,7 +370,9 @@
       "tipo": "Posto de Saúde",
       "endereco": "Avenida Principal, 890 - Bela Vista",
       "quantidadeViagens": 7,
-      "imagem": "../../assets/images/posto_de_saude.jpeg"
+      "imagem": "../../assets/images/posto_de_saude.jpeg",
+      "criador": "Angel Caroline",
+      "contato": "+553199999998"
     }
   ],
   "viagens": [],

@@ -1,162 +1,157 @@
-  // ======================================================
-//   PÁGINA DO LOCAL - CARREGAMENTO DINÂMICO
-// ======================================================
+/* Helpers */
+function qs(selector, parent = document) { return parent.querySelector(selector); }
+function qsa(selector, parent = document) { return Array.from(parent.querySelectorAll(selector)); }
+function el(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined && text !== null) node.textContent = text;
+  return node;
+}
 
-// ---------------------------
-// 1. Pegar o ID da URL
-// ---------------------------
-function getLocalIdFromUrl() {
+function getIdFromUrl() {
   const params = new URLSearchParams(window.location.search);
-  return params.get("id");
+  const id = params.get('id');
+  return id ? Number(id) : null;
 }
 
-// ---------------------------
-// 2. Buscar locais no localStorage
-// ---------------------------
-function getLocais() {
-  return JSON.parse(localStorage.getItem("locais") || "[]");
-}
+/* Renderiza um card de carona simples (adaptado da sua lógica de caronas) */
+function buildCardCarona(carona) {
+  const card = el('div', 'card-carona');
 
-// ---------------------------
-// 3. Buscar caronas no localStorage
-// ---------------------------
-function getCaronas() {
-  return JSON.parse(localStorage.getItem("caronas") || "[]");
-}
+  const info = el('div', 'carona-info');
+  const avatar = document.createElement('img');
+  avatar.className = 'user-avatar';
+  // avatar do criador se existir
+  avatar.src = (carona.usuario && carona.usuario.avatar) || (carona.criadorAvatar) || 'https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png';
+  avatar.alt = (carona.usuario && carona.usuario.nome) ? carona.usuario.nome : 'Usuário';
 
-// ---------------------------
-// 4. Preencher página com dados do local
-// ---------------------------
-function preencherLocal(local) {
-  // Foto principal
-  document.querySelector(".comunidades-box-local img").src = local.imagem;
+  const dados = el('div', 'carona-dados');
+  const usuarioTxt = el('div', null, (carona.usuario && carona.usuario.nome) ? `${carona.usuario.nome}` : (carona.criadorNome || 'Usuário'));
+  const rotaTxt = el('div', null, `De ${carona.rota?.origem || '—'} para ${carona.rota?.destino || '—'}`);
+  const detalhesTxt = el('div', null, `${carona.data ? 'Dia ' + carona.data : ''} ${carona.horario ? 'às ' + carona.horario : ''}`);
 
-  // Nome
-  document.querySelector(".comunidades-nome-local2").textContent = local.nome;
+  dados.appendChild(usuarioTxt);
+  dados.appendChild(rotaTxt);
+  dados.appendChild(detalhesTxt);
 
-  // Criador
-  document.querySelector(".local-info span:nth-child(1)").innerHTML =
-    `<span class="bi bi-person-circle"> Criado por <strong>${local.criador}</strong></span>`;
+  info.appendChild(avatar);
+  info.appendChild(dados);
 
-  // Tipo
-  document.querySelector(".local-info span:nth-child(2)").innerHTML =
-    `<span class="bi bi-shop-window"> ${local.tipo}</span>`;
+  // Ações (botões)
+  const acoes = el('div', 'carona-acao');
+  const btnParticipar = el('button', 'btn-participar', carona.tipo === 'oferecendo' ? 'Participar da viagem' : 'Se candidatar');
+  btnParticipar.onclick = () => {
+    // ação mínima: redireciona para a página de detalhes
+    window.location.href = `/pages/viagens/detalhes.html?id=${carona.id}&tipo=${carona.tipo || ''}`;
+  };
 
-  // Viagens
-  document.querySelector(".local-info span:nth-child(3)").innerHTML =
-    `<span class="bi bi-car-front-fill"> ${local.viagens} viagens estão passando por aqui atualmente</span>`;
+  const btnDetalhes = el('button', 'btn-detalhes', 'Detalhes');
+  btnDetalhes.onclick = () => {
+    window.location.href = `/pages/viagens/detalhes.html?id=${carona.id}&tipo=${carona.tipo || ''}`;
+  };
 
-  // Endereço
-  document.querySelector(".local-info span:nth-child(4)").innerHTML =
-    `<span class="bi bi-geo-alt-fill"> ${local.endereco}</span>`;
-}
+  acoes.appendChild(btnDetalhes);
+  acoes.appendChild(btnParticipar);
 
-// ---------------------------
-// 5. Build do card de carona
-// (simples e igual ao seu modelo)
-// ---------------------------
-function buildCaronaSimples(carona) {
-  const card = document.createElement("div");
-  card.className = "comunidades-box-locais";
-
-  card.innerHTML = `
-    <div class="comunidades-info">
-      <p class="bi bi-person-circle"> ${carona.usuario} está 
-        <strong>${carona.tipo === "oferecendo" ? "oferecendo" : "pedindo"} uma carona</strong>
-      </p>
-
-      <h2 class="comunidades-nome-local2">
-        De <strong>${carona.origem}</strong> para <strong>${carona.destino}</strong>
-      </h2>
-
-      <div class="local-info2">
-        <span class="bi bi-calendar3"><strong> Dia ${carona.data}</strong> às ${carona.horario}</span>
-        <span class="bi bi-car-front-fill"> <strong>Veículo: </strong>${carona.veiculo}</span>
-        <span class="bi bi-people-fill"><strong>${carona.vagas}</strong> vaga(s)</span>
-      </div>
-
-      <button class="btn comunidades-conhecer-local">
-        Participar da viagem
-      </button>
-    </div>
-  `;
+  card.appendChild(info);
+  card.appendChild(acoes);
 
   return card;
 }
 
-// ---------------------------
-// 6. Listar caronas relacionadas ao local
-// ---------------------------
-function listarCaronas(local) {
-  const caronas = getCaronas().filter(c => c.destino === local.nome);
-  const container = document.getElementById("caronas-container");
-  container.innerHTML = ""; // limpa
-
-  if (caronas.length === 0) {
-    container.innerHTML = `<p style="margin-top:15px; color:#777;">Nenhuma carona disponível para este local.</p>`;
-    return;
-  }
-
-  caronas.forEach(c => {
-    const card = buildCaronaSimples(c);
-    container.appendChild(card);
-  });
+/* Mostra mensagem quando não houver caronas */
+function renderVazio(container, texto = "Nenhuma carona encontrada para este local.") {
+  container.innerHTML = '';
+  const msg = el('div', 'alert alert-light', texto);
+  container.appendChild(msg);
 }
 
-// ---------------------------
-// 7. Iniciar página
-// ---------------------------
-function initLocalPage() {
-  const id = getLocalIdFromUrl();
+/* Carrega dados do local e das caronas */
+async function carregarPaginaLocal() {
+  const id = getIdFromUrl();
   if (!id) {
-    alert("ID do local não encontrado na URL.");
+    console.error('ID do local não informado na URL.');
     return;
   }
 
-  const locais = getLocais();
-  const localEncontrado = locais.find(l => l.id == id);
+  // Elementos
+  const imgBanner = qs('#local-banner-img');
+  const nomeEl = qs('#local-nome');
+  const criadorNomeEl = qs('#local-criador-nome');
+  const categoriaEl = qs('#local-categoria');
+  const enderecoEl = qs('#local-endereco');
+  const quantidadeEl = qs('#local-quantidade');
+  const btnContato = qs('#btn-contato');
+  const caronasContainer = qs('#caronas-container');
 
-  if (!localEncontrado) {
-    alert("Local não encontrado no sistema.");
-    return;
+  try {
+    // Buscar local
+    const resLocal = await fetch(`${API_BASE}/locais/${id}`);
+    if (!resLocal.ok) throw new Error('Erro ao buscar local');
+
+    const local = await resLocal.json();
+
+    // Preencher dados
+    imgBanner.src = local.imagem || imgBanner.src;
+    imgBanner.alt = `Foto de ${local.nome || 'local'}`;
+    nomeEl.textContent = local.nome || 'Nome do local';
+    criadorNomeEl.textContent = local.criadorNome || local.criador || '—';
+    categoriaEl.textContent = ' ' + (local.tipo || 'Categoria não informada');
+    enderecoEl.textContent = ' ' + (local.endereco || 'Endereço não informado');
+    quantidadeEl.textContent = ' ' + ((local.quantidadeViagens !== undefined) ? `${local.quantidadeViagens} viagens estão passando por aqui atualmente` : '0 viagens');
+
+    // contato (se tiver telefone no objeto local)
+    if (local.contato) {
+      btnContato.onclick = () => {
+        // abre whatsapp se for número, ou envia para link se for url
+        if (/^\+?\d{6,}$/.test(local.contato.replace(/\D/g, ''))) {
+          const numero = local.contato.replace(/\D/g, '');
+          window.open(`https://wa.me/${numero}`, '_blank');
+        } else if (local.contato.startsWith('http')) {
+          window.open(local.contato, '_blank');
+        } else {
+          // mostra número
+          Swal.fire('Contato', local.contato, 'info');
+        }
+      };
+    } else {
+      btnContato.style.display = 'none';
+    }
+
+    // Buscar caronas e filtrar
+    const resCaronas = await fetch(`${API_BASE}/caronas`);
+    if (!resCaronas.ok) throw new Error('Erro ao buscar caronas');
+    const caronas = await resCaronas.json();
+
+    // Filtrar as caronas relacionadas ao local:
+    // 1) carona.localId === id
+    // 2) carona.rota.destino === local.nome (caso não use localId)
+    const caronasFiltradas = caronas.filter(c => {
+      const destino = c.rota?.destino;
+      const localIdMatch = c.localId === id || c.destinoId === id;
+      const destinoNomeMatch = destino && local.nome && destino.toString().toLowerCase() === local.nome.toString().toLowerCase();
+      return localIdMatch || destinoNomeMatch;
+    });
+
+    // Renderizar
+    caronasContainer.innerHTML = '';
+    if (!caronasFiltradas.length) {
+      renderVazio(caronasContainer, 'Nenhuma carona disponível para este local no momento.');
+    } else {
+      caronasFiltradas.forEach(c => {
+        const card = buildCardCarona(c);
+        caronasContainer.appendChild(card);
+      });
+    }
+
+  } catch (err) {
+    console.error(err);
+    const caronasContainer = qs('#caronas-container');
+    renderVazio(caronasContainer, 'Erro ao carregar dados. Tente novamente mais tarde.');
   }
-
-  preencherLocal(localEncontrado);
-  listarCaronas(localEncontrado);
 }
 
-
-document.getElementById("form-cadastro-local").addEventListener("submit", async function(e) {
-    e.preventDefault();
-
-    const formData = new FormData(this);
-    const data = Object.fromEntries(formData.entries());
-
-    // Se tiver upload de imagem, coloca o nome do arquivo apenas
-    if (formData.get("foto")) {
-        data.foto = formData.get("foto").name;
-    }
-
-    try {
-        const response = await fetch("http://localhost:3000/locais", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        });
-
-        if (response.ok) {
-            alert("Local cadastrado com sucesso!");
-            this.reset();
-        } else {
-            alert("Erro ao cadastrar.");
-        }
-
-    } catch (erro) {
-        console.error("Erro:", erro);
-        alert("Falha de conexão com o servidor JSON.");
-    }
+/* Inicializa a página */
+document.addEventListener('DOMContentLoaded', () => {
+  carregarPaginaLocal();
 });
-
-document.addEventListener("DOMContentLoaded", initLocalPage);
