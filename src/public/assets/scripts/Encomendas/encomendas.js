@@ -11,6 +11,28 @@ $(function () {
         $container.children().remove();
     }
 
+    function el(tag, className) {
+        return $(`<${tag}>`).addClass(className);
+    }
+
+    function emptyState($container, iconCls, msg, color) {
+        const $wrap = el('div', 'text-center py-5');
+        const $i = $(`<i>`).addClass(iconCls).css('font-size', '3rem').css('color', color || '#d1d5db');
+        const $p = el('p', 'mt-3').text(msg);
+        $wrap.append($i, $p);
+        clear($container);
+        $container.append($wrap);
+    }
+
+    function getCurrentUser() {
+        try {
+            const userStr = localStorage.getItem('user');
+            return userStr ? JSON.parse(userStr) : null;
+        } catch {
+            return null;
+        }
+    }
+
     async function loadencomendas() {
         const $container = $('#encomendas-container');
         if (!$container.length) return;
@@ -33,10 +55,36 @@ $(function () {
         if (!$container.length) return;
         try {
             const encomendas = await fetchJSON(`${API_URL}/encomendas`);
-            const list = filter && filter !== 'todos' ? encomendas.filter(c => c.tipo === filter) : encomendas;
+            
+            let list = encomendas;
+            
+            if (filter === 'comunidade') {
+                // Filtrar por comunidade do usuário logado
+                const currentUserId = Number(localStorage.getItem('userId'));
+                if (currentUserId) {
+                    try {
+                        const user = await fetchJSON(`${API_URL}/users/${currentUserId}`);
+                        const userComunidade = user.comunidade;
+                        if (userComunidade) {
+                            list = encomendas.filter(c => {
+                                const encomendaComunidade = c.usuario?.comunidade || '';
+                                return encomendaComunidade === userComunidade;
+                            });
+                        }
+                    } catch (e) {
+                        console.error('Erro ao buscar usuário:', e);
+                    }
+                }
+            } else if (filter && filter !== 'todos') {
+                list = encomendas.filter(c => c.tipo === filter);
+            }
+            
             clear($container);
             if (!list.length) {
-                const msg = filter === 'oferecendo' ? 'Nenhuma oferta de encomenda disponível' : filter === 'pedindo' ? 'Nenhum pedido de encomenda disponível' : 'Nenhuma encomenda disponível no momento';
+                const msg = filter === 'oferecendo' ? 'Nenhuma oferta de encomenda disponível' : 
+                           filter === 'pedindo' ? 'Nenhum pedido de encomenda disponível' : 
+                           filter === 'comunidade' ? 'Nenhuma encomenda disponível na sua comunidade' :
+                           'Nenhuma encomenda disponível no momento';
                 emptyState($container, 'bi bi-car-front', msg, '#d1d5db');
                 return;
             }
@@ -65,6 +113,19 @@ $(function () {
             const filteredOrdenado = filtered.sort((a, b) => (b.id || 0) - (a.id || 0));
             filteredOrdenado.forEach(c => $container.append(buildencomendaCard(c)));
         } catch (e) { }
+    }
+
+    function setupFilters() {
+        const $tabs = $('.filter-tab');
+        if (!$tabs.length) return;
+        $tabs.each(function () {
+            $(this).on('click', function () {
+                $tabs.removeClass('active');
+                $(this).addClass('active');
+                const filter = $(this).data('filter') || 'todos';
+                filterEncomendas(filter);
+            });
+        });
     }
 
     function buildEncomendaCard(encomenda) {
@@ -142,5 +203,6 @@ $(function () {
     }
 
 
+    setupFilters();
     loadencomendas();
 });

@@ -22,9 +22,7 @@ $(document).ready(function () {
                     body: JSON.stringify({ role: novaRole })
                 });
             }
-        } catch (err) {
-            console.error('Erro ao atualizar role do usuário:', err);
-        }
+        } catch {}
     }
 
     function validateVehicleForm() {
@@ -149,8 +147,7 @@ $(document).ready(function () {
                 const modal = new bootstrap.Modal(modalElement);
                 modal.show();
             }
-        } catch (err) {
-            console.error(err);
+        } catch {
             Swal.fire('Erro', 'Não foi possível carregar os dados do veículo.', 'error');
         }
     });
@@ -196,15 +193,27 @@ $(document).ready(function () {
             } else {
                 vehicleData.id = Date.now();
 
-                await fetchJSON(`${API_BASE}/vehicles`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(vehicleData)
-                });
+                // Se estiver na página de registro (sem userId), salvar em window.userVehicles
+                if (!currentUserId || currentUserId === 0) {
+                    if (!window.userVehicles) {
+                        window.userVehicles = [];
+                    }
+                    window.userVehicles.push(vehicleData);
+                    await Swal.fire({ icon: 'success', title: 'Sucesso!', text: 'Veículo adicionado! Será salvo ao criar a conta.', timer: 1500, showConfirmButton: false });
+                    if (typeof window.displayVehiclesRegister === 'function') {
+                        window.displayVehiclesRegister();
+                    }
+                } else {
+                    await fetchJSON(`${API_BASE}/vehicles`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(vehicleData)
+                    });
 
-                await atualizarRoleUsuario();
+                    await atualizarRoleUsuario();
 
-                await Swal.fire({ icon: 'success', title: 'Sucesso!', text: 'Veículo cadastrado com sucesso!', timer: 1500, showConfirmButton: false });
+                    await Swal.fire({ icon: 'success', title: 'Sucesso!', text: 'Veículo cadastrado com sucesso!', timer: 1500, showConfirmButton: false });
+                }
             }
 
             const modalElement = document.getElementById('modal-vehicle');
@@ -216,8 +225,7 @@ $(document).ready(function () {
             resetForm();
             loadVehicles();
 
-        } catch (err) {
-            console.error(err);
+        } catch {
             Swal.fire('Erro', editingVehicleId ? 'Não foi possível atualizar o veículo.' : 'Não foi possível cadastrar o veículo.', 'error');
         }
     });
@@ -260,9 +268,7 @@ $(document).ready(function () {
                 $container.append($item);
             });
 
-        } catch (err) {
-            console.error('Erro carregar veículos', err);
-        }
+        } catch {}
     }
 
     $(document).on('click', '.delete-vehicle', function () {
@@ -284,10 +290,9 @@ $(document).ready(function () {
                     await atualizarRoleUsuario();
 
                     loadVehicles();
-                } catch (err) {
-                    console.error(err);
-                    Swal.fire('Erro', 'Não foi possível excluir o veículo.', 'error');
-                }
+        } catch {
+            Swal.fire('Erro', 'Não foi possível excluir o veículo.', 'error');
+        }
             }
         });
     });

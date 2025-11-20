@@ -47,8 +47,7 @@ $(document).ready(async function () {
       form.find("input[type='text']").eq(8).val(user.endereco.pontoReferencia || "");
     }
 
-  } catch (e) {
-    console.error("Erro ao carregar dados do usuário:", e);
+  } catch {
     Swal.fire("Erro", "Falha ao carregar dados do usuário.", "error");
   }
 
@@ -258,8 +257,7 @@ $(document).ready(async function () {
         window.location.href = "index.html";
       });
 
-    } catch (error) {
-      console.error("Erro ao salvar perfil:", error);
+    } catch {
       Swal.fire({
         icon: "error",
         title: "Erro",

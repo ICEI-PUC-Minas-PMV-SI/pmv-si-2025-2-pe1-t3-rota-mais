@@ -54,11 +54,37 @@ async function initCarona() {
     }
     const otherUser = await otherRes.json();
 
+    let isMotorista = false;
+    if (carona.tipo === 'pedindo') {
+        isMotorista = carona.motoristaId === otherUserId;
+    } else {
+        isMotorista = carona.motoristaId === otherUserId;
+    }
+    const roleText = isMotorista ? "Motorista" : "Passageiro";
 
-    document.querySelector(".passenger strong").textContent = otherUser.name;
-    document.querySelectorAll(".passenger .text-muted")[0].textContent = `★ ${otherUser.rating || 5}`;
-    document.querySelectorAll(".passenger .text-muted")[1].textContent =
-        otherUser.role === "motorista" ? "Motorista" : "Passageiro";
+    const passengerImgElement = document.querySelector(".passenger img");
+    const passengerStrong = document.querySelector(".passenger strong");
+    const passengerRating = document.querySelectorAll(".passenger .text-muted")[0];
+    const passengerRole = document.querySelectorAll(".passenger .text-muted")[1];
+
+    if (passengerImgElement) {
+        passengerImgElement.style.width = "40px";
+        passengerImgElement.style.height = "40px";
+        passengerImgElement.src = otherUser.avatar || "https://placehold.co/40x40";
+        passengerImgElement.alt = otherUser.name || otherUser.nome || "Usuário";
+    }
+    if (passengerStrong) {
+        passengerStrong.textContent = otherUser.name || otherUser.nome || "Usuário";
+    }
+    if (passengerRating) {
+        passengerRating.textContent = `★ ${otherUser.rating || 5}`;
+    }
+    if (passengerRole) {
+        passengerRole.textContent = roleText;
+    }
+
+    window.OTHER_USER = otherUser;
+    window.OTHER_USER_ID = otherUserId;
 }
 
 const chatContainer = document.getElementById("chat-container");
@@ -79,16 +105,37 @@ function initChat() {
     setInterval(loadMessages, 1000);
 }
 
-function createMessageElement(msg, isMe) {
+function createMessageElement(msg, isMe, authorAvatar = null, authorName = null) {
     const wrapper = document.createElement("div");
     wrapper.className = isMe ? "chat-message-me-message" : "chat-message-other-message";
+    wrapper.style.alignItems = "flex-end";
+    wrapper.style.gap = "10px";
+    wrapper.style.marginBottom = "15px";
+
+    if (!isMe) {
+        const avatarImg = document.createElement("img");
+        avatarImg.src = authorAvatar || "https://placehold.co/40x40";
+        avatarImg.alt = authorName || "Usuário";
+        avatarImg.className = "rounded-circle";
+        avatarImg.style.width = "40px";
+        avatarImg.style.height = "40px";
+        avatarImg.style.objectFit = "cover";
+        avatarImg.style.flexShrink = "0";
+        wrapper.appendChild(avatarImg);
+    }
 
     const content = document.createElement("div");
     content.className = "chat-message-content";
+    content.style.display = "flex";
+    content.style.flexDirection = "column";
+    content.style.maxWidth = "70%";
+    content.style.alignItems = isMe ? "flex-end" : "flex-start";
 
     const bubble = document.createElement("div");
     bubble.className =
         `chat-message-content-text ${isMe ? "bg-primary" : "bg-secondary"} text-white p-3 rounded-pill`;
+    bubble.style.display = "inline-block";
+    bubble.style.wordWrap = "break-word";
 
     const textSpan = document.createElement("span");
     textSpan.textContent = msg.text;
@@ -111,12 +158,33 @@ function createMessageElement(msg, isMe) {
     }
 
     const author = document.createElement("small");
-    author.className = "text-muted";
-    author.textContent = msg.authorName;
+    author.className = "text-muted d-block mt-1";
+    author.textContent = authorName || msg.authorName || "Usuário";
+    author.style.textAlign = isMe ? "right" : "left";
 
     content.appendChild(bubble);
     content.appendChild(author);
     wrapper.appendChild(content);
+
+    if (isMe) {
+        const currentUserStr = localStorage.getItem("user");
+        if (currentUserStr) {
+            try {
+                const currentUser = JSON.parse(currentUserStr);
+                const avatarImg = document.createElement("img");
+                avatarImg.src = currentUser.avatar || "https://placehold.co/40x40";
+                avatarImg.alt = currentUser.nome || currentUser.name || "Você";
+                avatarImg.className = "rounded-circle";
+                avatarImg.style.width = "40px";
+                avatarImg.style.height = "40px";
+                avatarImg.style.objectFit = "cover";
+                avatarImg.style.flexShrink = "0";
+                wrapper.appendChild(avatarImg);
+            } catch (e) {
+                console.error("Erro ao obter avatar do usuário atual:", e);
+            }
+        }
+    }
 
     return wrapper;
 }
@@ -148,9 +216,31 @@ async function loadMessages() {
 
     chatContainer.textContent = "";
 
+    const authorIds = [...new Set(messages.map(msg => msg.authorId))];
+    const authorsMap = new Map();
+
+    for (const authorId of authorIds) {
+        try {
+            const authorRes = await fetch(`${API_BASE}/users/${authorId}`);
+            if (authorRes.ok) {
+                const author = await authorRes.json();
+                authorsMap.set(authorId, {
+                    name: author.name || author.nome || "Usuário",
+                    avatar: author.avatar || "https://placehold.co/40x40"
+                });
+            }
+        } catch (e) {
+            console.error(`Erro ao buscar autor ${authorId}:`, e);
+        }
+    }
+
     messages.forEach(msg => {
         const isMe = msg.authorId === currentUserId;
-        const el = createMessageElement(msg, isMe);
+        const authorInfo = authorsMap.get(msg.authorId);
+        const authorName = authorInfo?.name || msg.authorName || "Usuário";
+        const authorAvatar = authorInfo?.avatar || null;
+        
+        const el = createMessageElement(msg, isMe, authorAvatar, authorName);
         chatContainer.appendChild(el);
     });
 
@@ -216,10 +306,26 @@ async function sendMessage() {
     if (!text) return;
 
     const authorId = Number(localStorage.getItem("userId"));
-    const authorName = localStorage.getItem("userName");
-
-    if (!authorId || !authorName) {
+    if (!authorId) {
         return Swal.fire("Erro", "Usuário não está logado.", "error");
+    }
+
+    let authorName = "Usuário";
+    try {
+        const userStr = localStorage.getItem("user");
+        if (userStr) {
+            const user = JSON.parse(userStr);
+            authorName = user.nome || user.name || user.username || "Usuário";
+        } else {
+            const userRes = await fetch(`${API_BASE}/users/${authorId}`);
+            if (userRes.ok) {
+                const user = await userRes.json();
+                authorName = user.nome || user.name || user.username || "Usuário";
+            }
+        }
+    } catch (e) {
+        console.error("Erro ao obter nome do usuário:", e);
+        authorName = "Usuário";
     }
 
     const urlParams = new URLSearchParams(window.location.search);

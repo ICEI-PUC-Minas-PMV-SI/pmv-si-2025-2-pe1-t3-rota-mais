@@ -77,7 +77,7 @@ function setupSidebar(user = null) {
   const sidebarContent = createEl("div", { class: "sidebar-container" }, [
 
     createEl("div", { class: "sidebar-header" }, [
-      createEl("a", { href: "/index.html" }, [
+      createEl("a", { href: "/pages/caronas/index.html" }, [
         createEl("img", { src: "/assets/images/logo.png", alt: "Logo", class: "logo" })
       ])
     ]),
