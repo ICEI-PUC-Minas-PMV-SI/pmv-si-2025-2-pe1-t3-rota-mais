@@ -456,7 +456,14 @@ $(function () {
     if (!$container.length) return;
     try {
       const caronas = await fetchJSON(`${API_BASE}/caronas`);
-      const caronasAtivas = caronas.filter(c => (c.statusViagem || 'agendada') === 'agendada');
+      const selectedCommunityId = Number(localStorage.getItem("selectedCommunityId"));
+      
+      let caronasFiltradas = caronas;
+      if (selectedCommunityId) {
+        caronasFiltradas = caronas.filter(c => c.comunidadeId === selectedCommunityId);
+      }
+      
+      const caronasAtivas = caronasFiltradas.filter(c => (c.statusViagem || 'agendada') === 'agendada');
       const list = filter && filter !== 'todos' ? caronasAtivas.filter(c => c.tipo === filter) : caronasAtivas;
       clear($container);
       if (!list.length) {
@@ -490,7 +497,14 @@ $(function () {
     if (!$container.length) return;
     try {
       const caronas = await fetchJSON(`${API_BASE}/caronas`);
-      let filtered = caronas.filter(c => (c.statusViagem || 'agendada') === 'agendada');
+      const selectedCommunityId = Number(localStorage.getItem("selectedCommunityId"));
+      
+      let filtered = caronas;
+      if (selectedCommunityId) {
+        filtered = caronas.filter(c => c.comunidadeId === selectedCommunityId);
+      }
+      
+      filtered = filtered.filter(c => (c.statusViagem || 'agendada') === 'agendada');
       if (origem) filtered = filtered.filter(c => c.rota?.origem?.toLowerCase().includes(origem.toLowerCase()));
       if (destino) filtered = filtered.filter(c => c.rota?.destino?.toLowerCase().includes(destino.toLowerCase()));
       if (data) {
@@ -855,9 +869,116 @@ $(function () {
     } catch {}
   }
 
+  async function loadLocaisComunidade() {
+    try {
+      const selectedCommunityId = Number(localStorage.getItem("selectedCommunityId"));
+      const selectedCommunityName = localStorage.getItem("selectedCommunity");
+      if (!selectedCommunityId && !selectedCommunityName) return [];
+
+      const locais = await fetchJSON(`${API_BASE}/locais`);
+      return locais.filter(local => {
+        if (local.comunidadeId === selectedCommunityId) return true;
+        if (selectedCommunityName && local.comunidade === selectedCommunityName) return true;
+        return false;
+      });
+    } catch (error) {
+      console.error("Erro ao carregar locais:", error);
+      return [];
+    }
+  }
+
+  async function setupLocaisSelects() {
+    const locais = await loadLocaisComunidade();
+    
+    const selectIds = [
+      '#origem-select',
+      '#destino-select',
+      '#origem-emergencial-select',
+      '#destino-emergencial-select'
+    ];
+
+    selectIds.forEach(selectId => {
+      const $select = $(selectId);
+      if (!$select.length) return;
+
+      $select.find('option:not(:first)').remove();
+
+      locais.forEach(local => {
+        const $option = $('<option>')
+          .val(local.nome)
+          .text(`${local.nome}${local.tipo ? ' - ' + local.tipo : ''}`)
+          .data('endereco', local.endereco || local.nome);
+        $select.append($option);
+      });
+
+      const $outroOption = $('<option>')
+        .val('outro')
+        .text('Outro (digite manualmente)');
+      $select.append($outroOption);
+
+      const $container = $select.parent('.input-with-icon');
+      const $input = $container.find('input[type="text"]').first();
+      
+      if (!$input.length) {
+        console.warn(`Input não encontrado para ${selectId}`);
+        return;
+      }
+      
+      $input.removeAttr('style');
+      $select.removeAttr('style');
+      
+      $select.css({
+        'width': '100%',
+        'padding': $input.css('padding') || '0.375rem 0.75rem',
+        'font-size': $input.css('font-size') || '1rem',
+        'border': $input.css('border') || '1px solid #ced4da',
+        'border-radius': $input.css('border-radius') || '0.375rem'
+      });
+      
+      if (locais.length === 0) {
+        $select.hide();
+        $input.show().attr('required', true);
+      } else {
+        $select.show();
+        $input.hide().removeAttr('required');
+      }
+      
+      $select.off('change').on('change', function() {
+        const selectedValue = $(this).val();
+        
+        if (selectedValue === 'outro') {
+          $select.css('display', 'none');
+          $input.removeAttr('style');
+          $input.css({
+            'display': 'block',
+            'visibility': 'visible',
+            'opacity': '1'
+          });
+          $input.val('').attr('required', true).prop('disabled', false).prop('readonly', false);
+          
+          setTimeout(() => {
+            if ($input.is(':visible')) {
+              $input.focus();
+            }
+          }, 150);
+        } else if (selectedValue) {
+          const endereco = $(this).find('option:selected').data('endereco') || $(this).val();
+          $input.val(endereco).removeAttr('required');
+          $select.css('display', 'block');
+          $input.css('display', 'none');
+        } else {
+          $select.css('display', 'none');
+          $input.removeAttr('style').css('display', 'block').val('').attr('required', true);
+        }
+      });
+    });
+  }
+
   function setupPedirCaronaForm() {
     const $form = $('#form-pedir-carona');
     if (!$form.length) return;
+
+    setupLocaisSelects();
 
     function setDataHoraEmergencial() {
       const agora = new Date();
@@ -918,6 +1039,7 @@ $(function () {
 
       let data;
 
+      const comunidadeId = Number(localStorage.getItem("selectedCommunityId")) || null;
       if (tipoCarona === 'emergencial') {
         const agora = new Date();
         const hora = String(agora.getHours()).padStart(2, '0');
@@ -930,10 +1052,15 @@ $(function () {
           usuario: currentUser,
           criadorId: currentUserId, 
           passageiroId: currentUserId,
-          motoristaId: null, 
+          motoristaId: null,
+          comunidadeId: comunidadeId,
           rota: {
-            origem: fd.get('origem-emergencial') || fd.get('origem'),
-            destino: fd.get('destino-emergencial') || fd.get('destino')
+            origem: $('#origem-emergencial-select').val() === 'outro' 
+              ? fd.get('origem-emergencial') 
+              : ($('#origem-emergencial-select').val() || fd.get('origem-emergencial') || fd.get('origem')),
+            destino: $('#destino-emergencial-select').val() === 'outro'
+              ? fd.get('destino-emergencial')
+              : ($('#destino-emergencial-select').val() || fd.get('destino-emergencial') || fd.get('destino'))
           },
           data: dataFormatada,
           horario: horarioAtual,
@@ -955,7 +1082,15 @@ $(function () {
           criadorId: currentUserId,
           passageiroId: currentUserId,
           motoristaId: null,
-          rota: { origem: fd.get('origem'), destino: fd.get('destino') },
+          comunidadeId: comunidadeId,
+          rota: { 
+            origem: $('#origem-select').val() === 'outro' 
+              ? fd.get('origem') 
+              : ($('#origem-select').val() || fd.get('origem')),
+            destino: $('#destino-select').val() === 'outro'
+              ? fd.get('destino')
+              : ($('#destino-select').val() || fd.get('destino'))
+          },
           data: fd.get('data'),
           horario: fd.get('horario'),
           tipoCarona: 'comum',
@@ -994,6 +1129,8 @@ $(function () {
   async function setupOferecerCaronaForm() {
     const $form = $('#form-oferecer-carona');
     if (!$form.length) return;
+
+    await setupLocaisSelects();
 
     const temVeiculo = await verificarVeiculosUsuario();
     if (!temVeiculo) {
@@ -1067,12 +1204,21 @@ $(function () {
       }
       const currentUserId = Number(localStorage.getItem("userId"));
       const currentUser = getCurrentUser();
+      const comunidadeId = Number(localStorage.getItem("selectedCommunityId")) || null;
       const data = {
         tipo: 'oferecendo',
         usuario: currentUser,
         criadorId: currentUserId, 
         motoristaId: currentUserId, 
-        rota: { origem: fd.get('origem'), destino: fd.get('destino') },
+        comunidadeId: comunidadeId,
+        rota: { 
+          origem: $('#origem-select').val() === 'outro' 
+            ? fd.get('origem') 
+            : ($('#origem-select').val() || fd.get('origem')),
+          destino: $('#destino-select').val() === 'outro'
+            ? fd.get('destino')
+            : ($('#destino-select').val() || fd.get('destino'))
+        },
         data: fd.get('data'),
         horario: fd.get('horario'),
         veiculo: fd.get('veiculo') || $('#rideVehicle').val() || '',
@@ -1200,7 +1346,14 @@ $(function () {
           criadorId: caronaAtual.criadorId || currentUserId, 
           passageiroId: currentUserId,
           motoristaId: caronaAtual.motoristaId || null,
-          rota: { origem: fd.get('origem'), destino: fd.get('destino') },
+          rota: { 
+            origem: $('#origem-select').val() === 'outro' 
+              ? fd.get('origem') 
+              : ($('#origem-select').val() || fd.get('origem')),
+            destino: $('#destino-select').val() === 'outro'
+              ? fd.get('destino')
+              : ($('#destino-select').val() || fd.get('destino'))
+          },
           data: fd.get('data'),
           horario: fd.get('horario'),
           tipoCarona: fd.get('tipo-carona') || 'comum',
@@ -1269,7 +1422,14 @@ $(function () {
           usuario: getCurrentUser(),
           criadorId: caronaAtual.criadorId || currentUserId, 
           motoristaId: currentUserId, 
-          rota: { origem: fd.get('origem'), destino: fd.get('destino') },
+          rota: { 
+            origem: $('#origem-select').val() === 'outro' 
+              ? fd.get('origem') 
+              : ($('#origem-select').val() || fd.get('origem')),
+            destino: $('#destino-select').val() === 'outro'
+              ? fd.get('destino')
+              : ($('#destino-select').val() || fd.get('destino'))
+          },
           data: fd.get('data'),
           horario: fd.get('horario'),
           veiculo: fd.get('veiculo') || $('#rideVehicle').val() || '',
@@ -1312,6 +1472,15 @@ $(function () {
     }
   }
 
+
+  window.addEventListener('communityChanged', () => {
+    const path = window.location.pathname;
+    if (path.includes('caronas/index.html')) {
+      loadCaronas();
+    } else if (path.includes('pedir-carona.html') || path.includes('oferecer-carona.html')) {
+      setupLocaisSelects();
+    }
+  });
 
   async function route() {
     const path = window.location.pathname;
