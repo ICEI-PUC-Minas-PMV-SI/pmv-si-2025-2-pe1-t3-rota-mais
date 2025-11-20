@@ -1,12 +1,39 @@
-document.addEventListener("DOMContentLoaded", () => {
-  
-  setupSidebar();
+const API_BASE = "http://localhost:3000";
+
+async function fetchJSON(path, options = {}) {
+  const res = await fetch(API_BASE + path, options);
+  if (!res.ok) throw new Error(`Erro HTTP ${res.status}`);
+  return await res.json();
+}
+
+function checkAuth() {
+  const userId = localStorage.getItem("userId");
+  if (!userId) {
+    window.location.href = "../../pages/autenticacao/login.html";
+    return false;
+  }
+  return true;
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  if (!checkAuth()) return;
+  try {
+    const currentUserId = Number(localStorage.getItem("userId"));
+    const user = await fetchJSON(`/users/${currentUserId}`);
+    setupSidebar(user);
+  } catch (e) {
+    setupSidebar();
+  }
 });
 
 function createEl(tag, attrs = {}, children = []) {
   const el = document.createElement(tag);
 
   Object.entries(attrs).forEach(([key, value]) => {
+    if (typeof key === 'number' || !isNaN(parseInt(key))) {
+      return;
+    }
+
     if (key === "class") {
       el.className = value;
     } else if (key === "style" && typeof value === "object") {
@@ -29,15 +56,22 @@ function createEl(tag, attrs = {}, children = []) {
   return el;
 }
 
-function setupSidebar() {
+function setupSidebar(user = null) {
   const sidebar = document.querySelector(".sidebar");
   if (!sidebar) return;
 
+  const userAvatar =
+    (user && user.avatar) ||
+    "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png";
+  const userName =
+    (user && (user.name || user.username || "Usuário")) ||
+    "Usuário";
+
   const navItems = [
-    { href: "/pages/caronas/caronas.html", icon: createEl("i", { class: "fa fa-car" }), label: "Caronas" },
-    { href: "/pages/encomendas/encomendas.html", icon: createEl("img", { src: "/assets/images/encomendas.svg", class: "nav-link-icon", style: "max-width: 90%;" }), label: "Encomendas" },
-    { href: "#", icon: createEl("i", { class: "fa fa-users" }), label: "Comunidade" },
-    { href: "#", icon: createEl("i", { class: "fa fa-bars" }), label: "Minhas viagens" }
+    { href: "/pages/caronas/index.html", icon: createEl("i", { class: "fa fa-car" }), label: "Caronas" },
+    { href: "/pages/encomendas/index.html", icon: createEl("img", { src: "/assets/images/encomendas.svg", class: "nav-link-icon", style: "max-width: 90%;" }), label: "Encomendas" },
+    { href: "/pages/comunidades/index.html", icon: createEl("i", { class: "fa fa-users" }), label: "Comunidade" },
+    { href: "/pages/viagens/index.html", icon: createEl("i", { class: "fa fa-bars" }), label: "Minhas viagens" },
   ];
 
   const sidebarContent = createEl("div", { class: "sidebar-container" }, [
@@ -73,15 +107,16 @@ function setupSidebar() {
     ]),
 
     createEl("div", { class: "sidebar-footer" }, [
-      createEl("div", { class: "user-profile d-flex" }, [
+      createEl("a", { href: "/pages/user/index.html", class: "user-profile d-flex align-items-center user-link gap-2" }, [
         createEl("div", { class: "user-avatar-container" }, [
           createEl("img", {
-            src: "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
-            class: "user-avatar"
+            src: userAvatar,
+            class: "user-avatar",
+            alt: "Foto do usuário"
           })
         ]),
         createEl("div", { class: "user-name-container" }, [
-          createEl("span", { class: "user-name" }, " João Silva ")
+          createEl("span", { class: "user-name text-dark" }, userName)
         ])
       ])
     ])

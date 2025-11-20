@@ -1,0 +1,191 @@
+/* ===========================
+   ESTILOS GERAIS DA PÁGINA
+=========================== */
+
+body {
+  font-family: "Nunito", sans-serif;
+  background: #f8fafc;
+  margin: 0;
+}
+
+.main-content .content-wrapper {
+  padding: 20px;
+}
+
+/* ===========================
+   CABEÇALHO
+=========================== */
+
+.comunidades-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.comunidades-titulo {
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #18181b;
+}
+
+.comunidades-cadastrar-local {
+  background: #0e793c !important;
+  border-radius: 12px;
+  color: #fff !important;
+  padding: 10px 20px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.comunidades-cadastrar-local:hover {
+  background: #0c6935 !important;
+}
+
+/* ===========================
+   CAMPO DE BUSCA
+=========================== */
+.comunidades-busca {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 1050px;
+}
+
+.comunidades-procurar-local {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.comunidades-procurar-local:focus {
+  border-color: #0e793c;
+  box-shadow: 0 0 0 3px rgba(14, 121, 60, 0.15);
+  outline: none !important;
+}
+
+.comunidades-btn-procurar-local {
+  background: #0e793c !important;
+}
+
+/* ===========================
+   CARD PADRÃO (PRIMEIRO CARD EXEMPLO)
+=========================== */
+
+.comunidades-box-locais {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  max-width: 1050px;
+  background: #fff;
+  border: 1px solid #d4d4d8;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.comunidades-imagem {
+  flex: 0 0 40%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.comunidades-imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.comunidades-info {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.comunidades-nome-local {
+  font-size: 1.8rem;
+  color: #0e793c;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.comunidades-txt-tipo-local,
+.comunidades-txt-endereco-local,
+.comunidades-txt-quantidade-viagens {
+  font-size: 1rem;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #4b5563;
+}
+
+.comunidades-conhecer-local {
+  align-self: flex-start;
+  background: #a2e9c1;
+  margin-top: auto;
+  border-radius: 10px;
+  padding: 8px 16px;
+}
+
+.comunidades-conhecer-local:hover {
+  background: #8cdba9;
+}
+
+/* ===========================
+   LISTA GERADA VIA JS
+=========================== */
+
+.locais-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 1050px;
+}
+
+/* Cada card da lista dinâmica */
+.local-card {
+  display: flex;
+  border: 1px solid #d4d4d8;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+  transition: 0.2s;
+}
+
+.local-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* ===========================
+   RESPONSIVIDADE
+=========================== */
+
+@media (max-width: 768px) {
+  .comunidades-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .comunidades-box-locais,
+  .local-card {
+    flex-direction: column;
+  }
+
+  .comunidades-imagem {
+    width: 100%;
+    flex: unset;
+  }
+
+  .comunidades-imagem img {
+    height: 200px;
+  }
+}

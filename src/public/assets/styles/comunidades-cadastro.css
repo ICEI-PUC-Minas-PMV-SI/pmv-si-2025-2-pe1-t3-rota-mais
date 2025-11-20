@@ -1,0 +1,63 @@
+.comunidades-cadastro-div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.comunidades-cadastro {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 48%;
+  min-width: 200px;
+}
+
+.rua-cadastro {
+  flex: 1 1 80%;
+}
+
+.numero-cadastro {
+  flex: 1 1 18%;
+}
+
+.comunidades-cadastro-descricao {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.comunidades-procurar-local, select.comunidades-procurar-local {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #d4d4d4;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.comunidades-procurar-local:focus, select.comunidades-procurar-local:focus {
+  border-color: #0c7c4e;
+}
+
+.btn-adicionar-arquivo {
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #cfcfcf;
+  width: 100%;
+  cursor: pointer;
+}
+
+#bnt-cadastrar-local {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 14px;
+  font-size: 1.1rem;
+  border-radius: 14px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .comunidades-cadastro-div {
+    flex-direction: column;
+  }
+}

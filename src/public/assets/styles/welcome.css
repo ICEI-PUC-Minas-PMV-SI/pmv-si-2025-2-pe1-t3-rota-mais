@@ -83,6 +83,9 @@ body {
 }
 
 .btn--entrar {
+  text-align: center;
+  text-decoration: none;
+  padding: 20px;
   color: #005BC4;
   border: 1px solid #0E793C;
   background: transparent;

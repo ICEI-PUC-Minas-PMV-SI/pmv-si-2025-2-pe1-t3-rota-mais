@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/styles/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <title>Rota + | Caronas - Detalhes</title>
+</head>
+
+<body>
+  <aside class="sidebar"></aside>
+
+  <main class="main-content">
+    <div class="content-wrapper">
+
+      <div class="content-header d-flex align-items-center justify-content-between">
+        <h1><strong>Caronas - Detalhes</strong></h1>
+      </div>
+
+      <div id="detalhes-container"></div>
+
+      <div id="detalhes-container-motorista" style="display:none;">
+        <div class="row g-4">
+
+          <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title fw-bold mb-3">Passageiros</h5>
+
+                <div id="motorista-lista-passageiros"></div>
+
+                <div id="motorista-vagas-info" class="text-muted fst-italic mt-3"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title fw-bold mb-3">Encomendas</h5>
+
+                <div id="motorista-lista-encomendas"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+          <button class="btn btn-success px-4 py-2 conclude-trip">
+            <i class="bi bi-check-circle me-1"></i> Concluir viagem
+          </button>
+
+          <button id="edit-travel" class="btn btn-secondary px-4 py-2">
+            <i class="bi bi-pencil-square me-1"></i> Editar viagem
+          </button>
+
+          <button class="btn btn-danger px-4 py-2 cancel-trip">
+            <i class="bi bi-x-circle me-1"></i> Cancelar viagem
+          </button>
+        </div>
+      </div>
+
+      <div id="detalhes-container-passageiro" style="display:none;">
+
+        <div class="mb-3 d-flex align-items-center">
+          <img id="motorista-avatar" src="https://placehold.co/40x40" class="rounded-circle me-2">
+          <div class="d-flex flex-column">
+            <strong id="motorista-nome"></strong>
+            <span id="motorista-rating" class="text-muted"></span>
+            <span class="text-muted">Motorista</span>
+          </div>
+        </div>
+
+        <div class="container">
+          <p class="p-2"><strong id="texto-status-passageiro">Aguardando confirmação do motorista.</strong></p>
+
+          <div class="d-flex justify-content-between gap-4 mb-3">
+            <button id="btn-pedir-vaga" class="btn btn-success w-100"></button>
+            <button id="btn-pedir-encomenda" class="btn btn-outline-success w-100">
+              Pedir transporte de item
+            </button>
+          </div>
+
+          <div id="btn-conversar-motorista-container" style="display:none;" class="mb-3">
+            <button id="btn-conversar-motorista" class="btn btn-primary w-100">
+              <i class="bi bi-chat-dots me-2"></i> Conversar com o motorista
+            </button>
+          </div>
+
+          <div id="btn-concluir-viagem-container" style="display:none;" class="mt-3">
+            <button id="btn-concluir-viagem-passageiro" class="btn btn-success w-100">
+              <i class="bi bi-check-circle me-2"></i> Concluir viagem
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="detalhes-container-criador" style="display:none;">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title fw-bold mb-3">Motoristas Candidatos</h5>
+            <p class="text-muted mb-3">Aprove ou negue os motoristas que se candidataram à sua carona. Apenas um
+              motorista pode ser aprovado.</p>
+
+            <div id="criador-lista-motoristas"></div>
+
+            <div id="criador-motorista-aprovado" class="mt-3" style="display:none;">
+              <div class="alert alert-success">
+                <strong>Motorista Aprovado:</strong>
+                <div id="criador-motorista-info"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="detalhes-container-motorista-candidato" style="display:none;">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title fw-bold mb-3">Candidatar-se à Carona</h5>
+            <p class="text-muted mb-3">Esta carona foi solicitada por um passageiro. Você pode se candidatar para ser o
+              motorista desta viagem.</p>
+
+            <div id="candidato-status" class="mb-3"></div>
+
+            <button id="btn-candidatar-motorista" class="btn btn-primary w-100">
+              <i class="bi bi-hand-thumbs-up me-2"></i> Candidatar-se como Motorista
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="detalhes-container-pedindo-aprovado" style="display:none;">
+        <div class="card shadow-sm mb-3">
+          <div class="card-body">
+            <h5 class="card-title fw-bold mb-3">Carona Confirmada</h5>
+
+            <div id="outro-participante-info" class="mb-4">
+            </div>
+
+            <div class="text-center">
+              <button id="btn-conversar-pedindo" class="btn btn-primary btn-lg">
+                <i class="bi bi-chat-dots me-2"></i> Conversar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.21.0/dist/jquery.validate.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
+    </script>
+  <script src="../../assets/scripts/detailsComponent.js"></script>
+  <script src="../../assets/scripts/aside.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script src="../../assets/scripts/viagens/detalhes.js"></script>
+</body>
+
+</html>

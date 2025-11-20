@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ccb23022-1ef6-41b2-b6eb-453facc08678" name="Changes" comment="" />
+    <list default="true" id="ccb23022-1ef6-41b2-b6eb-453facc08678" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/public/assets/scripts/aside.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/assets/scripts/aside.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/assets/scripts/viagens/detalhes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/assets/scripts/viagens/detalhes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/assets/styles/authentication.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/assets/styles/authentication.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/assets/styles/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/assets/styles/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/pages/autenticacao/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/pages/autenticacao/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/pages/viagens/detalhes.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/pages/viagens/detalhes.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,19 +44,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -67,6 +74,7 @@
       <updated>1760061219847</updated>
       <workItem from="1760061227789" duration="281000" />
       <workItem from="1760061524186" duration="1716000" />
+      <workItem from="1761494391052" duration="306000" />
     </task>
     <servers />
   </component>

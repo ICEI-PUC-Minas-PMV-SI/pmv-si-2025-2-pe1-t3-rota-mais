@@ -262,7 +262,7 @@
   pointer-events: none;
 }
 
-.comunidades-header {
+/*.comunidades-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -335,7 +335,6 @@
   overflow: hidden;
 }
 
-
 .comunidades-box-locais .comunidades-imagem {
   flex: 0 0 40%;
   height: 100%;
@@ -350,6 +349,45 @@
   display: block;
 }
 
+.comunidades-box-local {
+  position: relative;
+  width: 90%;
+  max-width: 1050px;
+  max-height: 300px;
+  border: 1px solid #D4D4D8;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.comunidades-box-local img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.comunidades-box-local2 {
+  position: relative;
+  width: 90%;
+  max-width: 1050px;
+  max-height: 300px;
+  border: 1px;
+  border-radius: 20px;
+  overflow:visible;
+  background: #fff;
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  padding: 0;
+}
+
+
 .comunidades-info, .viagens-info {
   flex: 1;
   padding: 20px;
@@ -359,10 +397,54 @@
   position: relative;
 }
 
+.local-info {
+  flex: 1;
+  font-size: 0.8rem;
+  padding: 20px;
+  display:inline;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  margin-top: 60px;
+  margin-left: -170px;
+  
+}
+
+.local-info2 {
+  flex: 1;
+  font-size: 0.8rem;
+  padding: 20px;
+  display:inline;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  margin-top: 10px;
+  margin-left: -20px;
+  
+}
+
 .comunidades-nome-local, .viagens-origem-destino {
   font-size: 1.8rem;
   color: #0E793C;
   font-weight: 700;
+}
+
+.comunidades-nome-local2 {
+  font-size: 1.8rem;
+  color: #0E793C;
+  font-weight: 700;
+  margin-top: 30px;
+}
+
+.comunidades-contato {
+  position:absolute;
+  top: 15px;
+  right: 0px;    
+  border-radius: 12px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 .comunidades-conhecer-local, .viagens-conferir-info {
@@ -374,9 +456,103 @@
   cursor: pointer;
   transition: 0.2s;
 }
-.comunidades-conhecer-local:hover, .viagens-conferir-info {
+.viagens-conferir-info:hover {
   background: #8cdba9;
 }
+
+.comunidades-cadastro2 {
+ flex: 1; 
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.comunidades-cadastro-descricao{
+display: block;
+  margin-bottom: 8px;
+ font-size: 0.9rem;
+  color: #a7a7a7;
+  font-weight: 700;
+  margin-top: 30px;
+}
+
+.comunidades-cadastro-div{
+ display: flex; 
+  flex-wrap: wrap; 
+  justify-content: space-between; 
+  gap: 20px; 
+}
+
+.btn-adicionar-arquivo {
+  direction: rtl; 
+  text-align: left; 
+  margin-left: 0;
+}
+
+.btn-adicionar-arquivo::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.btn-adicionar-arquivo::before {
+  content: "Selecionar arquivo"; 
+  display: inline-block;
+  background:  #0E793C;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+
+.btn-adicionar-arquivo:hover::before {
+  background-color:  #0c6935;
+}
+
+
+.bnt-pedir-transporte{
+background: #FF7700;
+border-color: #FF7700;
+}
+
+.bnt-pedir-transporte:hover{
+background: #ff5500;
+border-color: #ff5500;
+transform: translateY(-1px);
+}
+
+
+.bnt-oferecer-transporte{
+background: #7828C8;
+border-color: #7828C8;
+}
+
+.bnt-oferecer-transporte:hover{
+background: #6f14ca;
+border-color: #6f14ca;
+transform: translateY(-1px);
+}
+
+
+.encomendas-mais-info {
+  align-self: flex-end;
+  background: #c49ceb;
+  border-radius: 12px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.encomendas-mais-info:hover {
+  background:#c49ceb;
+}
+
+.encomendas-origem-destino {
+  font-size: 1.8rem;
+  color: #7828C8;
+  font-weight: 700;
+}
+
 
 @media (max-width: 768px) {
   .comunidades-header {
@@ -390,4 +566,4 @@
   .comunidades-box-locais img {
     width: 100%;
   }
-}
+}*/

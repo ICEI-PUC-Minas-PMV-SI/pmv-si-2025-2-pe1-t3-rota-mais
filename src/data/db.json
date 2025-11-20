@@ -4,17 +4,18 @@
       "tipo": "pedindo",
       "usuario": {
         "nome": "João Silva",
-        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png"
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+        "email": ""
       },
       "rota": {
-        "origem": "Partida",
-        "destino": "Chegada"
+        "origem": "aaaaaa",
+        "destino": "bbbbb"
       },
       "data": "06/10/2025",
       "horario": "14:00",
       "tipoCarona": "comum",
       "precisaRetorno": true,
-      "dataRetorno": "",
+      "dataRetorno": "06/10/2025",
       "horarioRetorno": "20:00",
       "id": 1759797187367
     },
@@ -176,9 +177,466 @@
       "dataRetorno": "123",
       "horarioRetorno": "123",
       "id": 1761008136430
+    },
+    {
+      "tipo": "pedindo",
+      "usuario": {
+        "nome": "João Silva",
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png"
+      },
+      "rota": {
+        "origem": "Partida",
+        "destino": "Chegada"
+      },
+      "data": "342",
+      "horario": "432",
+      "precisaRetorno": true,
+      "dataRetorno": "432",
+      "horarioRetorno": "432",
+      "tipoCarona": "comum",
+      "subtitle": "De Partida para Chegada",
+      "id": 1762214856886
+    },
+    {
+      "tipo": "pedindo",
+      "usuario": {
+        "nome": "João Silva",
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png"
+      },
+      "rota": {
+        "origem": "haha",
+        "destino": "aha"
+      },
+      "data": "06/11/2025",
+      "horario": "23:23",
+      "tipoCarona": "emergencial",
+      "precisaRetorno": false,
+      "dataRetorno": "",
+      "horarioRetorno": "",
+      "id": 1762394437363
+    },
+    {
+      "tipo": "pedindo",
+      "usuario": {
+        "nome": "João Silva",
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png"
+      },
+      "rota": {
+        "origem": "teste",
+        "destino": "teste2"
+      },
+      "data": "05/11/2025",
+      "horario": "23:10",
+      "tipoCarona": "emergencial",
+      "motivo": "socorro",
+      "precisaRetorno": false,
+      "dataRetorno": "",
+      "horarioRetorno": "",
+      "subtitle": "De teste para teste2",
+      "id": 1762395063676
+    },
+    {
+      "tipo": "pedindo",
+      "usuario": {
+        "nome": "João Silva",
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+        "email": ""
+      },
+      "rota": {
+        "origem": "farmacia",
+        "destino": "papagaios"
+      },
+      "data": "15/11/2025",
+      "horario": "09:24",
+      "tipoCarona": "emergencial",
+      "motivo": "Sofri um acidente e preciso ir ao hospital",
+      "precisaRetorno": false,
+      "dataRetorno": "",
+      "horarioRetorno": "",
+      "subtitle": "De farmacia para papagaios",
+      "id": 1763209489775
+    },
+    {
+      "tipo": "pedindo",
+      "usuario": {
+        "nome": "João Silva",
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+        "email": ""
+      },
+      "criadorId": 7,
+      "passageiroId": 7,
+      "motoristaId": null,
+      "rota": {
+        "origem": "Farmacia",
+        "destino": "Papagaios"
+      },
+      "data": "17/11/2025",
+      "horario": "19:00",
+      "tipoCarona": "emergencial",
+      "motivo": "Testes",
+      "precisaRetorno": false,
+      "dataRetorno": "",
+      "horarioRetorno": "",
+      "motoristasCandidatos": [],
+      "passageiros": [],
+      "encomendas": [],
+      "statusViagem": "agendada",
+      "id": 1763321515481
+    },
+    {
+      "tipo": "pedindo",
+      "usuario": {
+        "nome": "thor",
+        "email": "thor",
+        "senha": "thor",
+        "usuario": "",
+        "telefone": "",
+        "comunidade": "",
+        "cidade": "",
+        "endereco": {
+          "rua": "",
+          "numero": "",
+          "complemento": "",
+          "bairro": "",
+          "referencia": ""
+        },
+        "vehicles": [],
+        "id": 7
+      },
+      "criadorId": 7,
+      "passageiroId": 7,
+      "motoristaId": null,
+      "rota": {
+        "origem": "Farmacia",
+        "destino": "Papagaios"
+      },
+      "data": "17/11/2025",
+      "horario": "19:00",
+      "tipoCarona": "comum",
+      "precisaRetorno": false,
+      "dataRetorno": "",
+      "horarioRetorno": "",
+      "motoristasCandidatos": [],
+      "passageiros": [],
+      "encomendas": [],
+      "statusViagem": "agendada",
+      "subtitle": "De Farmacia para Papagaios",
+      "id": 1763321749794
+    },
+    {
+      "tipo": "pedindo",
+      "usuario": {
+        "nome": "João Silva",
+        "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+        "email": ""
+      },
+      "criadorId": 14,
+      "passageiroId": 14,
+      "motoristaId": null,
+      "rota": {
+        "origem": "Farmacia",
+        "destino": "Papagaios"
+      },
+      "data": "17/11/2025",
+      "horario": "19:00",
+      "tipoCarona": "comum",
+      "precisaRetorno": false,
+      "dataRetorno": "",
+      "horarioRetorno": "",
+      "motoristasCandidatos": [],
+      "passageiros": [],
+      "encomendas": [],
+      "statusViagem": "agendada",
+      "subtitle": "De Farmacia para Papagaios",
+      "id": 1763325187871
     }
   ],
   "encomendas": [],
   "comunidades": [],
-  "viagens": []
+  "locais": [
+    {
+      "id": 1,
+      "nome": "Mercado Central",
+      "tipo": "Mercado",
+      "endereco": "Rua das Flores, 123 - Centro",
+      "quantidadeViagens": 14,
+      "imagem": "../../assets/images/mercado_central.jpg",
+      "criador": "Marcos Antônio",
+      "contato": "+553199999999"
+    },
+    {
+      "id": 2,
+      "nome": "Posto de Saúde Bela Vista",
+      "tipo": "Posto de Saúde",
+      "endereco": "Avenida Principal, 890 - Bela Vista",
+      "quantidadeViagens": 7,
+      "imagem": "../../assets/images/posto_de_saude.jpeg",
+      "criador": "Angel Caroline",
+      "contato": "+553199999998"
+    }
+  ],
+  "viagens": [],
+  "vehicles": [],
+  "messages": [],
+  "users": [
+    {
+      "id": 1,
+      "name": "Maria Augusta",
+      "role": "motorista"
+    },
+    {
+      "id": 2,
+      "name": "Carlos",
+      "role": "passageiro"
+    },
+    {
+      "nome": "teste",
+      "email": "teste@gmail.com",
+      "senha": "teste",
+      "usuario": "teste",
+      "telefone": "123",
+      "comunidade": "teste",
+      "cidade": "testes",
+      "endereco": {
+        "rua": "teste",
+        "numero": "123",
+        "complemento": "a",
+        "bairro": "teste",
+        "referencia": "teste"
+      },
+      "vehicles": [],
+      "id": 3
+    },
+    {
+      "nome": "teste2",
+      "email": "teste2@gmail.com",
+      "senha": "",
+      "usuario": "teste2",
+      "telefone": "123",
+      "comunidade": "teste",
+      "cidade": "teste",
+      "endereco": {
+        "rua": "test",
+        "numero": "123",
+        "complemento": "a",
+        "bairro": "teste",
+        "referencia": "teste"
+      },
+      "vehicles": [],
+      "id": 4
+    },
+    {
+      "nome": "teste2",
+      "email": "teste21@gmail.com",
+      "senha": "",
+      "usuario": "teste2",
+      "telefone": "123",
+      "comunidade": "teste",
+      "cidade": "teste",
+      "endereco": {
+        "rua": "test",
+        "numero": "123",
+        "complemento": "a",
+        "bairro": "teste",
+        "referencia": "teste"
+      },
+      "vehicles": [],
+      "id": 5
+    },
+    {
+      "nome": "",
+      "email": "",
+      "senha": "",
+      "usuario": "",
+      "telefone": "",
+      "comunidade": "",
+      "cidade": "",
+      "endereco": {
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "id": 6
+    },
+    {
+      "nome": "thor",
+      "email": "thor",
+      "senha": "thor",
+      "usuario": "",
+      "telefone": "",
+      "comunidade": "",
+      "cidade": "",
+      "endereco": {
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "id": 7
+    },
+    {
+      "nome": "validacao1",
+      "email": "validacao1@gmail.com",
+      "senha": "validacao1",
+      "usuario": "validacao1",
+      "telefone": "",
+      "comunidade": "",
+      "cidade": "",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+      "endereco": {
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "dataCriacao": "2025-11-16T19:48:07.274Z",
+      "ativo": true,
+      "id": 8
+    },
+    {
+      "nome": "novo1",
+      "email": "novo1@gmail.com",
+      "senha": "novo1",
+      "usuario": "novo1",
+      "telefone": "",
+      "comunidade": "",
+      "cidade": "",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+      "endereco": {
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "dataCriacao": "2025-11-16T19:49:42.105Z",
+      "ativo": true,
+      "id": 9
+    },
+    {
+      "id": 10,
+      "name": "caminhao",
+      "email": "caminhao@gmail.com",
+      "senha": "caminhao1",
+      "usuario": "caminhao",
+      "telefone": "",
+      "comunidade": "",
+      "cidade": "",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+      "endereco": {
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "dataCriacao": "2025-11-16T19:51:39.268Z",
+      "ativo": true
+    },
+    {
+      "id": 11,
+      "nome": "gta",
+      "email": "gta@gmail.com",
+      "senha": "gtagta",
+      "usuario": "gta",
+      "telefone": "",
+      "comunidade": "",
+      "cidade": "",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+      "endereco": {
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "dataCriacao": "2025-11-16T19:58:06.036Z",
+      "ativo": true
+    },
+    {
+      "id": 12,
+      "nome": "mooca",
+      "email": "mooca@gmail.com",
+      "senha": "mooca",
+      "usuario": "mooca",
+      "telefone": "",
+      "comunidade": "",
+      "cidade": "",
+      "avatar": "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png",
+      "endereco": {
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "dataCriacao": "2025-11-16T20:01:32.724Z",
+      "ativo": true
+    },
+    {
+      "name": "testenome",
+      "email": "testenome@gmail.com",
+      "senha": "testenome",
+      "usuario": "testenome",
+      "telefone": "",
+      "comunidade": "",
+      "cidade": "",
+      "endereco": {
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "id": 13
+    },
+    {
+      "name": "ultimoteste",
+      "email": "ultimoteste@gmail.com",
+      "senha": "ultimo",
+      "usuario": "ultimo",
+      "telefone": "",
+      "comunidade": "",
+      "cidade": "",
+      "endereco": {
+        "rua": "",
+        "numero": "",
+        "complemento": "",
+        "bairro": "",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "id": 14
+    },
+    {
+      "name": "Angel",
+      "email": "angelcas98@outlook.com",
+      "senha": "123456+",
+      "usuario": "angelcas",
+      "telefone": "",
+      "comunidade": "Taquara",
+      "cidade": "Papagaios, MG",
+      "endereco": {
+        "rua": "Rua das Rosas",
+        "numero": "134",
+        "complemento": "N",
+        "bairro": "Sem bairro",
+        "referencia": ""
+      },
+      "vehicles": [],
+      "id": 15
+    }
+  ]
 }

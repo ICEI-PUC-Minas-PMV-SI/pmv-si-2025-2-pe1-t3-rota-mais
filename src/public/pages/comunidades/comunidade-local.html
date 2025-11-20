@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/styles/main.css">
+  <link rel="stylesheet" href="../../assets/styles/comunidades.css">
+  <!-- Estilo específico da página do local -->
+  <link rel="stylesheet" href="../../assets/styles/comunidade-local.css">
+  <title>Rota + | Local</title>
+</head>
+
+<body class="body">
+  <aside class="sidebar"></aside>
+
+  <main class="main-content">
+    <div class="content-wrapper">
+
+      <!-- Banner / imagem do local -->
+      <header class="local-cabecalho">
+        <div class="local-banner">
+          <img id="local-banner-img" src="../../assets/images/imagem-exemplo.jpg" alt="Foto do local">
+        </div>
+      </header>
+
+      <!-- Informações principais -->
+      <section class="local-principal">
+        <div class="local-titulo">
+          <h1 id="local-nome" class="local-nome">Nome do Local</h1>
+          <div id="local-meta" class="local-meta">
+            <!-- preenchido pelo JS -->
+            <span id="local-criador" class="bi bi-person-circle"> Criado por <strong
+                id="local-criador-nome">—</strong></span>
+            <span id="local-categoria" class="bi bi-shop-window"> Categoria</span>
+            <span id="local-quantidade" class="bi bi-car-front-fill"> X viagens passam por aqui</span>
+            <span id="local-endereco" class="bi bi-geo-alt-fill"> Endereço</span>
+          </div>
+        </div>
+        <div class="local-acao">
+          <button id="btn-contato" class="btn btn-success local-botao-contato bi bi-whatsapp"> Entrar em
+            contato</button>
+        </div>
+      </section>
+
+      <!-- Destaque de uma carona ativa (opcional) -->
+      <section class="carona-destaque" id="carona-destaque">
+        <!-- bloco exemplo / será substituído pelo JS se houver carona em destaque -->
+      </section>
+
+      <!-- Lista de caronas -->
+      <section>
+        <div id="caronas-container" class="lista-caronas"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="../../assets/scripts/aside.js"></script>
+  <script src="../../assets/scripts/searchComponent.js"></script>
+  <script src="../../assets/scripts/app.js"></script>
+  <script src="../../assets/scripts/comunidades/comunidades.js"></script>
+  <!-- Script específico da página -->
+  <script src="../../assets/scripts/comunidades/comunidade-local.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+</html>
