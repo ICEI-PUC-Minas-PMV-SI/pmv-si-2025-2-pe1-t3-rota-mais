@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
 
       setTimeout(() => {
-        window.location.href = "/pages/comunidades/comunidades.html";
+        window.location.href = "/pages/comunidades/index.html";
       }, 1200);
 
     } catch (err) {
