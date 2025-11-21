@@ -5,10 +5,6 @@
   overflow:hidden;
 }
 
-body {
-  font-family: Arial, sans-serif;
-}
-
 .welcome__container {
   display: flex;  
   align-items: stretch; 

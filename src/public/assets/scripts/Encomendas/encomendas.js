@@ -44,7 +44,7 @@ $(function () {
                 return;
             }
             const encomendasOrdenadas = encomendas.sort((a, b) => (b.id || 0) - (a.id || 0));
-            encomendasOrdenadas.forEach(c => $container.append(buildencomendaCard(c)));
+            encomendasOrdenadas.forEach(c => $container.append(buildEncomendaCard(c)));
         } catch (e) {
             emptyState($container, 'bi bi-exclamation-triangle', 'Erro ao carregar encomendas');
         }
@@ -89,7 +89,7 @@ $(function () {
                 return;
             }
             const listOrdenada = list.sort((a, b) => (b.id || 0) - (a.id || 0));
-            listOrdenada.forEach(c => $container.append(buildencomendaCard(c)));
+            listOrdenada.forEach(c => $container.append(buildEncomendaCard(c)));
         } catch (e) { }
     }
 
@@ -111,7 +111,7 @@ $(function () {
                 return;
             }
             const filteredOrdenado = filtered.sort((a, b) => (b.id || 0) - (a.id || 0));
-            filteredOrdenado.forEach(c => $container.append(buildencomendaCard(c)));
+            filteredOrdenado.forEach(c => $container.append(buildEncomendaCard(c)));
         } catch (e) { }
     }
 

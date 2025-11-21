@@ -77,7 +77,6 @@ function setupSidebar(user = null) {
     { href: "/pages/encomendas/index.html", icon: createEl("img", { src: "/assets/images/encomendas.svg", class: "nav-link-icon", style: "max-width: 90%;" }), label: "Encomendas" },
     { href: "/pages/comunidades/index.html", icon: createEl("i", { class: "fa fa-users" }), label: "Comunidade" },
     { href: "/pages/viagens/index.html", icon: createEl("i", { class: "fa fa-bars" }), label: "Minhas viagens" },
-    { href: "/pages/user/index.html", icon: createEl("img", { src: userAvatar, class: "user-avatar", style: { width: "32px", height: "32px", borderRadius: "50%", objectFit: "cover" } }), label: userName, class: "user-nav", style: { padding: "6px 10px", marginTop: "-10px" }}
   ];
 
   const sidebarContent = createEl("div", { class: "sidebar-container" }, [

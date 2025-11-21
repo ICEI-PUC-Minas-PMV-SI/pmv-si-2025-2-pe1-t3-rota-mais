@@ -80,23 +80,12 @@ if (btn) {
       horaRetorno: horaRetorno ? horaRetorno.value : ''
     };
 
-    console.log('Oferta criada:', dados);
-    alert('Oferta criada com sucesso! Veja o console para detalhes.');
-
-    // Opcional: limpar campos após criação
-    partida.value = '';
-    chegada.value = '';
-    dataViagem.value = '';
-    horaPartida.value = '';
-    veiculo.value = '';
-    placa.value = '';
-    if (dataRetorno) dataRetorno.value = '';
-    if (horaRetorno) horaRetorno.value = '';
-
-    // Reajusta exibição do retorno (caso a opção seja "Não incluir")
     const incluirRetornoAtivo = document.querySelector('#retornoOptions .active');
     if (incluirRetornoAtivo && incluirRetornoAtivo.innerText.includes('Não incluir')) {
       retornoContainer.style.display = 'none';
     }
+    
+    console.log('Oferta criada:', dados);
+    window.location.href = '/pages/encomendas/index.html';
   });
 }
