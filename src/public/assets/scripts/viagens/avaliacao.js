@@ -13,10 +13,6 @@ function checkAuth() {
     return true;
 }
 
-async function resolveMotorista(carona) {
-    if (!carona.motoristaId) return null;
-    return await fetchJSON(`/users/${carona.motoristaId}`);
-}
 
 $(document).ready(async function () {
     if (!checkAuth()) return;
@@ -34,7 +30,7 @@ $(document).ready(async function () {
 
     try {
         const carona = await fetchJSON(`/caronas/${caronaId}`);
-        const motorista = await resolveMotorista(carona);
+        const motorista = carona.motoristaId ? await fetchJSON(`/users/${carona.motoristaId}`) : null;
 
         const encomendasAprovadas = (carona.encomendas || []).filter(e => e.status === 'aprovado');
         const userEncomenda = encomendasAprovadas.find(e => e.userId === currentUserId);
@@ -46,6 +42,20 @@ $(document).ready(async function () {
         if (isEncomenda) {
             if (motorista && motorista.id !== currentUserId) {
                 criarItemAvaliacao(motorista, "Motorista", $container);
+            }
+        } else if (carona.tipo === 'pedindo') {
+            const isMotorista = carona.motoristaId === currentUserId;
+            const isPassageiro = carona.passageiroId === currentUserId;
+
+            if (isMotorista) {
+                if (carona.passageiroId && carona.passageiroId !== currentUserId) {
+                    const passageiro = await fetchJSON(`/users/${carona.passageiroId}`);
+                    criarItemAvaliacao(passageiro, "Passageiro", $container);
+                }
+            } else if (isPassageiro) {
+                if (motorista && motorista.id !== currentUserId) {
+                    criarItemAvaliacao(motorista, "Motorista", $container);
+                }
             }
         } else {
             const passageiros = carona.passageiros || [];
@@ -69,41 +79,43 @@ $(document).ready(async function () {
             await salvarAvaliacoes(caronaId, currentUserId);
         });
 
-    } catch (e) {
-        console.error("Erro ao carregar dados da viagem:", e);
+    } catch {
         Swal.fire("Erro", "Falha ao carregar dados da viagem.", "error");
     }
 });
 
 function criarItemAvaliacao(user, papel, $container) {
+    const papelEmoji = papel === 'Motorista' ? '🚗' : '👤';
     const $item = $(`
-    <div class="avaliacao-item mb-3" data-user-id="${user.id}">
-      <div class="d-flex align-items-start gap-3 p-3 pb-0">
-        <img src="${user.avatar || 'https://placehold.co/40x40'}" class="rounded-circle" alt="Foto" width="50" height="50" style="object-fit: cover;">
+    <div class="avaliacao-item mb-4 p-4 border rounded shadow-sm" data-user-id="${user.id}" style="background-color: #f8f9fa;">
+      <div class="d-flex align-items-start gap-3 mb-3">
+        <img src="${user.avatar || 'https://placehold.co/60x60'}" class="rounded-circle" alt="Foto" width="60" height="60" style="object-fit: cover; border: 2px solid #dee2e6;">
         <div class="flex-grow-1">
-          <div class="d-flex justify-content-between align-items-center mb-1">
-            <div class="d-flex flex-column justify-content-around">
-              <div class="d-flex align-items-center gap-2">
-                <strong>${user.name || 'Usuário'}</strong>
-                <span class="text-muted">★ ${user.rating || '5.0'}</span>
-              </div>
-              <div>
-                <span class="text-muted">${papel}</span>
-              </div>
-            </div>
-            <div class="d-flex justify-content-end w-75">
-              <textarea class="form-control resize-none comentario-avaliacao" rows="2" 
-                placeholder="Adicione um comentário" data-user-id="${user.id}"></textarea>
-            </div>
+          <div class="d-flex align-items-center gap-2 mb-1">
+            <strong style="font-size: 1.1rem;">${user.name || 'Usuário'}</strong>
+            <span class="badge bg-info">${papelEmoji} ${papel}</span>
+            <span class="text-muted ms-auto">★ ${user.rating || '5.0'}</span>
           </div>
         </div>
       </div>
-      <div class="d-flex mb-2 px-3 avaliacao-estrelas" data-user-id="${user.id}">
-        <i class="bi bi-star-fill me-2 fs-1 text-secondary estrela" data-value="1" data-user-id="${user.id}"></i>
-        <i class="bi bi-star-fill me-2 fs-1 text-secondary estrela" data-value="2" data-user-id="${user.id}"></i>
-        <i class="bi bi-star-fill me-2 fs-1 text-secondary estrela" data-value="3" data-user-id="${user.id}"></i>
-        <i class="bi bi-star-fill me-2 fs-1 text-secondary estrela" data-value="4" data-user-id="${user.id}"></i>
-        <i class="bi bi-star-fill me-2 fs-1 text-secondary estrela" data-value="5" data-user-id="${user.id}"></i>
+      
+      <div class="mb-3">
+        <label class="form-label fw-bold">Avaliação com estrelas:</label>
+        <div class="d-flex gap-1 avaliacao-estrelas" data-user-id="${user.id}" style="font-size: 2rem;">
+          <i class="bi bi-star-fill text-secondary estrela" data-value="1" data-user-id="${user.id}" style="cursor: pointer; transition: all 0.2s;"></i>
+          <i class="bi bi-star-fill text-secondary estrela" data-value="2" data-user-id="${user.id}" style="cursor: pointer; transition: all 0.2s;"></i>
+          <i class="bi bi-star-fill text-secondary estrela" data-value="3" data-user-id="${user.id}" style="cursor: pointer; transition: all 0.2s;"></i>
+          <i class="bi bi-star-fill text-secondary estrela" data-value="4" data-user-id="${user.id}" style="cursor: pointer; transition: all 0.2s;"></i>
+          <i class="bi bi-star-fill text-secondary estrela" data-value="5" data-user-id="${user.id}" style="cursor: pointer; transition: all 0.2s;"></i>
+        </div>
+      </div>
+      
+      <div>
+        <label class="form-label fw-bold">Comentário (opcional):</label>
+        <textarea class="form-control comentario-avaliacao" rows="3" 
+          placeholder="Deixe um comentário sobre sua experiência com este participante..." 
+          data-user-id="${user.id}"
+          style="resize: none;"></textarea>
       </div>
     </div>
   `);
@@ -114,6 +126,20 @@ function criarItemAvaliacao(user, papel, $container) {
         atualizarEstrelas(userId, value);
     });
 
+    $item.find(".estrela").on("mouseenter", function () {
+        const userId = $(this).data("user-id");
+        const value = $(this).data("value");
+        $(`.estrela[data-user-id="${userId}"]`).each(function () {
+            const estrelaValue = $(this).data("value");
+            if (estrelaValue <= value) {
+                $(this).css("transform", "scale(1.1)");
+            }
+        });
+    }).on("mouseleave", function () {
+        const userId = $(this).data("user-id");
+        $(`.estrela[data-user-id="${userId}"]`).css("transform", "scale(1)");
+    });
+
     $container.append($item);
 }
 
@@ -122,8 +148,10 @@ function atualizarEstrelas(userId, value) {
         const estrelaValue = $(this).data("value");
         if (estrelaValue <= value) {
             $(this).removeClass("text-secondary").addClass("text-warning");
+            $(this).css("transform", "scale(1)");
         } else {
             $(this).removeClass("text-warning").addClass("text-secondary");
+            $(this).css("transform", "scale(1)");
         }
     });
 }
@@ -176,8 +204,7 @@ async function salvarAvaliacoes(caronaId, avaliadorId) {
         Swal.fire("Sucesso!", "Avaliações salvas com sucesso.", "success").then(() => {
             window.location.href = "index.html";
         });
-    } catch (e) {
-        console.error("Erro ao salvar avaliações:", e);
+    } catch {
         Swal.fire("Erro", "Não foi possível salvar as avaliações.", "error");
     }
 }
@@ -202,8 +229,6 @@ async function atualizarMediaAvaliacao(userId) {
                 rating: mediaArredondada
             })
         });
-    } catch (e) {
-        console.error(`Erro ao atualizar média de avaliação do usuário ${userId}:`, e);
-    }
+    } catch {}
 }
 

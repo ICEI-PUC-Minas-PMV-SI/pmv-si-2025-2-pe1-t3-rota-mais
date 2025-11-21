@@ -31,7 +31,7 @@ async function createDetailsComponent(carona, container, vehicle = null) {
 
     const ul = createElDetailsComponent('ul', 'list-unstyled mb-4');
 
-    const vagasTotais = vehicle ? vehicle.availableSeats : (carona.vagas || 1);
+    const vagasTotais = vehicle ? vehicle.availableSeats : (carona.vagas || 0);
     const aprovados = carona.passageiros ? carona.passageiros.filter(p => p.status === 'aprovado').length : 0;
     const vagasRestantes = vagasTotais - aprovados;
 
@@ -43,9 +43,12 @@ async function createDetailsComponent(carona, container, vehicle = null) {
         veiculoTexto = carona.veiculo;
     }
 
-    const textoVagas = vagasRestantes === 1
-        ? `<strong>${vagasRestantes}</strong> de <strong>${vagasTotais}</strong> vaga disponível`
-        : `<strong>${vagasRestantes}</strong> de <strong>${vagasTotais}</strong> vagas disponíveis`;
+    let textoVagas;
+    if (vagasRestantes <= 0) {
+        textoVagas = `<strong>${aprovados}</strong> de <strong>${vagasTotais}</strong> vaga${vagasTotais > 1 ? 's' : ''} ocupada${aprovados !== 1 ? 's' : ''} - Sem vagas disponíveis`;
+    } else {
+        textoVagas = `<strong>${aprovados}</strong> de <strong>${vagasTotais}</strong> vaga${vagasTotais > 1 ? 's' : ''} ocupada${aprovados !== 1 ? 's' : ''} - <strong>${vagasRestantes}</strong> disponível${vagasRestantes > 1 ? 'eis' : ''}`;
+    }
 
     const listItems = [
         `<i class="bi bi-person-plus"></i> ${textoVagas}`,

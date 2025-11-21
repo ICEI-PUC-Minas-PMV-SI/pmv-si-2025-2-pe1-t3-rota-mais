@@ -1,6 +1,10 @@
 $(function () {
-
-  if (typeof $.validator !== 'undefined' && $.validator.methods) {
+  function addCustomValidationMethods() {
+    if (typeof $.validator === 'undefined' || !$.validator.methods) {
+      setTimeout(addCustomValidationMethods, 100);
+      return;
+    }
+    
     $.validator.addMethod("pattern", function (value, element, param) {
       if (!param) return true;
       if (!value) return true;
@@ -12,23 +16,52 @@ $(function () {
       }
       return regex.test(value);
     }, "Formato inválido");
-  } else {
-    setTimeout(function () {
-      if (typeof $.validator !== 'undefined' && $.validator.methods) {
-        $.validator.addMethod("pattern", function (value, element, param) {
-          if (!param) return true;
-          if (!value) return true;
-          let regex;
-          if (param instanceof RegExp) {
-            regex = param;
-          } else {
-            regex = new RegExp(param);
-          }
-          return regex.test(value);
-        }, "Formato inválido");
+    
+    $.validator.addMethod("validDate", function (value, element) {
+      if (!value) return true;
+      const parts = value.split('/');
+      if (parts.length !== 3) return false;
+      const [dia, mes, ano] = parts.map(p => parseInt(p));
+      if (isNaN(dia) || isNaN(mes) || isNaN(ano)) return false;
+      if (dia < 1 || dia > 31) return false;
+      if (mes < 1 || mes > 12) return false;
+      if (ano < 1900 || ano > 2100) return false;
+      const date = new Date(ano, mes - 1, dia);
+      return date.getDate() === dia && date.getMonth() === mes - 1 && date.getFullYear() === ano;
+    }, "Data inválida. Use o formato DD/MM/AAAA com valores válidos.");
+
+    $.validator.addMethod("dateGreaterThan", function (value, element, param) {
+      if (!value) return true;
+      
+      const $form = $(element).closest('form');
+      const dataIdaSelector = param || '#data, #data-pedido, #data-oferta';
+      const $dataIda = $form.find(dataIdaSelector).first();
+      const dataIda = $dataIda.val();
+      
+      if (!dataIda) return true;
+      
+      const parseDate = (dateStr) => {
+        if (!dateStr) return null;
+        const parts = dateStr.split('/');
+        if (parts.length !== 3) return null;
+        const [dia, mes, ano] = parts.map(p => parseInt(p));
+        if (isNaN(dia) || isNaN(mes) || isNaN(ano)) return null;
+        if (dia < 1 || dia > 31 || mes < 1 || mes > 12) return null;
+        return new Date(ano, mes - 1, dia);
+      };
+      
+      try {
+        const dataIdaObj = parseDate(dataIda);
+        const dataRetornoObj = parseDate(value);
+        if (!dataIdaObj || !dataRetornoObj) return true;
+        return dataRetornoObj >= dataIdaObj;
+      } catch {
+        return true;
       }
-    }, 100);
+    }, "A data de retorno não pode ser anterior à data de ida");
   }
+  
+  addCustomValidationMethods();
 
   function el(tag, cls, text) {
     const $e = $(`<${tag}>`);
@@ -49,11 +82,7 @@ $(function () {
   }
 
   function getCurrentUser() {
-    const saved = localStorage.getItem('currentUser');
-    if (saved) return JSON.parse(saved);
-    const def = { nome: 'João Silva', avatar: 'https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png', email: '' };
-    localStorage.setItem('currentUser', JSON.stringify(def));
-    return def;
+    return JSON.parse(localStorage.getItem('user'));
   }
 
   async function fetchJSON(url, options = {}) {
@@ -79,13 +108,6 @@ $(function () {
     $(selector).mask('99:99');
   }
 
-  function hasReturn() {
-    if ($('input[name="precisa-retorno"]:checked')) {
-      $('#retorno-fields').show();
-    } else {
-      $('#retorno-fields').hide();
-    }
-  }
 
   function toggleCaronaType() {
     const tipoCarona = $('input[name="tipo-carona"]:checked').val();
@@ -126,7 +148,7 @@ $(function () {
 
     addRule('origem', { required: true }, 'O local de partida é obrigatório');
     addRule('destino', { required: true }, 'O local de destino é obrigatório');
-    addRule('data', { required: true }, 'A data é obrigatória');
+    addRule('data', { required: true, validDate: true }, 'A data é obrigatória e deve ser válida');
     addRule('horario', {
       required: true,
       pattern: /^([0-1]\d|2[0-3]):([0-5]\d)$/
@@ -138,8 +160,10 @@ $(function () {
         required: function () {
           const precisa = $('input[name="precisa-retorno"]:checked').val();
           return precisa === 'sim';
-        }
-      }, 'A data de retorno é obrigatória');
+        },
+        validDate: true,
+        dateGreaterThan: '#data, #data-pedido'
+      }, 'A data de retorno é obrigatória e não pode ser anterior à data de ida');
       addRule('horario-retorno', {
         required: function () {
           const precisa = $('input[name="precisa-retorno"]:checked').val();
@@ -150,7 +174,7 @@ $(function () {
 
       addRule('origem-emergencial', { required: true }, 'O local de partida é obrigatório');
       addRule('destino-emergencial', { required: true }, 'O local de destino é obrigatório');
-      addRule('data-emergencial', { required: true }, 'A data é obrigatória');
+      addRule('data-emergencial', { required: true, validDate: true }, 'A data é obrigatória e deve ser válida');
       addRule('motivo-emergencial', { required: true }, 'O motivo da carona é obrigatório');
     }
 
@@ -163,8 +187,10 @@ $(function () {
       addRule('data-retorno', {
         required: function () {
           return $('input[name="incluir-retorno"]:checked').val() === 'sim';
-        }
-      }, 'A data de retorno é obrigatória');
+        },
+        validDate: true,
+        dateGreaterThan: '#data, #data-oferta'
+      }, 'A data de retorno é obrigatória e não pode ser anterior à data de ida');
       addRule('horario-retorno', {
         required: function () {
           return $('input[name="incluir-retorno"]:checked').val() === 'sim';
@@ -191,8 +217,7 @@ $(function () {
           }
         }
       });
-    } catch (error) {
-      console.error('Erro ao configurar validação:', error);
+    } catch {
       return null;
     }
   }
@@ -212,9 +237,7 @@ $(function () {
         criadorNome = carona.usuario.nome;
         criadorAvatar = carona.usuario.avatar || criadorAvatar;
       }
-    } catch (e) {
-      console.error('Erro ao buscar dados do criador:', e);
-    }
+    } catch {}
     
     const action = tipo === 'oferecendo' ? 'está oferecendo uma carona' : 'está pedindo uma carona';
     const $card = el('div', 'carona-card p-4 rounded mb-3 position-relative');
@@ -265,11 +288,7 @@ $(function () {
     const $h2 = el('h2');
     const origem = carona.rota && carona.rota.origem ? carona.rota.origem : '';
     const destino = carona.rota && carona.rota.destino ? carona.rota.destino : '';
-    const $h2Text1 = document.createTextNode('De ');
-    const $strongOrigem = $('<strong>').text(origem);
-    const $h2Text2 = document.createTextNode(' para ');
-    const $strongDestino = $('<strong>').text(destino);
-    $h2.append($h2Text1, $strongOrigem[0], $h2Text2, $strongDestino[0]);
+    $h2.append(document.createTextNode('De '), $('<strong>').text(origem)[0], document.createTextNode(' para '), $('<strong>').text(destino)[0]);
     $rota.append($h2);
     const $details = el('div', 'carona-details d-flex flex-wrap gap-3 mb-3');
     const $data = el('div', 'd-flex align-items-center gap-2');
@@ -365,17 +384,35 @@ $(function () {
           $actionBtn.on('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            participarViagem(carona.id);
+            window.location.href = `/pages/viagens/detalhes.html?id=${carona.id}&tipo=${carona.tipo}`;
           });
         }
       }
     } else {
-      $actionBtn.append(icon('bi bi-hand-thumbs-up'), el('span', null, ' Se candidatar'));
-      $actionBtn.on('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        oferecerCarona(carona.id);
-      });
+      const isCriadorPedindo = carona.passageiroId === currentUserId || carona.criadorId === currentUserId;
+      const jaTemMotorista = !!carona.motoristaId;
+      const motoristasCandidatos = carona.motoristasCandidatos || [];
+      const jaCandidatou = motoristasCandidatos.some(m => m.motoristaId === currentUserId);
+      const temVeiculo = await verificarVeiculosUsuario();
+      
+      if (isCriadorPedindo) {
+        $actionBtn.attr('style', 'display: none !important');
+      } else if (jaTemMotorista) {
+        $actionBtn.append(icon('bi bi-x-circle'), el('span', null, ' Carona já tem motorista'));
+        $actionBtn.prop('disabled', true).removeClass('btn-oferecer').addClass('btn-secondary');
+      } else if (jaCandidatou) {
+        $actionBtn.append(icon('bi bi-clock'), el('span', null, ' Aguardando aprovação'));
+        $actionBtn.prop('disabled', true).removeClass('btn-oferecer').addClass('btn-warning');
+      } else if (!temVeiculo) {
+        $actionBtn.attr('style', 'display: none !important');
+      } else {
+        $actionBtn.append(icon('bi bi-hand-thumbs-up'), el('span', null, ' Se candidatar'));
+        $actionBtn.on('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          oferecerCarona(carona.id);
+        });
+      }
     }
     
     if (isCriadorPedindo || (isMotoristaOferecendo && !temPassageirosAprovados)) {
@@ -398,27 +435,7 @@ $(function () {
   }
 
   async function loadCaronas() {
-    const $container = $('#caronas-container');
-    if (!$container.length) return;
-    try {
-      const caronas = await fetchJSON(`${API_BASE}/caronas`);
-      const caronasAtivas = caronas.filter(c => {
-        const status = c.statusViagem || 'agendada';
-        return status === 'agendada';
-      });
-      clear($container);
-      if (!caronasAtivas.length) {
-        emptyState($container, 'bi bi-car-front', 'Nenhuma carona disponível no momento', '#d1d5db');
-        return;
-      }
-      const caronasOrdenadas = caronasAtivas.sort((a, b) => (b.id || 0) - (a.id || 0));
-      for (const c of caronasOrdenadas) {
-        const $card = await buildCaronaCard(c);
-        $container.append($card);
-      }
-    } catch (e) {
-      emptyState($container, 'bi bi-exclamation-triangle', 'Erro ao carregar caronas');
-    }
+    await filterCaronas('todos');
   }
 
   function setupFilters() {
@@ -439,10 +456,14 @@ $(function () {
     if (!$container.length) return;
     try {
       const caronas = await fetchJSON(`${API_BASE}/caronas`);
-      const caronasAtivas = caronas.filter(c => {
-        const status = c.statusViagem || 'agendada';
-        return status === 'agendada';
-      });
+      const selectedCommunityId = Number(localStorage.getItem("selectedCommunityId"));
+      
+      let caronasFiltradas = caronas;
+      if (selectedCommunityId) {
+        caronasFiltradas = caronas.filter(c => c.comunidadeId === selectedCommunityId);
+      }
+      
+      const caronasAtivas = caronasFiltradas.filter(c => (c.statusViagem || 'agendada') === 'agendada');
       const list = filter && filter !== 'todos' ? caronasAtivas.filter(c => c.tipo === filter) : caronasAtivas;
       clear($container);
       if (!list.length) {
@@ -455,7 +476,9 @@ $(function () {
         const $card = await buildCaronaCard(c);
         $container.append($card);
       }
-    } catch (e) { }
+    } catch {
+      emptyState($container, 'bi bi-exclamation-triangle', 'Erro ao carregar caronas');
+    }
   }
 
   function setupSearch() {
@@ -474,12 +497,16 @@ $(function () {
     if (!$container.length) return;
     try {
       const caronas = await fetchJSON(`${API_BASE}/caronas`);
-      let filtered = caronas.filter(c => {
-        const status = c.statusViagem || 'agendada';
-        return status === 'agendada';
-      });
-      if (origem) filtered = filtered.filter(c => c.rota && c.rota.origem && c.rota.origem.toLowerCase().includes(origem.toLowerCase()));
-      if (destino) filtered = filtered.filter(c => c.rota && c.rota.destino && c.rota.destino.toLowerCase().includes(destino.toLowerCase()));
+      const selectedCommunityId = Number(localStorage.getItem("selectedCommunityId"));
+      
+      let filtered = caronas;
+      if (selectedCommunityId) {
+        filtered = caronas.filter(c => c.comunidadeId === selectedCommunityId);
+      }
+      
+      filtered = filtered.filter(c => (c.statusViagem || 'agendada') === 'agendada');
+      if (origem) filtered = filtered.filter(c => c.rota?.origem?.toLowerCase().includes(origem.toLowerCase()));
+      if (destino) filtered = filtered.filter(c => c.rota?.destino?.toLowerCase().includes(destino.toLowerCase()));
       if (data) {
         const searchDate = new Date(data).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
         filtered = filtered.filter(c => c.data === searchDate);
@@ -494,7 +521,9 @@ $(function () {
         const $card = await buildCaronaCard(c);
         $container.append($card);
       }
-    } catch (e) { }
+    } catch {
+      emptyState($container, 'bi bi-exclamation-triangle', 'Erro ao buscar caronas');
+    }
   }
 
   async function setupButtons() {
@@ -529,34 +558,13 @@ $(function () {
           }
 
           window.location.href = 'oferecer-carona.html';
-        } catch (error) {
-          console.error('Erro ao verificar veículos:', error);
+        } catch {
           Swal.fire('Erro', 'Não foi possível verificar seus veículos cadastrados.', 'error');
         }
       });
     }
   }
 
-  async function getNomeCarona(id) {
-    const c = await fetchJSON(`${API_BASE}/caronas/${id}`);
-    return c.usuario && c.usuario.nome ? c.usuario.nome : 'Usuário';
-  }
-
-  async function participarViagem(caronaId) {
-    const nome = await getNomeCarona(caronaId);
-    Swal.fire({
-      title: 'Participar da Viagem',
-      text: `Deseja participar da viagem de ${nome}?`,
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonText: 'Sim, participar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({ title: 'Sucesso!', text: 'Você foi adicionado à viagem.', icon: 'success' });
-      }
-    });
-  }
 
   async function oferecerCarona(caronaId) {
     try {
@@ -649,19 +657,6 @@ $(function () {
         return;
       }
 
-      const nome = await getNomeCarona(caronaId);
-      Swal.fire({
-        title: 'Oferecer Carona',
-        text: `Deseja oferecer carona para ${nome}?`,
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Sim, oferecer',
-        cancelButtonText: 'Cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire('Sucesso!', `Sua oferta foi enviada para ${nome}.`, 'success');
-        }
-      });
     } catch (err) {
       Swal.fire('Erro', 'Não foi possível carregar os dados da carona.', 'error');
     }
@@ -700,25 +695,12 @@ $(function () {
           loadCaronas();
         });
       }
-    } catch (err) {
-      console.error('Erro ao excluir carona:', err);
+    } catch {
       Swal.fire('Erro', 'Não foi possível excluir a carona.', 'error');
     }
   }
 
-  function getCustoText(tipo, valor) {
-    if (tipo === 'gratuito') return 'Viagem gratuita';
-    if (tipo === 'divisao') return 'Com divisão de custos';
-    if (tipo === 'fixo') return `R$ ${valor} por pessoa`;
-    return '';
-  }
-
   async function saveCaronaToDatabase(caronaData) {
-    if (caronaData.rota && caronaData.rota.origem && caronaData.rota.destino) {
-      const origem = caronaData.rota.origem;
-      const destino = caronaData.rota.destino;
-      caronaData.subtitle = `De ${origem} para ${destino}`;
-    }
     if (!caronaData.usuario) caronaData.usuario = getCurrentUser();
     if (!caronaData.id) caronaData.id = Date.now();
     return await fetchJSON(`${API_BASE}/caronas`, {
@@ -857,7 +839,8 @@ $(function () {
 
   async function loadVehicles() {
     try {
-      const veiculos = await fetchJSON(`${API_BASE}/vehicles`);
+      const currentUserId = Number(localStorage.getItem("userId"));
+      const veiculos = await fetchJSON(`${API_BASE}/vehicles?motoristaId=${currentUserId}`);
       const $select = $('#rideVehicle');
       if (!$select.length) return;
       if (!$select.attr('name')) $select.attr('name', 'veiculo');
@@ -883,30 +866,121 @@ $(function () {
           $seats.prop('disabled', false);
         }
       });
-    } catch (e) {
-      console.error('Erro ao carregar veículos:', e);
+    } catch {}
+  }
+
+  async function loadLocaisComunidade() {
+    try {
+      const selectedCommunityId = Number(localStorage.getItem("selectedCommunityId"));
+      const selectedCommunityName = localStorage.getItem("selectedCommunity");
+      if (!selectedCommunityId && !selectedCommunityName) return [];
+
+      const locais = await fetchJSON(`${API_BASE}/locais`);
+      return locais.filter(local => {
+        if (local.comunidadeId === selectedCommunityId) return true;
+        if (selectedCommunityName && local.comunidade === selectedCommunityName) return true;
+        return false;
+      });
+    } catch (error) {
+      console.error("Erro ao carregar locais:", error);
+      return [];
     }
+  }
+
+  async function setupLocaisSelects() {
+    const locais = await loadLocaisComunidade();
+    
+    const selectIds = [
+      '#origem-select',
+      '#destino-select',
+      '#origem-emergencial-select',
+      '#destino-emergencial-select'
+    ];
+
+    selectIds.forEach(selectId => {
+      const $select = $(selectId);
+      if (!$select.length) return;
+
+      $select.find('option:not(:first)').remove();
+
+      locais.forEach(local => {
+        const $option = $('<option>')
+          .val(local.nome)
+          .text(`${local.nome}${local.tipo ? ' - ' + local.tipo : ''}`)
+          .data('endereco', local.endereco || local.nome);
+        $select.append($option);
+      });
+
+      const $outroOption = $('<option>')
+        .val('outro')
+        .text('Outro (digite manualmente)');
+      $select.append($outroOption);
+
+      const $container = $select.parent('.input-with-icon');
+      const $input = $container.find('input[type="text"]').first();
+      
+      if (!$input.length) {
+        console.warn(`Input não encontrado para ${selectId}`);
+        return;
+      }
+      
+      $input.removeAttr('style');
+      $select.removeAttr('style');
+      
+      $select.css({
+        'width': '100%',
+        'padding': $input.css('padding') || '0.375rem 0.75rem',
+        'font-size': $input.css('font-size') || '1rem',
+        'border': $input.css('border') || '1px solid #ced4da',
+        'border-radius': $input.css('border-radius') || '0.375rem'
+      });
+      
+      if (locais.length === 0) {
+        $select.hide();
+        $input.show().attr('required', true);
+      } else {
+        $select.show();
+        $input.hide().removeAttr('required');
+      }
+      
+      $select.off('change').on('change', function() {
+        const selectedValue = $(this).val();
+        
+        if (selectedValue === 'outro') {
+          $select.css('display', 'none');
+          $input.removeAttr('style');
+          $input.css({
+            'display': 'block',
+            'visibility': 'visible',
+            'opacity': '1'
+          });
+          $input.val('').attr('required', true).prop('disabled', false).prop('readonly', false);
+          
+          setTimeout(() => {
+            if ($input.is(':visible')) {
+              $input.focus();
+            }
+          }, 150);
+        } else if (selectedValue) {
+          const endereco = $(this).find('option:selected').data('endereco') || $(this).val();
+          $input.val(endereco).removeAttr('required');
+          $select.css('display', 'block');
+          $input.css('display', 'none');
+        } else {
+          $select.css('display', 'none');
+          $input.removeAttr('style').css('display', 'block').val('').attr('required', true);
+        }
+      });
+    });
   }
 
   function setupPedirCaronaForm() {
     const $form = $('#form-pedir-carona');
     if (!$form.length) return;
 
-    $('input[name="tipo-carona"]').on('change', function () {
-      toggleCaronaType();
-      if ($(this).val() === 'emergencial') {
-        const agora = new Date();
-        const hora = String(agora.getHours()).padStart(2, '0');
-        const minuto = String(agora.getMinutes()).padStart(2, '0');
-        const dataFormatada = agora.toLocaleDateString('pt-BR');
-        $('#data-emergencial').val(dataFormatada);
-        $('#horario-emergencial-value').val(`${hora}:${minuto}`);
-      }
-    });
+    setupLocaisSelects();
 
-    toggleCaronaType();
-
-    if ($('input[name="tipo-carona"]:checked').val() === 'emergencial') {
+    function setDataHoraEmergencial() {
       const agora = new Date();
       const hora = String(agora.getHours()).padStart(2, '0');
       const minuto = String(agora.getMinutes()).padStart(2, '0');
@@ -914,6 +988,14 @@ $(function () {
       $('#data-emergencial').val(dataFormatada);
       $('#horario-emergencial-value').val(`${hora}:${minuto}`);
     }
+
+    $('input[name="tipo-carona"]').on('change', function () {
+      toggleCaronaType();
+      if ($(this).val() === 'emergencial') setDataHoraEmergencial();
+    });
+
+    toggleCaronaType();
+    if ($('input[name="tipo-carona"]:checked').val() === 'emergencial') setDataHoraEmergencial();
 
     if (!$('#data').attr('name')) $('#data').attr('name', 'data');
     if (!$('#horario').attr('name')) $('#horario').attr('name', 'horario');
@@ -931,7 +1013,6 @@ $(function () {
     maskTime('#horario, #horario-retorno');
 
     toggleReturnFields($('#precisa-retorno'), $('#nao-precisa-retorno'), $('#retorno-fields'));
-    $('input[name="precisa-retorno"]').on('change', hasReturn);
 
     baseValidationConfig($form, 'pedido');
 
@@ -958,25 +1039,30 @@ $(function () {
 
       let data;
 
+      const comunidadeId = Number(localStorage.getItem("selectedCommunityId")) || null;
       if (tipoCarona === 'emergencial') {
         const agora = new Date();
         const hora = String(agora.getHours()).padStart(2, '0');
         const minuto = String(agora.getMinutes()).padStart(2, '0');
-        const dataFormatada = agora.toLocaleDateString('pt-BR');
         const horarioAtual = fd.get('horario-emergencial-value') || `${hora}:${minuto}`;
-
+        const dataFormatada = fd.get('data-emergencial') || agora.toLocaleDateString('pt-BR');
         const currentUserId = Number(localStorage.getItem("userId"));
         data = {
           tipo: 'pedindo',
           usuario: currentUser,
           criadorId: currentUserId, 
           passageiroId: currentUserId,
-          motoristaId: null, 
+          motoristaId: null,
+          comunidadeId: comunidadeId,
           rota: {
-            origem: fd.get('origem-emergencial') || fd.get('origem'),
-            destino: fd.get('destino-emergencial') || fd.get('destino')
+            origem: $('#origem-emergencial-select').val() === 'outro' 
+              ? fd.get('origem-emergencial') 
+              : ($('#origem-emergencial-select').val() || fd.get('origem-emergencial') || fd.get('origem')),
+            destino: $('#destino-emergencial-select').val() === 'outro'
+              ? fd.get('destino-emergencial')
+              : ($('#destino-emergencial-select').val() || fd.get('destino-emergencial') || fd.get('destino'))
           },
-          data: fd.get('data-emergencial') || dataFormatada,
+          data: dataFormatada,
           horario: horarioAtual,
           tipoCarona: 'emergencial',
           motivo: fd.get('motivo-emergencial'),
@@ -996,7 +1082,15 @@ $(function () {
           criadorId: currentUserId,
           passageiroId: currentUserId,
           motoristaId: null,
-          rota: { origem: fd.get('origem'), destino: fd.get('destino') },
+          comunidadeId: comunidadeId,
+          rota: { 
+            origem: $('#origem-select').val() === 'outro' 
+              ? fd.get('origem') 
+              : ($('#origem-select').val() || fd.get('origem')),
+            destino: $('#destino-select').val() === 'outro'
+              ? fd.get('destino')
+              : ($('#destino-select').val() || fd.get('destino'))
+          },
           data: fd.get('data'),
           horario: fd.get('horario'),
           tipoCarona: 'comum',
@@ -1023,15 +1117,11 @@ $(function () {
 
   async function verificarVeiculosUsuario() {
     const currentUserId = Number(localStorage.getItem("userId"));
-    if (!currentUserId) {
-      return false;
-    }
-
+    if (!currentUserId) return false;
     try {
       const veiculos = await fetchJSON(`${API_BASE}/vehicles?motoristaId=${currentUserId}`);
       return veiculos && veiculos.length > 0;
-    } catch (error) {
-      console.error('Erro ao verificar veículos:', error);
+    } catch {
       return false;
     }
   }
@@ -1039,6 +1129,8 @@ $(function () {
   async function setupOferecerCaronaForm() {
     const $form = $('#form-oferecer-carona');
     if (!$form.length) return;
+
+    await setupLocaisSelects();
 
     const temVeiculo = await verificarVeiculosUsuario();
     if (!temVeiculo) {
@@ -1112,17 +1204,26 @@ $(function () {
       }
       const currentUserId = Number(localStorage.getItem("userId"));
       const currentUser = getCurrentUser();
+      const comunidadeId = Number(localStorage.getItem("selectedCommunityId")) || null;
       const data = {
         tipo: 'oferecendo',
         usuario: currentUser,
         criadorId: currentUserId, 
         motoristaId: currentUserId, 
-        rota: { origem: fd.get('origem'), destino: fd.get('destino') },
+        comunidadeId: comunidadeId,
+        rota: { 
+          origem: $('#origem-select').val() === 'outro' 
+            ? fd.get('origem') 
+            : ($('#origem-select').val() || fd.get('origem')),
+          destino: $('#destino-select').val() === 'outro'
+            ? fd.get('destino')
+            : ($('#destino-select').val() || fd.get('destino'))
+        },
         data: fd.get('data'),
         horario: fd.get('horario'),
         veiculo: fd.get('veiculo') || $('#rideVehicle').val() || '',
         vagas: vagasSolicitadas,
-        custo: getCustoText(fd.get('custo'), fd.get('valor-fixo')),
+        custo: fd.get('custo') === 'gratuito' ? 'Viagem gratuita' : fd.get('custo') === 'divisao' ? 'Com divisão de custos' : fd.get('custo') === 'fixo' ? `R$ ${fd.get('valor-fixo')} por pessoa` : '',
         podeTrazerEncomendas: fd.get('pode-encomendas') === 'sim',
         incluiRetorno: fd.get('incluir-retorno') === 'sim',
         dataRetorno: fd.get('data-retorno'),
@@ -1169,7 +1270,6 @@ $(function () {
         return;
       }
     } catch (e) {
-      console.error('Erro ao verificar permissão de edição:', e);
       Swal.fire('Erro', 'Não foi possível verificar as permissões.', 'error');
       return;
     }
@@ -1190,7 +1290,6 @@ $(function () {
     const $formPedido = $('#form-editar-pedido');
     const $formOferta = $('#form-editar-oferta');
 
-    $('input[name="precisa-retorno"]').on('change', hasReturn);
 
     if ($formPedido.length) {
       maskDate('#data-pedido, #data-retorno-pedido');
@@ -1238,7 +1337,6 @@ $(function () {
           return false;
         }
 
-        console.log('Salvando pedido de carona...', id);
         const fd = new FormData($formPedido[0]);
         const caronaAtual = await fetchJSON(`${API_BASE}/caronas/${id}`);
         const currentUserId = Number(localStorage.getItem("userId"));
@@ -1248,7 +1346,14 @@ $(function () {
           criadorId: caronaAtual.criadorId || currentUserId, 
           passageiroId: currentUserId,
           motoristaId: caronaAtual.motoristaId || null,
-          rota: { origem: fd.get('origem'), destino: fd.get('destino') },
+          rota: { 
+            origem: $('#origem-select').val() === 'outro' 
+              ? fd.get('origem') 
+              : ($('#origem-select').val() || fd.get('origem')),
+            destino: $('#destino-select').val() === 'outro'
+              ? fd.get('destino')
+              : ($('#destino-select').val() || fd.get('destino'))
+          },
           data: fd.get('data'),
           horario: fd.get('horario'),
           tipoCarona: fd.get('tipo-carona') || 'comum',
@@ -1270,8 +1375,7 @@ $(function () {
           Swal.fire('Sucesso!', 'Pedido atualizado com sucesso.', 'success').then(() => {
             window.location.href = 'index.html';
           });
-        } catch (error) {
-          console.error('Erro ao salvar pedido:', error);
+        } catch {
           Swal.fire('Erro!', 'Não foi possível salvar as alterações.', 'error');
         }
         return false;
@@ -1295,7 +1399,6 @@ $(function () {
           return false;
         }
 
-        console.log('Salvando oferta de carona...', id);
         const fd = new FormData($formOferta[0]);
         
         const $selectedVehicle = $('#rideVehicle option:selected');
@@ -1319,12 +1422,19 @@ $(function () {
           usuario: getCurrentUser(),
           criadorId: caronaAtual.criadorId || currentUserId, 
           motoristaId: currentUserId, 
-          rota: { origem: fd.get('origem'), destino: fd.get('destino') },
+          rota: { 
+            origem: $('#origem-select').val() === 'outro' 
+              ? fd.get('origem') 
+              : ($('#origem-select').val() || fd.get('origem')),
+            destino: $('#destino-select').val() === 'outro'
+              ? fd.get('destino')
+              : ($('#destino-select').val() || fd.get('destino'))
+          },
           data: fd.get('data'),
           horario: fd.get('horario'),
           veiculo: fd.get('veiculo') || $('#rideVehicle').val() || '',
           vagas: vagasSolicitadas,
-          custo: getCustoText(fd.get('custo'), fd.get('valor-fixo')),
+          custo: fd.get('custo') === 'gratuito' ? 'Viagem gratuita' : fd.get('custo') === 'divisao' ? 'Com divisão de custos' : fd.get('custo') === 'fixo' ? `R$ ${fd.get('valor-fixo')} por pessoa` : '',
           podeTrazerEncomendas: fd.get('pode-encomendas') === 'sim',
           incluiRetorno: fd.get('incluir-retorno') === 'sim',
           dataRetorno: fd.get('data-retorno'),
@@ -1342,8 +1452,7 @@ $(function () {
           Swal.fire('Sucesso!', 'Carona atualizada com sucesso.', 'success').then(() => {
             window.location.href = 'index.html';
           });
-        } catch (error) {
-          console.error('Erro ao salvar oferta:', error);
+        } catch {
           Swal.fire('Erro!', 'Não foi possível salvar as alterações.', 'error');
         }
         return false;
@@ -1363,35 +1472,15 @@ $(function () {
     }
   }
 
-  async function loadViagens() {
-    const $container = $('#viagens-container');
-    if (!$container.length) return;
-    try {
-      const viagens = await fetchJSON(`${API_BASE}/viagens`);
-      clear($container);
-      if (!viagens.length) {
-        emptyState($container, 'bi bi-briefcase', 'Nenhuma viagem cadastrada', '#d1d5db');
-        return;
-      }
-      viagens.forEach(v => $container.append(buildViagemCard(v)));
-    } catch (e) { }
-  }
 
-  function buildViagemCard({ title, subtitle, footer, buttonText, buttonColor, icon: iconCls }) {
-    const $card = el('div', 'viagem-card');
-    const $title = el('p', 'card-title', title || '');
-    const $sub = el('h3', 'card-subtitle', subtitle || '');
-    const $footer = el('p', 'card-footer');
-    if (iconCls) $footer.append(icon(iconCls));
-    $footer.append(document.createTextNode(iconCls ? ' ' : ''));
-    $footer.append(document.createTextNode(footer || ''));
-    const $btn = el('button', 'btn-info');
-    if (buttonColor) $btn.css('background', buttonColor);
-    if (iconCls) $btn.append(icon(iconCls), document.createTextNode(' '));
-    $btn.append(document.createTextNode(buttonText || 'Ação'));
-    $card.append($title, $sub, $footer, $btn);
-    return $card;
-  }
+  window.addEventListener('communityChanged', () => {
+    const path = window.location.pathname;
+    if (path.includes('caronas/index.html')) {
+      loadCaronas();
+    } else if (path.includes('pedir-carona.html') || path.includes('oferecer-carona.html')) {
+      setupLocaisSelects();
+    }
+  });
 
   async function route() {
     const path = window.location.pathname;
@@ -1406,8 +1495,6 @@ $(function () {
       setupPedirCaronaForm();
     } else if (path.includes('oferecer-carona.html')) {
       await setupOferecerCaronaForm();
-    } else if (path.includes('viagem.html')) {
-      loadViagens();
     } else {
       if ($('#page-title').length) {
         initializeEditCarona();

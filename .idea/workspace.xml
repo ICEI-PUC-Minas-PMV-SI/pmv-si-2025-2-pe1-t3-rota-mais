@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ccb23022-1ef6-41b2-b6eb-453facc08678" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/public/assets/scripts/aside.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/assets/scripts/aside.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/assets/scripts/viagens/detalhes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/assets/scripts/viagens/detalhes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/assets/styles/authentication.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/assets/styles/authentication.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/assets/styles/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/assets/styles/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/pages/autenticacao/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/pages/autenticacao/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/pages/viagens/detalhes.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/pages/viagens/detalhes.html" afterDir="false" />
-    </list>
+    <list default="true" id="ccb23022-1ef6-41b2-b6eb-453facc08678" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -75,6 +68,7 @@
       <workItem from="1760061227789" duration="281000" />
       <workItem from="1760061524186" duration="1716000" />
       <workItem from="1761494391052" duration="306000" />
+      <workItem from="1763311059136" duration="927000" />
     </task>
     <servers />
   </component>

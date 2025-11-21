@@ -1,3 +1,18 @@
+if (localStorage.getItem("userId")) {
+    window.location.replace("/pages/caronas/index.html");
+}
+
+function hashPassword(password) {
+    let hash = 0;
+    if (password.length === 0) return hash.toString();
+    for (let i = 0; i < password.length; i++) {
+        const char = password.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+    }
+    return Math.abs(hash).toString(16);
+}
+
 document.getElementById("btn-login").addEventListener("click", async () => {
     const usuario = document.getElementById("usuario").value.trim();
     const senha = document.getElementById("senha").value;
@@ -22,8 +37,9 @@ document.getElementById("btn-login").addEventListener("click", async () => {
         }
 
         const user = users[0];
+        const senhaHash = hashPassword(senha);
 
-        if (user.senha !== senha) {
+        if (user.senha !== senhaHash && user.senha !== senha) {
             alert("Senha incorreta");
             return;
         }

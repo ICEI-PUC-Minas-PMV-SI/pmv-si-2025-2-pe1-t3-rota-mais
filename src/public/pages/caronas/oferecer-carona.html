@@ -33,10 +33,14 @@
               <div class="route-field">
                 <label for="origem" class="form-label">Local de partida</label>
                 <div class="input-with-icon">
+                  <select class="form-select" id="origem-select" style="display:none;">
+                    <option value="">Selecione um local da comunidade</option>
+                  </select>
                   <input type="text" class="form-control" id="origem" name="origem"
-                    placeholder="Farmácia do Antônio • Taquara" required>
+                    placeholder="Selecione um local ou digite o endereço" required>
                   <i class="bi bi-search input-icon"></i>
                 </div>
+                <small class="text-muted">Ou digite um endereço personalizado</small>
               </div>
               <div
                 class="d-flex align-items-center justify-content-center p-2 pointer transition-all duration-200 ease">
@@ -45,9 +49,13 @@
               <div class="route-field">
                 <label for="destino" class="form-label">Local de chegada</label>
                 <div class="input-with-icon">
-                  <input type="text" class="form-control" id="destino" name="destino" placeholder="Papagaios" required>
+                  <select class="form-select" id="destino-select" style="display:none;">
+                    <option value="">Selecione um local da comunidade</option>
+                  </select>
+                  <input type="text" class="form-control" id="destino" name="destino" placeholder="Selecione um local ou digite o endereço" required>
                   <i class="bi bi-search input-icon"></i>
                 </div>
+                <small class="text-muted">Ou digite um endereço personalizado</small>
               </div>
             </div>
           </div>

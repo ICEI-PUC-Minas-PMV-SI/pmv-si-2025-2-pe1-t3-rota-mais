@@ -1,13 +1,28 @@
+function hashPassword(password) {
+  let hash = 0;
+  if (password.length === 0) return hash.toString();
+  for (let i = 0; i < password.length; i++) {
+    const char = password.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  return Math.abs(hash).toString(16);
+}
+
 async function fetchJSON(path, options = {}) {
   const res = await fetch(API_BASE + path, options);
   if (!res.ok) throw new Error(`Erro HTTP ${res.status}`);
+  if (options.method === 'DELETE') {
+    const text = await res.text();
+    return text ? JSON.parse(text) : {};
+  }
   return await res.json();
 }
 
 function checkAuth() {
   const userId = localStorage.getItem("userId");
   if (!userId) {
-    window.location.href = "../../autenticacao/login.html";
+    window.location.replace("/pages/autenticacao/login.html");
     return false;
   }
   return true;
@@ -20,6 +35,10 @@ $(document).ready(async function () {
 
   try {
     const user = await fetchJSON(`/users/${currentUserId}`);
+
+    if (!user || !user.id) {
+      throw new Error('Usuário não encontrado');
+    }
 
     $(".user-avatar img").attr("src", user.avatar || "https://placehold.co/100x100").css("width", "100px").css("height", "100px");
 
@@ -40,7 +59,9 @@ $(document).ready(async function () {
     $(".user-stats-item-value").html(`
       <div>
         <i class="bi bi-car-front"></i>
-        <span><strong>${viagensRealizadas} viagem${viagensRealizadas !== 1 ? 'ens' : ''} realizada${viagensRealizadas !== 1 ? 's' : ''}</strong></span>
+            <span><strong>
+              ${viagensRealizadas} ${viagensRealizadas === 1 ? 'viagem realizada' : 'viagens realizadas'}
+            </strong></span>
       </div>
       <div>
         <i class="bi bi-star-fill"></i>
@@ -69,8 +90,23 @@ $(document).ready(async function () {
 
     await carregarVeiculos(currentUserId);
 
+    configurarBotoes(currentUserId, user);
+
   } catch (e) {
-    console.error("Erro ao carregar dados do usuário:", e);
+    if (e.message && (e.message.includes('404') || e.message.includes('não encontrado'))) {
+      localStorage.removeItem("userId");
+      localStorage.removeItem("user");
+      Swal.fire({
+        icon: "warning",
+        title: "Sessão expirada",
+        text: "Seu usuário não foi encontrado. Você será redirecionado para o login.",
+        confirmButtonText: "OK"
+      }).then(() => {
+        window.location.replace("/pages/autenticacao/login.html");
+      });
+      return;
+    }
+    
     Swal.fire("Erro", "Falha ao carregar dados do usuário.", "error");
   }
 });
@@ -107,9 +143,163 @@ async function carregarVeiculos(userId) {
       $container.append($item);
     });
 
-  } catch (e) {
-    console.error("Erro ao carregar veículos:", e);
+  } catch {
     $container.html('<p class="text-danger">Erro ao carregar veículos.</p>');
   }
+}
+
+function configurarBotoes(userId, user) {
+  $("#btn-alterar-senha").off("click").on("click", async function(e) {
+    e.preventDefault();
+    
+    const { value: formValues } = await Swal.fire({
+      title: 'Alterar Senha',
+      html: `
+        <input id="swal-senha-atual" type="password" class="swal2-input" placeholder="Senha atual" required>
+        <input id="swal-senha-nova" type="password" class="swal2-input" placeholder="Nova senha" required>
+        <input id="swal-senha-confirmar" type="password" class="swal2-input" placeholder="Confirmar nova senha" required>
+      `,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: 'Alterar senha',
+      cancelButtonText: 'Cancelar',
+      preConfirm: () => {
+        const senhaAtual = document.getElementById('swal-senha-atual').value;
+        const senhaNova = document.getElementById('swal-senha-nova').value;
+        const senhaConfirmar = document.getElementById('swal-senha-confirmar').value;
+
+        if (!senhaAtual || !senhaNova || !senhaConfirmar) {
+          Swal.showValidationMessage('Preencha todos os campos');
+          return false;
+        }
+
+        const senhaAtualHash = hashPassword(senhaAtual);
+        if (user.senha && senhaAtualHash !== user.senha && senhaAtual !== user.senha) {
+          Swal.showValidationMessage('Senha atual incorreta');
+          return false;
+        }
+
+        if (senhaNova.length < 4) {
+          Swal.showValidationMessage('A nova senha deve ter pelo menos 4 caracteres');
+          return false;
+        }
+
+        if (senhaNova !== senhaConfirmar) {
+          Swal.showValidationMessage('As senhas não coincidem');
+          return false;
+        }
+
+        return { senhaAtual, senhaNova };
+      }
+    });
+
+    if (formValues) {
+      try {
+        const senhaHash = hashPassword(formValues.senhaNova);
+        await fetchJSON(`/users/${userId}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ senha: senhaHash })
+        });
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Senha alterada!',
+          text: 'Sua senha foi alterada com sucesso.',
+          confirmButtonText: 'OK'
+        });
+      } catch {
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro',
+          text: 'Não foi possível alterar a senha. Tente novamente.',
+          confirmButtonText: 'OK'
+        });
+      }
+    }
+  });
+
+  $("#btn-logout").off("click").on("click", function(e) {
+    e.preventDefault();
+    
+    Swal.fire({
+      title: 'Deseja sair?',
+      text: 'Você será desconectado da sua conta.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sim, sair',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#3085d6'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("userId");
+        localStorage.removeItem("user");
+        window.location.replace("/pages/autenticacao/login.html");
+      }
+    });
+  });
+
+  $("#btn-excluir-usuario").off("click").on("click", async function(e) {
+    e.preventDefault();
+    
+    const { value: senha } = await Swal.fire({
+      title: 'Excluir Conta',
+      text: 'Esta ação não pode ser desfeita. Digite sua senha para confirmar:',
+      input: 'password',
+      inputPlaceholder: 'Digite sua senha',
+      showCancelButton: true,
+      confirmButtonText: 'Excluir conta',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#dc3545',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'Você precisa digitar sua senha!';
+        }
+        const senhaHash = hashPassword(value);
+        if (user.senha && senhaHash !== user.senha && value !== user.senha) {
+          return 'Senha incorreta!';
+        }
+      }
+    });
+
+    if (senha) {
+      const confirmacao = await Swal.fire({
+        title: 'Tem certeza?',
+        text: 'Esta ação é irreversível. Todos os seus dados serão perdidos.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sim, excluir conta',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#dc3545'
+      });
+
+      if (confirmacao.isConfirmed) {
+        try {
+          await fetchJSON(`/users/${userId}`, {
+            method: 'DELETE'
+          });
+
+          localStorage.removeItem("userId");
+          localStorage.removeItem("user");
+          
+          Swal.fire({
+            icon: 'success',
+            title: 'Conta excluída!',
+            text: 'Sua conta foi excluída com sucesso.',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            window.location.replace("/pages/autenticacao/login.html");
+          });
+        } catch {
+          Swal.fire({
+            icon: 'error',
+            title: 'Erro',
+            text: 'Não foi possível excluir a conta. Tente novamente.',
+            confirmButtonText: 'OK'
+          });
+        }
+      }
+    }
+  });
 }
 

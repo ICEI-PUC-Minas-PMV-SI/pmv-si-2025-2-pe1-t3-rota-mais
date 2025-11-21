@@ -5,27 +5,25 @@ async function fetchJSON(path, options = {}) {
 }
 
 
-async function resolveMotorista(carona) {
-  if (!carona.motoristaId) return null;
-  return await fetchJSON(`/users/${carona.motoristaId}`);
-}
-
 async function resolveVehicleForCarona(carona) {
   if (carona.vehicleId) {
     try {
       return await fetchJSON(`/vehicles/${carona.vehicleId}`);
-    } catch {
-      console.warn("vehicleId inválido na carona");
-    }
+    } catch {}
   }
 
   if (carona.motoristaId) {
     try {
       const lista = await fetchJSON(`/vehicles?motoristaId=${carona.motoristaId}`);
-      if (lista.length > 0) return lista[0];
-    } catch {
-      console.warn("Motorista sem veículo cadastrado");
-    }
+      if (lista && lista.length > 0) {
+        const veiculoTipo = carona.veiculo === 'carro' ? 'CAR' : carona.veiculo === 'moto' ? 'MOTORCYCLE' : null;
+        if (veiculoTipo) {
+          const veiculoCorreto = lista.find(v => v.type === veiculoTipo);
+          if (veiculoCorreto) return veiculoCorreto;
+        }
+        return lista[0];
+      }
+    } catch {}
   }
 
   return null;
@@ -37,7 +35,7 @@ $(document).ready(async function () {
 
   if (!caronaId) return Swal.fire("Erro", "ID inválido.", "error");
 
-  const currentUserId = Number(localStorage.getItem("userId")) || 2;
+  const currentUserId = Number(localStorage.getItem("userId"));
   const currentUser = await fetchJSON(`/users/${currentUserId}`);
 
   try {
@@ -107,15 +105,14 @@ $(document).ready(async function () {
         await renderPassageiroPanel(carona, currentUser);
       }
     }
-  } catch (e) {
-    console.error(e);
+  } catch {
     Swal.fire("Erro", "Falha ao carregar carona.", "error");
   }
 });
 
 
 async function renderPassageiroPanel(carona, currentUser) {
-  const motorista = await resolveMotorista(carona);
+  const motorista = carona.motoristaId ? await fetchJSON(`/users/${carona.motoristaId}`) : null;
   const vehicle = await resolveVehicleForCarona(carona);
 
   if (motorista?.avatar) {
@@ -223,8 +220,7 @@ async function renderPassageiroPanel(carona, currentUser) {
           Swal.fire("Sucesso!", "Viagem concluída!", "success");
           const caronaAtualizada = await fetchJSON(`/caronas/${carona.id}`);
           await renderPassageiroPanel(caronaAtualizada, currentUser);
-        } catch (error) {
-          console.error("Erro ao concluir viagem:", error);
+        } catch {
           Swal.fire("Erro", "Não foi possível concluir a viagem.", "error");
         }
       }
@@ -259,24 +255,89 @@ async function renderPassageiroPanel(carona, currentUser) {
   });
 
   btnEncomenda.off().on("click", async () => {
-    const jaPediuEncomenda = carona.encomendas.some(e => e.userId === currentUser.id);
-    if (jaPediuEncomenda) {
-      Swal.fire("Aviso", "Você já solicitou uma encomenda nesta carona.", "info");
-      return;
-    }
-
     if (!carona.podeTrazerEncomendas) {
       Swal.fire("Aviso", "Esta carona não aceita encomendas.", "info");
       return;
     }
 
-    const newEnc = { userId: currentUser.id, status: "pendente" };
+    const minhasEncomendas = (carona.encomendas || []).filter(e => e.userId === currentUser.id);
+    const jaPediuEncomenda = minhasEncomendas.length > 0;
+
+    let encomendasHtml = '';
+    if (jaPediuEncomenda) {
+      encomendasHtml = '<div class="text-start mb-3 p-3 bg-light rounded"><h6 class="mb-2"><strong>Suas encomendas solicitadas:</strong></h6>';
+      minhasEncomendas.forEach((e, index) => {
+        const statusBadge = e.status === "aprovado" 
+          ? '<span class="badge bg-success">Aprovado</span>'
+          : e.status === "negado"
+          ? '<span class="badge bg-danger">Negado</span>'
+          : '<span class="badge bg-warning">Pendente</span>';
+        
+        encomendasHtml += `
+          <div class="mb-2 pb-2 ${index < minhasEncomendas.length - 1 ? 'border-bottom' : ''}">
+            ${statusBadge}
+            ${e.descricao ? `<p class="mb-1 mt-1"><strong>O que é:</strong> ${e.descricao}</p>` : ''}
+            <p class="mb-1 small"><strong><i class="bi bi-geo-alt-fill text-primary"></i> Onde pegar:</strong> ${e.enderecoBusca || 'Não informado'}</p>
+            <p class="mb-0 small"><strong><i class="bi bi-geo-alt text-success"></i> Para onde levar:</strong> ${e.enderecoEntrega || 'Não informado'}</p>
+          </div>
+        `;
+      });
+      encomendasHtml += '</div>';
+    }
+
+    const { value: formValues } = await Swal.fire({
+      title: 'Solicitar Transporte de Encomenda',
+      html: `
+        <div class="text-start mb-3">
+          <p class="mb-2"><strong>O que é transporte de encomenda?</strong></p>
+          <p class="text-muted small mb-3">Você pode solicitar que o motorista busque ou entregue um item em um endereço específico durante a viagem. O motorista avaliará sua solicitação e poderá aprovar ou negar.</p>
+        </div>
+        ${encomendasHtml}
+        <div class="text-start mb-3">
+          <h6 class="mb-2"><strong>Nova solicitação:</strong></h6>
+        </div>
+        <textarea id="descricao-encomenda" class="swal2-textarea" placeholder="O que é a encomenda? (ex: pacote, documento, etc.)" required></textarea>
+        <input id="endereco-busca" class="swal2-input" placeholder="Onde pegar a encomenda?" required>
+        <input id="endereco-entrega" class="swal2-input" placeholder="Para onde levar a encomenda?" required>
+      `,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: 'Enviar solicitação',
+      cancelButtonText: 'Cancelar',
+      width: '600px',
+      preConfirm: () => {
+        const descricao = document.getElementById('descricao-encomenda').value;
+        const enderecoBusca = document.getElementById('endereco-busca').value;
+        const enderecoEntrega = document.getElementById('endereco-entrega').value;
+        
+        if (!descricao || !enderecoBusca || !enderecoEntrega) {
+          Swal.showValidationMessage('Por favor, preencha todos os campos');
+          return false;
+        }
+        
+        return {
+          descricao: descricao,
+          enderecoBusca: enderecoBusca,
+          enderecoEntrega: enderecoEntrega
+        };
+      }
+    });
+
+    if (!formValues) return;
+
+    const newEnc = { 
+      userId: currentUser.id, 
+      status: "pendente",
+      enderecoBusca: formValues.enderecoBusca,
+      enderecoEntrega: formValues.enderecoEntrega,
+      descricao: formValues.descricao
+    };
 
     await patchCarona(carona.id, {
       encomendas: [...(carona.encomendas || []), newEnc]
     });
 
-    Swal.fire("OK!", "Pedido enviado.", "success");
+    Swal.fire("OK!", "Solicitação de encomenda enviada!", "success");
 
     const caronaAtualizada = await fetchJSON(`/caronas/${carona.id}`);
     await renderPassageiroPanel(caronaAtualizada, currentUser);
@@ -303,10 +364,12 @@ async function renderMotoristaPanel(carona) {
   const aprovados = passageiros.filter(p => p.status === "aprovado").length;
   const vagasRestantes = vagasTotais - aprovados;
 
-  const textoVagasInfo = vagasRestantes === 1
-    ? `${vagasRestantes} vaga disponível`
-    : `${vagasRestantes} vagas disponíveis`;
-  $("#motorista-vagas-info").text(textoVagasInfo);
+  if (vagasRestantes <= 0) {
+    $("#motorista-vagas-info").text('Sem vagas disponíveis').show();
+  } else {
+    const textoVagasInfo = `${aprovados} de ${vagasTotais} vaga${vagasTotais > 1 ? 's' : ''} ocupada${aprovados !== 1 ? 's' : ''} - ${vagasRestantes} disponível${vagasRestantes > 1 ? 'eis' : ''}`;
+    $("#motorista-vagas-info").text(textoVagasInfo).show();
+  }
 
   if (passageiros.length === 0) {
     passList.append('<p class="text-muted">Nenhum passageiro solicitou vaga ainda.</p>');
@@ -441,14 +504,27 @@ async function renderMotoristaPanel(carona) {
   } else {
     for (let e of encomendas) {
       const user = await fetchJSON(`/users/${e.userId}`);
+      
+      const statusBadge = e.status === "aprovado" 
+        ? '<span class="badge bg-success">Aprovado</span>'
+        : e.status === "negado"
+        ? '<span class="badge bg-danger">Negado</span>'
+        : '<span class="badge bg-warning">Pendente</span>';
 
       const row = $(`
-        <div class="mb-3 p-2 border rounded d-flex justify-content-between">
-          <div>
-            <strong>${user.name}</strong><br>
-            <small>Status: ${e.status}</small>
+        <div class="mb-3 p-3 border rounded">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div>
+              <strong>${user.name || user.nome || "Usuário"}</strong>
+              ${statusBadge}
+            </div>
+            <div class="d-flex gap-2"></div>
           </div>
-          <div class="d-flex gap-2"></div>
+          <div class="mt-2">
+            ${e.descricao ? `<p class="mb-2"><strong>O que é:</strong> ${e.descricao}</p>` : ''}
+            <p class="mb-1"><strong><i class="bi bi-geo-alt-fill text-primary"></i> Onde pegar:</strong> ${e.enderecoBusca || 'Não informado'}</p>
+            <p class="mb-0"><strong><i class="bi bi-geo-alt text-success"></i> Para onde levar:</strong> ${e.enderecoEntrega || 'Não informado'}</p>
+          </div>
         </div>
       `);
 
@@ -481,9 +557,11 @@ async function renderMotoristaPanel(carona) {
 
   const currentUserId = Number(localStorage.getItem("userId"));
   const temPassageirosAprovados = passageiros.some(p => p.status === 'aprovado');
-  const isCriador = carona.criadorId === currentUserId;
-  if (isCriador && !temPassageirosAprovados) {
-    $("#btn-excluir-carona-oferecendo").remove();
+  const isCriador = carona.criadorId === currentUserId || carona.motoristaId === currentUserId;
+  
+  $("#btn-excluir-carona-oferecendo").remove();
+  
+  if (isCriador && !temPassageirosAprovados && carona.statusViagem !== 'iniciada' && carona.statusViagem !== 'concluida' && carona.statusViagem !== 'cancelada') {
     const $btnExcluir = $('<button id="btn-excluir-carona-oferecendo" class="btn btn-danger mt-3"><i class="bi bi-trash me-2"></i> Excluir oferta de carona</button>');
     $btnExcluir.on("click", async () => {
       const result = await Swal.fire({
@@ -504,8 +582,7 @@ async function renderMotoristaPanel(carona) {
           Swal.fire('Excluída!', 'Oferta de carona excluída com sucesso.', 'success').then(() => {
             window.location.href = '/pages/caronas/index.html';
           });
-        } catch (error) {
-          console.error("Erro ao excluir carona:", error);
+        } catch {
           Swal.fire("Erro", "Não foi possível excluir a oferta.", "error");
         }
       }
@@ -547,8 +624,7 @@ function setupMotoristaButtons(carona) {
           Swal.fire("Sucesso!", "Viagem iniciada!", "success");
           const caronaAtualizada = await fetchJSON(`/caronas/${carona.id}`);
           await renderMotoristaPanel(caronaAtualizada);
-        } catch (error) {
-          console.error("Erro ao iniciar viagem:", error);
+        } catch {
           Swal.fire("Erro", "Não foi possível iniciar a viagem.", "error");
         }
       }
@@ -575,8 +651,7 @@ function setupMotoristaButtons(carona) {
           Swal.fire("Sucesso!", "Viagem concluída!", "success");
           const caronaAtualizada = await fetchJSON(`/caronas/${carona.id}`);
           await renderMotoristaPanel(caronaAtualizada);
-        } catch (error) {
-          console.error("Erro ao concluir viagem:", error);
+        } catch {
           Swal.fire("Erro", "Não foi possível concluir a viagem.", "error");
         }
       }
@@ -621,8 +696,7 @@ function setupMotoristaButtons(carona) {
           Swal.fire("Cancelada!", "Viagem cancelada com sucesso.", "success");
           const caronaAtualizada = await fetchJSON(`/caronas/${carona.id}`);
           await renderMotoristaPanel(caronaAtualizada);
-        } catch (error) {
-          console.error("Erro ao cancelar viagem:", error);
+        } catch {
           Swal.fire("Erro", "Não foi possível cancelar a viagem.", "error");
         }
       }
@@ -679,9 +753,11 @@ async function renderCriadorPanel(carona, currentUser) {
 
   const currentUserId = Number(localStorage.getItem("userId"));
   const isCriador = carona.criadorId === currentUserId;
+  let $btnExcluir = null;
+  
   if (isCriador) {
     $("#btn-excluir-carona-pedindo").remove();
-    const $btnExcluir = $('<button id="btn-excluir-carona-pedindo" class="btn btn-danger mt-3 w-100"><i class="bi bi-trash me-2"></i> Excluir pedido de carona</button>');
+    $btnExcluir = $('<button id="btn-excluir-carona-pedindo" class="btn btn-danger mt-3 w-100"><i class="bi bi-trash me-2"></i> Excluir pedido de carona</button>');
     $btnExcluir.on("click", async () => {
       const result = await Swal.fire({
         title: 'Excluir pedido de carona?',
@@ -701,8 +777,7 @@ async function renderCriadorPanel(carona, currentUser) {
           Swal.fire('Excluído!', 'Pedido de carona excluído com sucesso.', 'success').then(() => {
             window.location.href = '/pages/caronas/index.html';
           });
-        } catch (error) {
-          console.error("Erro ao excluir carona:", error);
+        } catch {
           Swal.fire("Erro", "Não foi possível excluir o pedido.", "error");
         }
       }
@@ -726,7 +801,9 @@ async function renderCriadorPanel(carona, currentUser) {
     `);
     $aprovadoContainer.show();
     $lista.html('<p class="text-muted">Você já aprovou um motorista para esta carona.</p>');
-    $("#criador-lista-motoristas").parent().append($btnExcluir);
+    if ($btnExcluir) {
+      $("#criador-lista-motoristas").parent().append($btnExcluir);
+    }
     return;
   }
 
@@ -736,7 +813,9 @@ async function renderCriadorPanel(carona, currentUser) {
 
   if (motoristasCandidatos.length === 0) {
     $lista.html('<p class="text-muted">Nenhum motorista se candidatou ainda.</p>');
-    $("#criador-lista-motoristas").parent().append($btnExcluir);
+    if ($btnExcluir) {
+      $("#criador-lista-motoristas").parent().append($btnExcluir);
+    }
     return;
   }
 
@@ -795,7 +874,9 @@ async function renderCriadorPanel(carona, currentUser) {
     $lista.append(row);
   }
 
-  $("#criador-lista-motoristas").parent().append($btnExcluir);
+  if ($btnExcluir) {
+    $("#criador-lista-motoristas").parent().append($btnExcluir);
+  }
 }
 
 async function renderMotoristaCandidatoPanel(carona, currentUser) {
@@ -850,6 +931,7 @@ async function renderMotoristaCandidatoPanel(carona, currentUser) {
 async function renderPedindoAprovadoPanel(carona, currentUser, role) {
   const $btn = $("#btn-conversar-pedindo");
   const $info = $("#outro-participante-info");
+  const statusViagem = carona.statusViagem || "agendada";
 
   let outroParticipante = null;
   let outroRole = '';
@@ -872,6 +954,15 @@ async function renderPedindoAprovadoPanel(carona, currentUser, role) {
     $info.html('<p class="text-muted">Carregando informações...</p>');
   } else {
     let infoExtra = '';
+    let statusMensagem = '';
+
+    if (statusViagem === "iniciada") {
+      if (role === 'passageiro') {
+        statusMensagem = '<div class="alert alert-info mb-3"><i class="bi bi-car-front me-2"></i><strong>O motorista está a caminho!</strong></div>';
+      } else {
+        statusMensagem = '<div class="alert alert-primary mb-3"><i class="bi bi-play-circle me-2"></i><strong>Viagem em andamento</strong></div>';
+      }
+    }
 
     if (role === 'motorista') {
       if (outroParticipante.endereco) {
@@ -889,6 +980,7 @@ async function renderPedindoAprovadoPanel(carona, currentUser, role) {
     }
 
     $info.html(`
+      ${statusMensagem}
       <div class="d-flex align-items-center mb-3 p-3 border rounded bg-light">
         <img src="${outroParticipante.avatar || 'https://placehold.co/60x60'}" 
              class="rounded-circle me-3" 
@@ -908,4 +1000,76 @@ async function renderPedindoAprovadoPanel(carona, currentUser, role) {
   $btn.off("click").on("click", () => {
     window.location.href = `/pages/viagens/negociar.html?id=${carona.id}`;
   });
+  $btn.show();
+
+  if (role === 'motorista') {
+    let $btnIniciar = $("#btn-iniciar-viagem-pedindo");
+    
+    if (!$btnIniciar.length) {
+      $btnIniciar = $('<button id="btn-iniciar-viagem-pedindo" class="btn btn-primary btn-lg w-100 mt-3"></button>');
+      $btn.after($btnIniciar);
+    }
+
+    if (statusViagem === "agendada") {
+      $btnIniciar.html('<i class="bi bi-play-circle me-2"></i> Iniciar viagem');
+      $btnIniciar.removeClass("btn-success").addClass("btn-primary");
+      $btnIniciar.show();
+      $btnIniciar.off("click").on("click", async () => {
+        const result = await Swal.fire({
+          title: "Iniciar Viagem",
+          text: "Deseja iniciar esta viagem?",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonText: "Sim, iniciar",
+          cancelButtonText: "Cancelar"
+        });
+
+        if (result.isConfirmed) {
+          try {
+            await patchCarona(carona.id, {
+              statusViagem: "iniciada",
+              dataInicio: new Date().toISOString()
+            });
+            Swal.fire("Sucesso!", "Viagem iniciada!", "success");
+            const caronaAtualizada = await fetchJSON(`/caronas/${carona.id}`);
+            await renderPedindoAprovadoPanel(caronaAtualizada, currentUser, role);
+          } catch {
+            Swal.fire("Erro", "Não foi possível iniciar a viagem.", "error");
+          }
+        }
+      });
+    } else if (statusViagem === "iniciada") {
+      $btnIniciar.html('<i class="bi bi-check-circle me-2"></i> Concluir viagem');
+      $btnIniciar.removeClass("btn-primary").addClass("btn-success");
+      $btnIniciar.show();
+      $btnIniciar.off("click").on("click", async () => {
+        const result = await Swal.fire({
+          title: "Concluir Viagem",
+          text: "Deseja concluir esta viagem?",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonText: "Sim, concluir",
+          cancelButtonText: "Cancelar"
+        });
+
+        if (result.isConfirmed) {
+          try {
+            await patchCarona(carona.id, {
+              statusViagem: "concluida",
+              dataFim: new Date().toISOString()
+            });
+            Swal.fire("Sucesso!", "Viagem concluída!", "success");
+            const caronaAtualizada = await fetchJSON(`/caronas/${carona.id}`);
+            await renderPedindoAprovadoPanel(caronaAtualizada, currentUser, role);
+          } catch {
+            Swal.fire("Erro", "Não foi possível concluir a viagem.", "error");
+          }
+        }
+      });
+    } else {
+      $btnIniciar.hide();
+    }
+  } else {
+    $("#btn-iniciar-viagem-pedindo").hide();
+  }
 }

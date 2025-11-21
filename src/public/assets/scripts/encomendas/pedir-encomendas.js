@@ -44,11 +44,9 @@ document.addEventListener("DOMContentLoaded", function() {
       dataReceber: dataReceber.value,
       horaLimite: horaLimite.value
     };
+  
+    window.location.href = "/pages/encomendas/index.html";
 
-    // Simulação de envio (poderia ser um fetch para API)
-    alert("✅ Pedido criado com sucesso!\n\n" + JSON.stringify(pedido, null, 2));
-
-    // Limpar campos
     descricao.value = "";
     localOrigem.value = "";
     localDestino.value = "";
