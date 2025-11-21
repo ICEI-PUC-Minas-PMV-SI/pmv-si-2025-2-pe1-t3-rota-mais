@@ -6,63 +6,80 @@
   <title>Editar Transporte de Encomenda</title>
   <link rel="stylesheet" href="../../assets/styles/editar-transporte-encomenda.css" />
 </head>
+
 <body>
   <div class="container">
     <h1>Editar transporte de encomenda</h1>
 
+    <!-- Local de partida e chegada -->
     <div class="route-section">
       <div class="location">
         <label>Local de partida</label>
-        <input type="text" value="Farmácia do Antônio • Taquara" />
+        <input id="partida" type="text" placeholder="Digite o local de partida" />
       </div>
+
       <div class="exchange">⇄</div>
+
       <div class="location">
         <label>Local de chegada</label>
-        <input type="text" value="Papagaios" />
+        <input id="chegada" type="text" placeholder="Digite o local de chegada" />
       </div>
     </div>
 
+    <!-- Informações da viagem -->
     <div class="trip-info">
       <div>
         <label>Data da viagem</label>
-        <input type="date" value="2025-09-26" />
+        <input id="dataViagem" type="date" />
       </div>
+
       <div>
         <label>Horário de partida</label>
-        <input type="time" value="14:00" />
+        <input id="horaPartida" type="time" />
       </div>
+
       <div>
         <label>Veículo</label>
-        <input type="text" value="Carro • BRA2E19" />
+        <input id="veiculo" type="text" placeholder="Ex: Carro, Moto..." />
+      </div>
+
+      <div>
+        <label>Placa</label>
+        <input id="placa" type="text" placeholder="Ex: ABC1234" />
       </div>
     </div>
 
+    <!-- Custo -->
     <h3>O transporte incluirá algum custo para o passageiro?</h3>
-    <div class="radio-group">
-      <label class="selected"><input type="radio" name="custo" checked /> Não, será gratuito</label>
-      <label><input type="radio" name="custo" /> Sim, haverá um custo</label>
+    <div class="options" id="custoOptions">
+      <div class="option active">Não, será gratuito</div>
+      <div class="option">Sim, haverá um custo</div>
     </div>
 
+    <!-- Retorno -->
     <h3>Gostaria de incluir uma previsão de retorno?</h3>
-    <div class="radio-group">
-      <label class="selected"><input type="radio" name="retorno" checked /> Sim, incluir previsão de retorno</label>
-      <label><input type="radio" name="retorno" /> Não incluir previsão de retorno</label>
+    <div class="options" id="retornoOptions">
+      <div class="option active">Sim, incluir previsão de retorno</div>
+      <div class="option">Não incluir previsão de retorno</div>
     </div>
 
-    <div class="return-info">
+    <!-- Dados do retorno -->
+    <div class="return-info" id="retornoContainer">
       <div>
         <label>Data do retorno</label>
-        <input type="date" value="2025-09-26" />
+        <input id="dataRetorno" type="date" />
       </div>
+
       <div>
         <label>Horário previsto</label>
-        <input type="time" value="16:00" />
+        <input id="horaRetorno" type="time" />
       </div>
     </div>
 
-    <button class="create-btn">Criar oferta</button>
+    <!-- Botão -->
+    <button class="create-btn" id="criarOferta">Criar oferta</button>
   </div>
-  <script src="../../assets/scripts/encomendas/editar-transporte-encomendas.js"></script>
 
+  <script src="../../assets/scripts/encomendas/editar-transporte-encomendas.js"></script>
 </body>
 </html>

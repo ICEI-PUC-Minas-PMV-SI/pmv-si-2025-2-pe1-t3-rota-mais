@@ -5,33 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Oferecer transporte de encomenda</title>
   <link rel="stylesheet" href="../../assets/styles/transporte-encomendas.css">
+  <style>
+    .option { cursor: pointer; }
+    .option.active { background: #d9d9d9; }
+  </style>
 </head>
 <body>
-
   <div class="container">
     <h1>Oferecer transporte de encomenda</h1>
 
     <label>Local de partida</label>
-    <input type="text" value="Farmácia do Antônio • Taquara">
+    <input id="partida" type="text" value="">
 
     <label>Local de chegada</label>
-    <input type="text" value="Papagaios">
+    <input id="chegada" type="text" value="">
 
     <div class="inline">
       <div>
         <label>Data da viagem</label>
-        <input type="date" value="2025-09-26">
+        <input id="dataViagem" type="date" value="">
       </div>
       <div>
         <label>Horário de partida</label>
-        <input type="time" value="14:00">
+        <input id="horaPartida" type="time" value="">
       </div>
     </div>
 
     <div class="inline">
       <div>
         <label>Veículo</label>
-        <select>
+        <select id="veiculo">
+          <option value="">Selecione</option>
           <option>Carro</option>
           <option>Moto</option>
           <option>Caminhão</option>
@@ -39,35 +43,36 @@
       </div>
       <div>
         <label>Placa</label>
-        <input type="text" value="BRA2E19">
+        <input id="placa" type="text" value="">
       </div>
     </div>
 
     <label class="sub-label">O transporte incluirá algum custo para o passageiro?</label>
-    <div class="options">
+    <div class="options" id="custoOptions">
       <div class="option active">Não, será gratuito</div>
       <div class="option">Sim, haverá um custo</div>
     </div>
 
     <label class="sub-label">Gostaria de incluir uma previsão de retorno?</label>
-    <div class="options">
+    <div class="options" id="retornoOptions">
       <div class="option active">Sim, incluir previsão de retorno</div>
       <div class="option">Não incluir previsão de retorno</div>
     </div>
 
-    <div class="inline">
+    <div class="inline" id="retornoContainer">
       <div>
         <label>Data do retorno</label>
-        <input type="date" value="2025-09-26">
+        <input id="dataRetorno" type="date" value="">
       </div>
       <div>
         <label>Horário previsto</label>
-        <input type="time" value="16:00">
+        <input id="horaRetorno" type="time" value="">
       </div>
     </div>
 
-    <button class="btn">Criar oferta</button>
+    <button class="btn" id="criarOferta">Criar oferta</button>
   </div>
 
+  <script src="../../assets/scripts/encomendas/transporte-encomendas.js"></script>
 </body>
 </html>

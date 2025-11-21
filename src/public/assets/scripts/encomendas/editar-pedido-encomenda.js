@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Referências aos elementos do formulário
   const descricao = document.querySelector("#descricao");
   const localOrigem = document.querySelector("#localOrigem");
   const localDestino = document.querySelector("#localDestino");
@@ -9,46 +8,44 @@ document.addEventListener("DOMContentLoaded", () => {
   const horaLimite = document.querySelector("#horaLimite");
   const btnSalvar = document.querySelector(".btn-salvar");
 
-  // Exemplo de dados pré-carregados (poderia vir da API)
-  const pedidoExistente = {
-    descricao: "Saco de milho",
-    localOrigem: "Farmácia do Antônio • Taquara",
-    localDestino: "Papagaios",
-    destinatarioEhUsuario: false,
-    nomeDestinatario: "Pedro Alves",
-    dataReceber: "2025-09-26",
-    horaLimite: "14:00"
-  };
+  // 🔹 Garante que os campos começam vazios + adiciona placeholders
+  descricao.value = "";
+  descricao.placeholder = "Ex: Saco de milho";
 
-  // Preenche automaticamente os campos
-  function preencherFormulario(pedido) {
-    descricao.value = pedido.descricao;
-    localOrigem.value = pedido.localOrigem;
-    localDestino.value = pedido.localDestino;
-    nomeDestinatario.value = pedido.nomeDestinatario;
-    dataReceber.value = pedido.dataReceber;
-    horaLimite.value = pedido.horaLimite;
+  localOrigem.value = "";
+  localOrigem.placeholder = "Ex: Farmácia do Antônio • Taquara";
 
-    if (pedido.destinatarioEhUsuario) {
-      radioDestinatario[0].checked = true;
-    } else {
-      radioDestinatario[1].checked = true;
-    }
-  }
+  localDestino.value = "";
+  localDestino.placeholder = "Ex: Papagaios";
 
-  preencherFormulario(pedidoExistente);
+  nomeDestinatario.value = "";
+  nomeDestinatario.placeholder = "Ex: Pedro Alves";
 
-  // Ação ao clicar em "Salvar alterações"
+  dataReceber.value = "";
+  dataReceber.placeholder = "Selecione uma data";
+
+  horaLimite.value = "";
+  horaLimite.placeholder = "Selecione um horário";
+
+  radioDestinatario.forEach(r => (r.checked = false));
+
   btnSalvar.addEventListener("click", (e) => {
     e.preventDefault();
 
-    // Validação simples
-    if (!descricao.value.trim() || !localOrigem.value.trim() || !localDestino.value.trim()) {
-      alert("⚠️ Preencha todos os campos obrigatórios!");
+    // 🔹 Validação
+    if (
+      !descricao.value.trim() ||
+      !localOrigem.value.trim() ||
+      !localDestino.value.trim() ||
+      (!radioDestinatario[0].checked && !radioDestinatario[1].checked) ||
+      !nomeDestinatario.value.trim() ||
+      !dataReceber.value ||
+      !horaLimite.value
+    ) {
+      alert("⚠️ Preencha todos os campos obrigatórios antes de salvar!");
       return;
     }
 
-    // Cria objeto com os novos dados
     const pedidoAtualizado = {
       descricao: descricao.value.trim(),
       localOrigem: localOrigem.value.trim(),
@@ -62,7 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("📦 Pedido atualizado:", pedidoAtualizado);
     alert("✅ Alterações salvas com sucesso!");
 
-    // Exemplo: guardar localmente (poderia enviar via fetch para API)
     localStorage.setItem("pedidoEditado", JSON.stringify(pedidoAtualizado));
   });
 });
