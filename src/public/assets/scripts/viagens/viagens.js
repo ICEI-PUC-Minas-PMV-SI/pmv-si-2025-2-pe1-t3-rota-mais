@@ -187,17 +187,10 @@ async function createCard(carona, papel, tipoViagem, statusText, statusClass, st
             const caronas = await fetchJSON("/caronas");
 
             let viagens = caronas.filter(c => {
-                const status = c.statusViagem || 'agendada';
-                if (status !== 'concluida' && status !== 'cancelada') return false;
-
-                // Para caronas do tipo "oferecendo"
                 const isMotoristaOferecendo = c.motoristaId === userId && c.tipo === 'oferecendo';
                 const isPassageiroOferecendo = c.tipo === 'oferecendo' && c.passageiros && c.passageiros.some(p => p.userId === userId && p.status === 'aprovado');
-                
-                // Para caronas do tipo "pedindo"
                 const isPassageiroPedindo = c.tipo === 'pedindo' && c.passageiroId === userId;
                 const isMotoristaPedindo = c.tipo === 'pedindo' && c.motoristaId === userId;
-                
                 const isEncomenda = c.encomendas && c.encomendas.some(e => e.userId === userId && e.status === 'aprovado');
 
                 return isMotoristaOferecendo || isPassageiroOferecendo || isPassageiroPedindo || isMotoristaPedindo || isEncomenda;
@@ -230,19 +223,16 @@ async function createCard(carona, papel, tipoViagem, statusText, statusClass, st
                 const motorista = carona.motoristaId ? await fetchJSON(`/users/${carona.motoristaId}`) : null;
                 const status = carona.statusViagem || 'agendada';
 
-                // Determinar o papel do usuário
                 let papel = 'passageiro';
                 const isEncomenda = carona.encomendas && carona.encomendas.some(e => e.userId === userId && e.status === 'aprovado');
                 
                 if (carona.tipo === 'oferecendo') {
-                    // Para caronas oferecendo: motorista é quem criou, passageiro está na lista
                     if (carona.motoristaId === userId) {
                         papel = 'motorista';
                     } else if (carona.passageiros && carona.passageiros.some(p => p.userId === userId && p.status === 'aprovado')) {
                         papel = 'passageiro';
                     }
                 } else if (carona.tipo === 'pedindo') {
-                    // Para caronas pedindo: passageiro é quem criou, motorista é quem foi aprovado
                     if (carona.passageiroId === userId) {
                         papel = 'passageiro';
                     } else if (carona.motoristaId === userId) {
@@ -255,15 +245,29 @@ async function createCard(carona, papel, tipoViagem, statusText, statusClass, st
                 let tipoViagem = 'carona';
                 if (isEncomenda && carona.tipo === 'oferecendo') tipoViagem = 'encomenda';
 
-                const statusText = status === 'concluida' ? 'Concluída' : 'Cancelada';
-                const statusClass = status === 'concluida' ? 'success' : 'danger';
-                const statusIcon = status === 'concluida' ? 'check-circle' : 'x-circle';
+                let statusText, statusClass, statusIcon;
+                if (status === 'concluida') {
+                    statusText = 'Concluída';
+                    statusClass = 'success';
+                    statusIcon = 'check-circle';
+                } else if (status === 'cancelada') {
+                    statusText = 'Cancelada';
+                    statusClass = 'danger';
+                    statusIcon = 'x-circle';
+                } else if (status === 'em_andamento') {
+                    statusText = 'Em andamento';
+                    statusClass = 'primary';
+                    statusIcon = 'car-front';
+                } else {
+                    statusText = 'Agendada';
+                    statusClass = 'warning';
+                    statusIcon = 'clock';
+                }
 
                 const card = await createCard(carona, papel, tipoViagem, statusText, statusClass, statusIcon, motorista, userId);
                 container.appendChild(card);
             }
 
-            // Event listeners para botões de avaliar
             container.querySelectorAll('.btn-avaliar-viagem').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const caronaId = this.dataset.caronaId;

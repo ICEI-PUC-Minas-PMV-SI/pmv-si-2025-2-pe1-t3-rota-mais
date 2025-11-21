@@ -162,8 +162,9 @@
         }
       ],
       "encomendas": [],
-      "statusViagem": "agendada",
-      "id": 1763690612192
+      "statusViagem": "cancelada",
+      "id": 1763690612192,
+      "dataCancelamento": "2025-11-21T02:13:22.678Z"
     }
   ],
   "encomendas": [],
