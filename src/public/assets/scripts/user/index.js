@@ -59,7 +59,9 @@ $(document).ready(async function () {
     $(".user-stats-item-value").html(`
       <div>
         <i class="bi bi-car-front"></i>
-        <span><strong>${viagensRealizadas} viagem${viagensRealizadas !== 1 ? 'ens' : ''} realizada${viagensRealizadas !== 1 ? 's' : ''}</strong></span>
+            <span><strong>
+              ${viagensRealizadas} ${viagensRealizadas === 1 ? 'viagem realizada' : 'viagens realizadas'}
+            </strong></span>
       </div>
       <div>
         <i class="bi bi-star-fill"></i>

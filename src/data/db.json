@@ -119,6 +119,51 @@
       "encomendas": [],
       "statusViagem": "agendada",
       "id": 1763686396296
+    },
+    {
+      "tipo": "oferecendo",
+      "usuario": {
+        "id": 8,
+        "name": "Omar",
+        "email": "omar@gmail.com",
+        "usuario": "omar",
+        "telefone": "49999999999",
+        "comunidade": "Pampulha",
+        "cidade": "Tor",
+        "endereco": {
+          "rua": "",
+          "numero": "",
+          "complemento": "",
+          "bairro": "",
+          "referencia": ""
+        }
+      },
+      "criadorId": 8,
+      "motoristaId": 8,
+      "comunidadeId": 1,
+      "rota": {
+        "origem": "teste",
+        "destino": "Teste"
+      },
+      "data": "24/11/2025",
+      "horario": "19:00",
+      "veiculo": "carro",
+      "vagas": 2,
+      "custo": "Viagem gratuita",
+      "podeTrazerEncomendas": true,
+      "incluiRetorno": false,
+      "dataRetorno": "",
+      "horarioRetorno": "",
+      "passageiros": [
+        {
+          "userId": 7,
+          "status": "aprovado",
+          "posicao": 1
+        }
+      ],
+      "encomendas": [],
+      "statusViagem": "agendada",
+      "id": 1763690612192
     }
   ],
   "encomendas": [],
@@ -285,6 +330,16 @@
       "licensePlate": "ABC2344",
       "availableSeats": 4,
       "id": 1763685411509
+    },
+    {
+      "motoristaId": 8,
+      "type": "CAR",
+      "brand": "Honda",
+      "model": "Civic",
+      "color": "vermelho",
+      "licensePlate": "ABC1234",
+      "availableSeats": 2,
+      "id": 1763690571142
     }
   ],
   "messages": [
@@ -449,7 +504,8 @@
         "bairro": "",
         "referencia": ""
       },
-      "id": 8
+      "id": 8,
+      "role": "motorista"
     }
   ]
 }
