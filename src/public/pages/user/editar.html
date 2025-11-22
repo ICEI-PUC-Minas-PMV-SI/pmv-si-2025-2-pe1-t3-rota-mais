@@ -58,15 +58,15 @@
                     <div class="col-md-6">
                         <label class="form-label">Comunidade</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Taquara">
-                            <button class="btn btn-outline-secondary" type="button"><i
-                                    class="bi bi-search"></i></button>
+                            <select class="form-select" id="comunidade-select">
+                                <option value="">Selecione uma comunidade</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Cidade</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Papagaios, MG">
+                            <input type="text" class="form-control" id="cidade-input" placeholder="Papagaios, MG">
                             <button class="btn btn-outline-secondary" type="button"><i
                                     class="bi bi-search"></i></button>
                         </div>
@@ -76,29 +76,36 @@
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
                         <label class="form-label">Rua</label>
-                        <input type="text" class="form-control" placeholder="Rua Augusta">
+                        <input type="text" class="form-control" id="rua-input" placeholder="Rua Augusta">
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Número</label>
-                        <input type="text" class="form-control" placeholder="164">
+                        <input type="text" class="form-control" id="numero-input" placeholder="164">
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Complemento</label>
-                        <input type="text" class="form-control" placeholder="B">
+                        <input type="text" class="form-control" id="complemento-input" placeholder="B">
                     </div>
                 </div>
 
                 <div class="row g-3 mb-3">
                     <div class="col-md-6">
                         <label class="form-label">Bairro</label>
-                        <input type="text" class="form-control" placeholder="Sem bairro">
+                        <input type="text" class="form-control" id="bairro-input" placeholder="Sem bairro">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Ponto de referência</label>
-                        <input type="text" class="form-control" placeholder="Sem ponto de referência">
+                        <input type="text" class="form-control" id="ponto-referencia-input" placeholder="Sem ponto de referência">
                     </div>
                 </div>
 
+                <div class="row g-3 mb-3">
+                    <div class="col-12">
+                        <label class="form-label">Biografia</label>
+                        <textarea class="form-control" id="biografia-input" rows="4" placeholder="Conte um pouco sobre você..."></textarea>
+                        <div class="form-text">Máximo de 500 caracteres</div>
+                    </div>
+                </div>
 
                 <div class="row g-3 mb-4">
                     <label class="form-label">Veículos cadastrados</label>

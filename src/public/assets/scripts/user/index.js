@@ -69,17 +69,28 @@ $(document).ready(async function () {
       </div>
     `);
 
+    // Montar localização - priorizar endereco, depois campos diretos do user
     let localizacaoTexto = "Não informado";
+    const partes = [];
+    
     if (user.endereco) {
-      const partes = [];
       if (user.endereco.comunidade) partes.push(user.endereco.comunidade);
       if (user.endereco.cidade) partes.push(user.endereco.cidade);
-      if (partes.length > 0) {
-        localizacaoTexto = partes.join(" • ");
-      }
-    } else if (user.localizacao) {
-      localizacaoTexto = user.localizacao;
     }
+    
+    // Se não tiver no endereco, verificar campos diretos
+    if (partes.length === 0) {
+      if (user.comunidade) partes.push(user.comunidade);
+      if (user.cidade) partes.push(user.cidade);
+    }
+    
+    // Se ainda não tiver, verificar localizacao direta
+    if (partes.length === 0 && user.localizacao) {
+      localizacaoTexto = user.localizacao;
+    } else if (partes.length > 0) {
+      localizacaoTexto = partes.join(" • ");
+    }
+    
     $(".user-info").find("h4").first().text(localizacaoTexto);
 
     if (user.biografia) {

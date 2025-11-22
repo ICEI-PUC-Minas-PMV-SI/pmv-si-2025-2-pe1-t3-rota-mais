@@ -161,6 +161,16 @@
       "licensePlate": "ABC1234",
       "availableSeats": 4,
       "id": 1763761718449
+    },
+    {
+      "motoristaId": 2,
+      "type": "CAR",
+      "brand": "Honda",
+      "model": "Civic 2025",
+      "color": "Preto",
+      "licensePlate": "ABC1234",
+      "availableSeats": 3,
+      "id": 1763777168841
     }
   ],
   "messages": [
@@ -236,6 +246,28 @@
       "id": 1,
       "rating": 5,
       "username": "clleber",
+      "avatar": "https://placehold.co/100x100"
+    },
+    {
+      "name": "Cleber",
+      "email": "cleber@gmail.com",
+      "senha": "416728a2",
+      "usuario": "clleber",
+      "username": "cleber",
+      "telefone": "(31) 00000-0000",
+      "comunidade": "Centro",
+      "cidade": "Belo Horizonte",
+      "endereco": {
+        "comunidade": "Centro",
+        "cidade": "Belo Horizonte",
+        "rua": "Rua Curvelo",
+        "numero": "72",
+        "complemento": "",
+        "bairro": "Floresta",
+        "pontoReferencia": ""
+      },
+      "id": 2,
+      "biografia": "Estudante da PUC Minas",
       "avatar": "https://placehold.co/100x100"
     }
   ]

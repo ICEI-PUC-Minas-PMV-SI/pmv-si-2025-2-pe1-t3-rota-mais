@@ -24,6 +24,24 @@ $(document).ready(async function () {
     return;
   }
 
+  // Carregar comunidades
+  try {
+    const comunidades = await fetchJSON(`/comunidades`);
+    const $comunidadeSelect = $("#comunidade-select");
+    
+    if ($comunidadeSelect.length && comunidades && comunidades.length > 0) {
+      // Adicionar opção vazia primeiro
+      $comunidadeSelect.append($("<option>").attr("value", "").text("Selecione uma comunidade"));
+      
+      comunidades.forEach(comunidade => {
+        const $option = $("<option>").attr("value", comunidade.nome).text(comunidade.nome);
+        $comunidadeSelect.append($option);
+      });
+    }
+  } catch (error) {
+    console.error("Erro ao carregar comunidades:", error);
+  }
+
   try {
     const user = await fetchJSON(`/users/${currentUserId}`);
 
@@ -37,15 +55,21 @@ $(document).ready(async function () {
 
     form.find("input[type='tel']").val(user.telefone || "");
 
+    const comunidadeValue = (user.endereco && user.endereco.comunidade) || user.comunidade || "";
+    $("#comunidade-select").val(comunidadeValue);
+    
+    const cidadeValue = (user.endereco && user.endereco.cidade) || user.cidade || "";
+    $("#cidade-input").val(cidadeValue);
+    
     if (user.endereco) {
-      form.find(".input-group input[type='text']").eq(0).val(user.endereco.comunidade || "");
-      form.find(".input-group input[type='text']").eq(1).val(user.endereco.cidade || "");
-      form.find("input[type='text']").eq(4).val(user.endereco.rua || "");
-      form.find("input[type='text']").eq(5).val(user.endereco.numero || "");
-      form.find("input[type='text']").eq(6).val(user.endereco.complemento || "");
-      form.find("input[type='text']").eq(7).val(user.endereco.bairro || "");
-      form.find("input[type='text']").eq(8).val(user.endereco.pontoReferencia || "");
+      $("#rua-input").val(user.endereco.rua || "");
+      $("#numero-input").val(user.endereco.numero || "");
+      $("#complemento-input").val(user.endereco.complemento || "");
+      $("#bairro-input").val(user.endereco.bairro || "");
+      $("#ponto-referencia-input").val(user.endereco.pontoReferencia || "");
     }
+    
+    $("#biografia-input").val(user.biografia || "");
 
   } catch {
     Swal.fire("Erro", "Falha ao carregar dados do usuário.", "error");
@@ -68,6 +92,11 @@ $(document).ready(async function () {
   nomeInput.attr("maxlength", "100");
   usernameInput.attr("maxlength", "50");
   emailInput.attr("maxlength", "255");
+  
+  const biografiaInput = $("#biografia-input");
+  if (biografiaInput.length) {
+    biografiaInput.attr("maxlength", "500");
+  }
 
   usernameInput.on("input", function () {
     this.value = this.value.replace(/[^a-zA-Z0-9_]/g, '');
@@ -76,6 +105,24 @@ $(document).ready(async function () {
   form.find("input[type='text']").eq(5).on("input", function () {
     this.value = this.value.replace(/\D/g, '');
   });
+  
+  if (biografiaInput.length) {
+    const $counter = $("<small>").addClass("form-text text-muted").text("0/500 caracteres");
+    biografiaInput.after($counter);
+    
+    biografiaInput.on("input", function() {
+      const length = $(this).val().length;
+      $counter.text(`${length}/500 caracteres`);
+      if (length > 500) {
+        $counter.addClass("text-danger").removeClass("text-muted");
+      } else {
+        $counter.removeClass("text-danger").addClass("text-muted");
+      }
+    });
+    
+    const initialLength = biografiaInput.val().length;
+    $counter.text(`${initialLength}/500 caracteres`);
+  }
 
   function validarCampo(input, valor, tipo) {
     const $input = $(input);
@@ -225,19 +272,27 @@ $(document).ready(async function () {
     }
 
     try {
+      const comunidadeValue = $("#comunidade-select").val().trim();
+      const cidadeValue = $("#cidade-input").val().trim();
+      
+      const biografiaValue = $("#biografia-input").val().trim();
+      
       const formData = {
         name: nomeInput.val().trim(),
         username: usernameInput.val().trim(),
         email: emailInput.val().trim(),
         telefone: telefoneInput.val().trim(),
+        comunidade: comunidadeValue,
+        cidade: cidadeValue,
+        biografia: biografiaValue,
         endereco: {
-          comunidade: form.find(".input-group input[type='text']").eq(0).val().trim(),
-          cidade: form.find(".input-group input[type='text']").eq(1).val().trim(),
-          rua: form.find("input[type='text']").eq(4).val().trim(),
-          numero: form.find("input[type='text']").eq(5).val().trim(),
-          complemento: form.find("input[type='text']").eq(6).val().trim(),
-          bairro: form.find("input[type='text']").eq(7).val().trim(),
-          pontoReferencia: form.find("input[type='text']").eq(8).val().trim()
+          comunidade: comunidadeValue,
+          cidade: cidadeValue,
+          rua: $("#rua-input").val().trim(),
+          numero: $("#numero-input").val().trim(),
+          complemento: $("#complemento-input").val().trim(),
+          bairro: $("#bairro-input").val().trim(),
+          pontoReferencia: $("#ponto-referencia-input").val().trim()
         },
         avatar: $(".profile-img").attr("src")
       };

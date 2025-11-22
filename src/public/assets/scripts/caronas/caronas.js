@@ -771,11 +771,28 @@ $(function () {
       if ($data.length) $data.val(oferta.data || '');
       if ($hora.length) $hora.val(oferta.horario || '');
       if ($cid.length) $cid.val(oferta.id || '');
+      
+      await loadVehicles();
+      
       const $vehicle = $('#rideVehicle');
       const $seats = $('#rideSeats');
       if ($vehicle.length) {
         if (!$vehicle.attr('name')) $vehicle.attr('name', 'veiculo');
-        $vehicle.val(oferta.veiculo || '');
+        const veiculoValue = oferta.veiculo || '';
+        if (veiculoValue) {
+          let normalizedValue = veiculoValue.toLowerCase();
+          if (normalizedValue === 'car' || normalizedValue === 'carro') {
+            normalizedValue = 'carro';
+          } else if (normalizedValue === 'motorcycle' || normalizedValue === 'moto' || normalizedValue === 'motocicleta') {
+            normalizedValue = 'moto';
+          }
+          
+          const $option = $vehicle.find(`option[value="${normalizedValue}"]`);
+          if ($option.length) {
+            $vehicle.val(normalizedValue);
+            $vehicle.trigger('change');
+          }
+        }
       }
       if ($seats.length) {
         if (!$seats.attr('name')) $seats.attr('name', 'vagas');
@@ -1283,10 +1300,10 @@ $(function () {
     } else {
       detectCaronaType(id);
     }
-    setupFormHandlers(id);
+    await setupFormHandlers(id);
   }
 
-  function setupFormHandlers(id) {
+  async function setupFormHandlers(id) {
     const $formPedido = $('#form-editar-pedido');
     const $formOferta = $('#form-editar-oferta');
 
@@ -1340,12 +1357,14 @@ $(function () {
         const fd = new FormData($formPedido[0]);
         const caronaAtual = await fetchJSON(`${API_BASE}/caronas/${id}`);
         const currentUserId = Number(localStorage.getItem("userId"));
+        const comunidadeId = caronaAtual.comunidadeId || Number(localStorage.getItem("selectedCommunityId")) || null;
         const data = {
           tipo: 'pedindo',
           usuario: getCurrentUser(),
           criadorId: caronaAtual.criadorId || currentUserId, 
           passageiroId: currentUserId,
           motoristaId: caronaAtual.motoristaId || null,
+          comunidadeId: comunidadeId,
           rota: { 
             origem: $('#origem-select').val() === 'outro' 
               ? fd.get('origem') 
@@ -1386,7 +1405,7 @@ $(function () {
       maskTime('#horario-oferta, #horario-retorno-oferta');
       if (!$('#rideVehicle').attr('name')) $('#rideVehicle').attr('name', 'veiculo');
       if (!$('#rideSeats').attr('name')) $('#rideSeats').attr('name', 'vagas');
-      loadVehicles();
+      await loadVehicles();
       baseValidationConfig($formOferta, 'oferta');
 
       $formOferta[0].onsubmit = null;
@@ -1417,11 +1436,13 @@ $(function () {
         
         const caronaAtual = await fetchJSON(`${API_BASE}/caronas/${id}`);
         const currentUserId = Number(localStorage.getItem("userId"));
+        const comunidadeId = caronaAtual.comunidadeId || Number(localStorage.getItem("selectedCommunityId")) || null;
         const data = {
           tipo: 'oferecendo',
           usuario: getCurrentUser(),
           criadorId: caronaAtual.criadorId || currentUserId, 
-          motoristaId: currentUserId, 
+          motoristaId: currentUserId,
+          comunidadeId: comunidadeId,
           rota: { 
             origem: $('#origem-select').val() === 'outro' 
               ? fd.get('origem') 
