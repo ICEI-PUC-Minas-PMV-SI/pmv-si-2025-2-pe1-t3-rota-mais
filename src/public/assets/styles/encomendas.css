@@ -34,7 +34,8 @@
 
 .encomendas-pedido {
     align-self: flex-end;
-    background: #c49ceb;
+    background: #FF7700;     /* LARANJA = pedindo */
+    color: #fff;
     border-radius: 12px;
     padding: 8px 16px;
     border: none;
@@ -49,7 +50,8 @@
 
 .encomendas-oferta {
     align-self: flex-end;
-    background: #f3aa6a;
+    background: #7828C8;     /* ROXO = oferecendo */
+    color: #fff;
     border-radius: 12px;
     padding: 8px 16px;
     border: none;

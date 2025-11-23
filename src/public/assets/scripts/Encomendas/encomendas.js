@@ -117,7 +117,7 @@ $(function () {
         const $p3 = $('<p>').addClass('viagens-data bi bi-calendar3').html(`<strong>Dia <time datetime="${dataISO}">${dataTexto}${horario ? ' às ' + horario : ''}.</time></strong>`);
 
         const $btn = $(`<a class="btn ${classeBtn}">${textoBtn}</a>`);
-        $btn.attr('href', `/pages/encomendas/detalhes.html?id=${encomenda.id}`);
+        $btn.attr('href', `/pages/encomendas/detalhes-encomenda.html?id=${encomenda.id}`);
 
         $card.append($p1, $p2, $p3, $btn);
         return $card;
