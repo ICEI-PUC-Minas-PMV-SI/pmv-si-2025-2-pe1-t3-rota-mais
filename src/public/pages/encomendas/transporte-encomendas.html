@@ -4,76 +4,81 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Oferecer transporte de encomenda</title>
+
+  <!-- Mesmo padrão da outra tela -->
   <link rel="stylesheet" href="../../assets/styles/main.css" />
-  <link rel="stylesheet" href="../../assets/styles/transporte-encomendas.css">
-  <style>
-    .option { cursor: pointer; }
-    .option.active { background: #d9d9d9; }
-  </style>
+  <link rel="stylesheet" href="../../assets/styles/transporte-encomendas.css" />
 </head>
+
 <body>
-    <div class="sidebar"></div>
-  <div class="container">
-    <h1>Oferecer transporte de encomenda</h1>
 
-    <label>Local de partida</label>
-    <input id="partida" type="text" value="">
+  <aside class="sidebar"></aside>
 
-    <label>Local de chegada</label>
-    <input id="chegada" type="text" value="">
+  <main class="main-content">
+    <div class="content-wrapper">
 
-    <div class="inline">
-      <div>
-        <label>Data da viagem</label>
-        <input id="dataViagem" type="date" value="">
+      <h1>Oferecer transporte de encomenda</h1>
+
+      <label>Local de partida</label>
+      <input id="partida" type="text" placeholder="Cidade / Bairro / Estabelecimento" />
+
+      <label>Local de chegada</label>
+      <input id="chegada" type="text" placeholder="Cidade / Bairro / Estabelecimento" />
+
+      <div class="row">
+        <div class="campo">
+          <label>Data da viagem</label>
+          <input id="dataViagem" type="date" />
+        </div>
+        <div class="campo">
+          <label>Horário de partida</label>
+          <input id="horaPartida" type="time" />
+        </div>
       </div>
-      <div>
-        <label>Horário de partida</label>
-        <input id="horaPartida" type="time" value="">
+
+      <div class="row">
+        <div class="campo">
+          <label>Veículo</label>
+          <select id="veiculo">
+            <option value="">Selecione</option>
+            <option>Carro</option>
+            <option>Moto</option>
+            <option>Caminhão</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label>Placa</label>
+          <input id="placa" type="text" placeholder="ABC-1234" />
+        </div>
       </div>
+
+      <label class="sub-label">O transporte incluirá algum custo?</label>
+      <div class="opcoes" id="custoOptions">
+        <div class="option active">Não, será gratuito</div>
+        <div class="option">Sim, haverá um custo</div>
+      </div>
+
+      <h3>Incluir previsão de retorno?</h3>
+      <div class="opcoes" id="retornoOptions">
+        <div class="option active">Sim, incluir</div>
+        <div class="option">Não incluir</div>
+      </div>
+
+      <div class="row" id="retornoContainer">
+        <div class="campo">
+          <label>Data do retorno</label>
+          <input id="dataRetorno" type="date" />
+        </div>
+        <div class="campo">
+          <label>Horário previsto</label>
+          <input id="horaRetorno" type="time" />
+        </div>
+      </div>
+
+      <button class="btn" id="criarOferta">Criar oferta</button>
+
     </div>
-
-    <div class="inline">
-      <div>
-        <label>Veículo</label>
-        <select id="veiculo">
-          <option value="">Selecione</option>
-          <option>Carro</option>
-          <option>Moto</option>
-          <option>Caminhão</option>
-        </select>
-      </div>
-      <div>
-        <label>Placa</label>
-        <input id="placa" type="text" value="">
-      </div>
-    </div>
-
-    <label class="sub-label">O transporte incluirá algum custo para o passageiro?</label>
-    <div class="options" id="custoOptions">
-      <div class="option active">Não, será gratuito</div>
-      <div class="option">Sim, haverá um custo</div>
-    </div>
-
-    <label class="sub-label">Gostaria de incluir uma previsão de retorno?</label>
-    <div class="options" id="retornoOptions">
-      <div class="option active">Sim, incluir previsão de retorno</div>
-      <div class="option">Não incluir previsão de retorno</div>
-    </div>
-
-    <div class="inline" id="retornoContainer">
-      <div>
-        <label>Data do retorno</label>
-        <input id="dataRetorno" type="date" value="">
-      </div>
-      <div>
-        <label>Horário previsto</label>
-        <input id="horaRetorno" type="time" value="">
-      </div>
-    </div>
-
-    <button class="btn" id="criarOferta">Criar oferta</button>
-  </div>
+  </main>
 
   <script src="../../assets/scripts/encomendas/transporte-encomendas.js"></script>
   <script src="../../assets/scripts/aside.js"></script>

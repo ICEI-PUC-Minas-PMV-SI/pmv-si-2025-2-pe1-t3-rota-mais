@@ -1,5 +1,6 @@
 $(function () {
-    const API_URL = 'http://localhost:3000';
+    // usa a mesma base que as outras telas
+    const API_URL = `${API_BASE}`;
 
     async function fetchJSON(url, options = {}) {
         const res = await fetch(url, options);
@@ -7,17 +8,12 @@ $(function () {
         return await res.json();
     }
 
-    function clear($container) {
-        $container.children().remove();
-    }
+    function clear($container) { $container.empty(); }
+    function el(tag, className) { return $(`<${tag}>`).addClass(className); }
 
-    function el(tag, className) {
-        return $(`<${tag}>`).addClass(className);
-    }
-
-    function emptyState($container, iconCls, msg, color) {
+    function emptyState($container, iconCls, msg) {
         const $wrap = el('div', 'text-center py-5');
-        const $i = $(`<i>`).addClass(iconCls).css('font-size', '3rem').css('color', color || '#d1d5db');
+        const $i = $('<i>').addClass(iconCls).css('font-size', '3rem').css('color', '#d1d5db');
         const $p = el('p', 'mt-3').text(msg);
         $wrap.append($i, $p);
         clear($container);
@@ -25,184 +21,109 @@ $(function () {
     }
 
     function getCurrentUser() {
-        try {
-            const userStr = localStorage.getItem('user');
-            return userStr ? JSON.parse(userStr) : null;
-        } catch {
-            return null;
-        }
+        try { const s = localStorage.getItem('user'); return s ? JSON.parse(s) : null; } catch { return null; }
     }
 
+    function formatarDataTexto(dataISO) {
+        try {
+            const d = new Date(dataISO);
+            const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+            return `${d.getDate()} de ${meses[d.getMonth()]} de ${d.getFullYear()}`;
+        } catch { return ''; }
+    }
+
+    // Carrega todas as encomendas
     async function loadencomendas() {
         const $container = $('#encomendas-container');
-        if (!$container.length) return;
         try {
             const encomendas = await fetchJSON(`${API_URL}/encomendas`);
             clear($container);
-            if (!encomendas.length) {
-                emptyState($container, 'bi bi-car-front', 'Nenhuma encomenda disponível no momento', '#d1d5db');
+            if (!encomendas || !encomendas.length) {
+                emptyState($container, 'bi bi-envelope', 'Nenhuma encomenda disponível no momento');
                 return;
             }
-            const encomendasOrdenadas = encomendas.sort((a, b) => (b.id || 0) - (a.id || 0));
-            encomendasOrdenadas.forEach(c => $container.append(buildEncomendaCard(c)));
+            encomendas
+                .sort((a, b) => (b.id || 0) - (a.id || 0))
+                .forEach(e => $container.append(buildCard(e)));
         } catch (e) {
-            emptyState($container, 'bi bi-exclamation-triangle', 'Erro ao carregar encomendas');
+            console.error(e);
+            emptyState($('#encomendas-container'), 'bi bi-exclamation-triangle', 'Erro ao carregar encomendas');
         }
     }
 
-    async function filterEncomendas(filter) {
+    // Filtra por tipo: 'pedindo' | 'oferecendo' | 'todos'
+    async function filterEncomendas(tipo) {
         const $container = $('#encomendas-container');
-        if (!$container.length) return;
         try {
             const encomendas = await fetchJSON(`${API_URL}/encomendas`);
-            
-            let list = encomendas;
-            
-            if (filter === 'comunidade') {
-                // Filtrar por comunidade do usuário logado
-                const currentUserId = Number(localStorage.getItem('userId'));
-                if (currentUserId) {
-                    try {
-                        const user = await fetchJSON(`${API_URL}/users/${currentUserId}`);
-                        const userComunidade = user.comunidade;
-                        if (userComunidade) {
-                            list = encomendas.filter(c => {
-                                const encomendaComunidade = c.usuario?.comunidade || '';
-                                return encomendaComunidade === userComunidade;
-                            });
-                        }
-                    } catch (e) {
-                        console.error('Erro ao buscar usuário:', e);
-                    }
-                }
-            } else if (filter && filter !== 'todos') {
-                list = encomendas.filter(c => c.tipo === filter);
-            }
-            
-            clear($container);
-            if (!list.length) {
-                const msg = filter === 'oferecendo' ? 'Nenhuma oferta de encomenda disponível' : 
-                           filter === 'pedindo' ? 'Nenhum pedido de encomenda disponível' : 
-                           filter === 'comunidade' ? 'Nenhuma encomenda disponível na sua comunidade' :
-                           'Nenhuma encomenda disponível no momento';
-                emptyState($container, 'bi bi-car-front', msg, '#d1d5db');
-                return;
-            }
-            const listOrdenada = list.sort((a, b) => (b.id || 0) - (a.id || 0));
-            listOrdenada.forEach(c => $container.append(buildEncomendaCard(c)));
-        } catch (e) { }
-    }
-
-    async function searchencomendas(origem, destino, data) {
-        const $container = $('#encomendas-container');
-        if (!$container.length) return;
-        try {
-            const encomendas = await fetchJSON(`${API_URL}/encomendas`);
-            let filtered = encomendas;
-            if (origem) filtered = filtered.filter(c => c.rota && c.rota.origem && c.rota.origem.toLowerCase().includes(origem.toLowerCase()));
-            if (destino) filtered = filtered.filter(c => c.rota && c.rota.destino && c.rota.destino.toLowerCase().includes(destino.toLowerCase()));
-            if (data) {
-                const searchDate = new Date(data).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
-                filtered = filtered.filter(c => c.data === searchDate);
+            let lista = encomendas || [];
+            if (tipo && tipo !== 'todos') {
+                lista = lista.filter(i => i.tipo === tipo);
             }
             clear($container);
-            if (!filtered.length) {
-                emptyState($container, 'bi bi-search', 'Nenhuma encomenda encontrada com os critérios de busca', '#d1d5db');
+            if (!lista.length) {
+                const msg = tipo === 'oferecendo' ? 'Nenhuma oferta de encomenda disponível' :
+                            tipo === 'pedindo' ? 'Nenhum pedido de encomenda disponível' :
+                            'Nenhuma encomenda disponível no momento';
+                emptyState($container, 'bi bi-car-front', msg);
                 return;
             }
-            const filteredOrdenado = filtered.sort((a, b) => (b.id || 0) - (a.id || 0));
-            filteredOrdenado.forEach(c => $container.append(buildEncomendaCard(c)));
-        } catch (e) { }
+            lista.sort((a,b) => (b.id || 0) - (a.id || 0)).forEach(e => $container.append(buildCard(e)));
+        } catch (e) {
+            console.error(e);
+            emptyState($container, 'bi bi-exclamation-triangle', 'Erro ao filtrar encomendas');
+        }
     }
 
+    // Setup filtros (corrigido: data-filter corresponde ao tipo real)
     function setupFilters() {
         const $tabs = $('.filter-tab');
-        if (!$tabs.length) return;
-        $tabs.each(function () {
-            $(this).on('click', function () {
-                $tabs.removeClass('active');
-                $(this).addClass('active');
-                const filter = $(this).data('filter') || 'todos';
-                filterEncomendas(filter);
-            });
+        $tabs.on('click', function () {
+            $tabs.removeClass('active');
+            $(this).addClass('active');
+            const filtro = $(this).data('filter') || 'todos';
+            if (filtro === 'todos') loadencomendas();
+            else filterEncomendas(filtro);
         });
     }
 
-    function buildEncomendaCard(encomenda) {
-        const user = encomenda.usuario || getCurrentUser();
+    // Build do card (padronizado)
+    function buildCard(encomenda) {
+        const user = encomenda.usuario || {};
+        const nome = user.nome || 'Usuário';
+
+        const origem = encomenda.origem || encomenda.partida || '—';
+        const destino = encomenda.destino || encomenda.chegada || '—';
+        const dataISO = encomenda.dataISO || (encomenda.dataViagem ? new Date(encomenda.dataViagem + 'T00:00:00').toISOString() : new Date().toISOString());
+        const dataTexto = encomenda.dataTexto || formatarDataTexto(dataISO) || '';
+        const horario = encomenda.horario || encomenda.horaPartida || '';
+
+        const tipo = encomenda.tipo || 'pedindo';
+        const isPedido = tipo === 'pedindo';
+        const isOferta = tipo === 'oferecendo';
+
+        const classeBtn = isPedido ? 'encomendas-pedido' : 'encomendas-oferta';
+        const textoBtn = isPedido ? 'Ver pedido' : 'Ver oferta';
+
         const $card = el('div', 'viagens-box-locais p-3 rounded mb-3 position-relative');
 
-        const agora = Date.now();
-        const idade = agora - (encomenda.id || 0);
-        const ehRecente = idade < 300000;
+        // Texto principal conforme tipo
+        const textoPrincipal = isOferta
+            ? `${nome} está oferecendo transporte de encomenda.`
+            : `${nome} precisa que alguém leve uma encomenda.`;
 
-        /*if (ehRecente || encomenda.urgente) {
-            $card.css({
-                'border-left': '5px solid #dc3545',
-                'background-color': '#ffeaea',
-                'border': '2px solid #dc3545',
-                'box-shadow': '0 2px 8px rgba(220, 53, 69, 0.2)'
-            });
+        const $p1 = $('<p>').addClass('mb-1').html(`<strong>${textoPrincipal}</strong>`);
+        const $p2 = $('<p>').addClass('encomendas-origem-destino').html(`De <strong>${origem}</strong> para <strong>${destino}</strong>.`);
+        const $p3 = $('<p>').addClass('viagens-data bi bi-calendar3').html(`<strong>Dia <time datetime="${dataISO}">${dataTexto}${horario ? ' às ' + horario : ''}.</time></strong>`);
 
-            const badgeText = encomenda.urgente ? 'Urgente' : 'Nova';
-            const $badge = $('<span>')
-                .addClass('badge bg-danger')
-                .css({
-                    position: 'absolute',
-                    top: '10px',
-                    right: '10px',
-                    fontSize: '0.75rem',
-                    zIndex: 10
-                })
-                .text(badgeText);
+        const $btn = $(`<a class="btn ${classeBtn}">${textoBtn}</a>`);
+        $btn.attr('href', `/pages/encomendas/detalhes.html?id=${encomenda.id}`);
 
-            $card.prepend($badge);
-        }*/
-
-        const $info = el('div', 'viagens-info');
-
-        // 🔹 Linha 1 — Nome + ação
-        const $p1 = $('<p>')
-            .addClass('bi bi-person-circle')
-            .html(
-                `${user.nome || 'Usuário'} precisa que <strong>alguém leve uma encomenda</strong>.`
-            );
-
-        // 🔹 Linha 2 — Origem e destino
-        const origem = encomenda.origem || '';
-        const destino = encomenda.destino || '';
-
-        const $p2 = $('<p>')
-            .addClass('encomendas-origem-destino')
-            .html(`De <strong>${origem}</strong> para <strong>${destino}</strong>.`);
-
-        // 🔹 Linha 3 — Data e hora formatadas
-        const dataISO = encomenda.dataISO || new Date().toISOString();
-        const dataLegivel = encomenda.dataTexto || '';
-        const hora = encomenda.horario || '';
-
-        const $p3 = $('<p>')
-            .addClass('viagens-data bi bi-calendar3')
-            .html(
-                `<strong>Dia <time datetime="${dataISO}">${dataLegivel} ${hora ? 'às ' + hora : ''
-                }.</time></strong>`
-            );
-
-        // 🔹 Botão "Mais informações"
-        const $btn = $('<a>')
-            .addClass('btn encomendas-mais-info')
-            .text('Mais informações')
-            .attr('href', `/pages/encomendas/detalhes.html?id=${encomenda.id}`);
-
-        // Monta tudo
-        $info.append($p1, $p2, $p3, $btn);
-
-        $card.append($info);
-
+        $card.append($p1, $p2, $p3, $btn);
         return $card;
     }
 
-
+    // Inicializa
     setupFilters();
     loadencomendas();
 });
