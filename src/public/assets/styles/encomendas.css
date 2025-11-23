@@ -1,72 +1,119 @@
-.bnt-pedir-transporte {
-    background: #FF7700;
-    border-color: #FF7700;
+/* encomendas.css - estilo inspirado em caronas, identidade própria */
+
+/* container list */
+.encomendas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 0;
 }
 
-.bnt-pedir-transporte:hover {
-    background: #ff5500;
-    border-color: #ff5500;
-    transform: translateY(-1px);
+/* card */
+.encomenda-card {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  border-radius: 16px;
+  padding: 1.25rem;
+  background: #fff;
+  position: relative;
 }
 
-.bnt-pedir-transporte:active {
-  background: #FF7700; 
-  transform: scale(0.97); 
+.encomenda-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 }
 
-
-.bnt-oferecer-transporte {
-    background: #7828C8;
-    border-color: #7828C8;
+/* header */
+.encomenda-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-.bnt-oferecer-transporte:hover {
-    background: #6f14ca;
-    border-color: #6f14ca;
-    transform: translateY(-1px);
+.encomenda-user {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
 }
 
-.bnt-oferecer-transporte:active {
-  background:  #7828C8; 
-  transform: scale(0.97); 
+/* rota */
+.encomenda-rota {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: .6rem 0;
 }
 
+.encomenda-rota.pedindo { color: #FF7700; }    /* laranja pedido */
+.encomenda-rota.oferecendo { color: #7828C8; } /* roxo oferta */
 
-.encomendas-pedido {
-    align-self: flex-end;
-    background: #FF7700;     /* LARANJA = pedindo */
-    color: #fff;
-    border-radius: 12px;
-    padding: 8px 16px;
-    border: none;
-    cursor: pointer;
-    transition: 0.2s;
+/* detalhes linha */
+.encomenda-details { font-size: .95rem; color: #6b7280; display:flex; gap:1rem; flex-wrap:wrap; align-items:center; }
+.encomenda-details i { color: #9ca3af; }
+
+/* custo / badge area */
+.encomenda-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-size: .85rem;
+  font-weight: 600;
+  color: #374151;
 }
 
-.encomendas-pedido:hover {
-    background: #c49ceb;
+/* buttons */
+.encomendas-mais-info {
+  background: transparent;
+  border-radius: 10px;
+  padding: 8px 14px;
+  color: #374151;
+  border: 1px solid #e6e6e6;
+  cursor:pointer;
+  transition: .15s;
 }
 
-
-.encomendas-oferta {
-    align-self: flex-end;
-    background: #7828C8;     /* ROXO = oferecendo */
-    color: #fff;
-    border-radius: 12px;
-    padding: 8px 16px;
-    border: none;
-    cursor: pointer;
-    transition: 0.2s;
+.encomendas-mais-info:hover {
+  background: #f6f6f7;
 }
 
-.encomendas-oferta:hover {
-    background: #f3aa6a;
+/* Action buttons for candidature */
+.encomenda-btn-request { /* asking to send item into an offering */
+  background-color: #FF7700;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 600;
 }
 
+.encomenda-btn-request[disabled] { opacity: .7; cursor: default; }
 
-.encomendas-origem-destino {
-    font-size: 1.8rem;
-    color: #7828C8;
-    font-weight: 700;
+.encomenda-btn-offer { /* offering to carry a requested item */
+  background-color: #7828C8;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 600;
 }
 
+.encomenda-btn-offer[disabled] { opacity: .7; cursor: default; }
+
+/* small state badges inside card */
+.encomenda-state {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.encomenda-state.pending { background: #FFF4E5; color: #B45309; }
+.encomenda-state.approved { background: #ECFDF5; color: #065F46; }
+.encomenda-state.denied { background: #FEF2F2; color: #9A1B1B; }
+
+/* responsive */
+@media (max-width: 768px) {
+  .encomenda-details { flex-direction: column; align-items:flex-start; gap: .5rem; }
+  .encomenda-badge { top: 12px; right: 10px; }
+}

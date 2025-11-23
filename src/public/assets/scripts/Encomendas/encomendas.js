@@ -1,129 +1,249 @@
+// encomendas.js
 $(function () {
-    // usa a mesma base que as outras telas
-    const API_URL = `${API_BASE}`;
+    // usa API_BASE global
+    const API = API_BASE || 'http://localhost:3000';
 
-    async function fetchJSON(url, options = {}) {
-        const res = await fetch(url, options);
-        if (!res.ok) throw new Error(`Erro HTTP: ${res.status}`);
+    async function fetchJSON(path, opts = {}) {
+        const res = await fetch(`${API}${path}`, opts);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return await res.json();
     }
 
-    function clear($container) { $container.empty(); }
-    function el(tag, className) { return $(`<${tag}>`).addClass(className); }
+    async function patchJSON(path, body) {
+        const res = await fetch(`${API}${path}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        if (!res.ok) throw new Error(`Patch failed ${res.status}`);
+        return await res.json();
+    }
 
-    function emptyState($container, iconCls, msg) {
-        const $wrap = el('div', 'text-center py-5');
-        const $i = $('<i>').addClass(iconCls).css('font-size', '3rem').css('color', '#d1d5db');
-        const $p = el('p', 'mt-3').text(msg);
+    function el(tag, cls, text) {
+        const $e = $(`<${tag}>`);
+        if (cls) $e.addClass(cls);
+        if (text !== undefined) $e.text(text);
+        return $e;
+    }
+
+    function clear($c) { $c.empty(); }
+
+    function emptyState($c, icon, msg) {
+        const $wrap = $('<div>').addClass('text-center py-5');
+        const $i = $('<i>').addClass(icon).css('font-size','2.6rem').css('color','#d1d5db');
+        const $p = $('<p>').addClass('mt-3').text(msg);
         $wrap.append($i, $p);
-        clear($container);
-        $container.append($wrap);
+        clear($c); $c.append($wrap);
     }
 
     function getCurrentUser() {
         try { const s = localStorage.getItem('user'); return s ? JSON.parse(s) : null; } catch { return null; }
     }
+    const currentUser = getCurrentUser();
+    const currentUserId = Number(localStorage.getItem('userId')) || (currentUser && currentUser.id) || null;
 
-    function formatarDataTexto(dataISO) {
-        try {
-            const d = new Date(dataISO);
-            const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-            return `${d.getDate()} de ${meses[d.getMonth()]} de ${d.getFullYear()}`;
-        } catch { return ''; }
-    }
-
-    // Carrega todas as encomendas
-    async function loadencomendas() {
+    // load all
+    async function loadEncomendas() {
         const $container = $('#encomendas-container');
         try {
-            const encomendas = await fetchJSON(`${API_URL}/encomendas`);
+            const list = await fetchJSON('/encomendas');
             clear($container);
-            if (!encomendas || !encomendas.length) {
-                emptyState($container, 'bi bi-envelope', 'Nenhuma encomenda disponível no momento');
+            if (!list || !list.length) {
+                emptyState($container, 'bi bi-inbox', 'Nenhuma encomenda disponível no momento');
                 return;
             }
-            encomendas
-                .sort((a, b) => (b.id || 0) - (a.id || 0))
-                .forEach(e => $container.append(buildCard(e)));
-        } catch (e) {
-            console.error(e);
+            list.sort((a,b)=> (b.id||0) - (a.id||0)).forEach(e => $container.append(buildEncomendaCard(e)));
+        } catch (err) {
+            console.error(err);
             emptyState($('#encomendas-container'), 'bi bi-exclamation-triangle', 'Erro ao carregar encomendas');
         }
     }
 
-    // Filtra por tipo: 'pedindo' | 'oferecendo' | 'todos'
+    // filter handler
     async function filterEncomendas(tipo) {
         const $container = $('#encomendas-container');
         try {
-            const encomendas = await fetchJSON(`${API_URL}/encomendas`);
-            let lista = encomendas || [];
-            if (tipo && tipo !== 'todos') {
-                lista = lista.filter(i => i.tipo === tipo);
-            }
+            const all = await fetchJSON('/encomendas');
+            let list = all;
+            if (tipo && tipo !== 'todos') list = all.filter(i => i.tipo === tipo);
             clear($container);
-            if (!lista.length) {
-                const msg = tipo === 'oferecendo' ? 'Nenhuma oferta de encomenda disponível' :
-                            tipo === 'pedindo' ? 'Nenhum pedido de encomenda disponível' :
-                            'Nenhuma encomenda disponível no momento';
-                emptyState($container, 'bi bi-car-front', msg);
+            if (!list.length) {
+                emptyState($container, 'bi bi-search', 'Nenhuma encomenda encontrada');
                 return;
             }
-            lista.sort((a,b) => (b.id || 0) - (a.id || 0)).forEach(e => $container.append(buildCard(e)));
-        } catch (e) {
-            console.error(e);
-            emptyState($container, 'bi bi-exclamation-triangle', 'Erro ao filtrar encomendas');
+            list.sort((a,b)=> (b.id||0) - (a.id||0)).forEach(e => $container.append(buildEncomendaCard(e)));
+        } catch (err) {
+            console.error(err);
+            emptyState($('#encomendas-container'), 'bi bi-exclamation-triangle', 'Erro ao filtrar encomendas');
         }
     }
 
-    // Setup filtros (corrigido: data-filter corresponde ao tipo real)
+    // adicionar candidato (user se candidata a oferta / oferece transporte a pedido)
+    async function addCandidate(encomendaId, candidateObj) {
+        // pega encomenda atual
+        const enc = await fetchJSON(`/encomendas/${encomendaId}`);
+        const candidatos = Array.isArray(enc.candidatos) ? enc.candidatos : [];
+        // evitar duplicados por userId
+        if (candidatos.some(c => c.userId === candidateObj.userId)) throw new Error('Já cadastrado');
+        const novo = [...candidatos, candidateObj];
+        return await patchJSON(`/encomendas/${encomendaId}`, { candidatos: novo });
+    }
+
+    // build card
+    function buildEncomendaCard(encomenda) {
+        const tipo = encomenda.tipo === 'oferecendo' ? 'oferecendo' : 'pedindo';
+        const nome = encomenda.usuario?.nome || encomenda.usuario?.name || 'Usuário';
+        const avatar = encomenda.usuario?.avatar || 'https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png';
+        const origem = encomenda.origem || '';
+        const destino = encomenda.destino || '';
+        const dataTexto = encomenda.dataTexto || '';
+        const horario = encomenda.horario || '';
+        const candidatos = Array.isArray(encomenda.candidatos) ? encomenda.candidatos : [];
+        const qtdPendentes = candidatos.filter(c=>c.status==='pendente').length;
+        const qtdAprovados = candidatos.filter(c=>c.status==='aprovado').length;
+
+        const $card = el('div','encomenda-card');
+
+        // badge showing type maybe or count
+        const $badge = el('div','encomenda-badge').html(`<small class="text-muted">${tipo === 'oferecendo' ? 'Oferta' : 'Pedido'}</small>`);
+        $card.append($badge);
+
+        // header
+        const $header = el('div','d-flex align-items-center gap-3 mb-2');
+        const $img = $('<img>').addClass('encomenda-avatar').attr('src', avatar).attr('alt', nome);
+        const $user = el('div', null);
+        $user.append($('<div>').addClass('encomenda-user').text(`${nome} ${tipo === 'oferecendo' ? 'está oferecendo transporte de encomenda.' : 'precisa que alguém leve uma encomenda.'}`));
+        $header.append($img,$user);
+        $card.append($header);
+
+        // rota
+        const $rota = el('div', `encomenda-rota ${tipo}`).html(`De <strong>${origem}</strong> para <strong>${destino}</strong>`);
+        $card.append($rota);
+
+        // details
+        const $details = el('div','encomenda-details mb-2');
+        $details.append($('<div>').append($('<i>').addClass('bi bi-calendar3 me-1')).append($(`<span>`).text(` ${dataTexto}${horario ? ' às ' + horario : ''}`)));
+        $card.append($details);
+
+        // candidacy summary
+        if (candidatos.length) {
+            const $cand = el('div','mb-2');
+            const states = candidatos.map(c => {
+                const s = c.status || 'pendente';
+                return `<span class="encomenda-state ${s==='pendente'?'pending':s==='aprovado'?'approved':'denied'}" style="margin-right:6px">${s.toUpperCase()}</span>`;
+            }).join(' ');
+            $cand.html(`<small class="text-muted">Candidaturas: ${candidatos.length} ${states}</small>`);
+            $card.append($cand);
+        }
+
+        // action buttons container
+        const $btns = el('div','d-flex gap-2 justify-content-end align-items-center');
+
+        // details button
+        const $detailsBtn = $('<a>').addClass('encomendas-mais-info').attr('href', `/pages/encomendas/detalhes.html?id=${encomenda.id}`).text('Mais informações');
+        $btns.append($detailsBtn);
+
+        // determine user relation and show correct action
+        const isCreator = encomenda.criadorId && Number(encomenda.criadorId) === currentUserId;
+        const alreadyCandidate = candidatos.some(c => Number(c.userId) === currentUserId);
+        const myCandidate = candidatos.find(c => Number(c.userId) === currentUserId);
+        // action for offering: others can "pedir transporte" (send their encomenda)
+        if (tipo === 'oferecendo') {
+            if (!currentUserId) {
+                // not logged in show nothing (or link to login)
+                const $login = $('<button>').addClass('encomenda-btn-request').text('Entrar para solicitar').on('click', ()=> window.location.href = '/pages/autenticacao/login.html');
+                $btns.append($login);
+            } else if (isCreator) {
+                // creator sees candidates count and link to details
+                const $info = $('<span>').addClass('text-muted small').text(`${candidatos.length} candidatura(s)`);
+                $btns.prepend($info);
+            } else {
+                // normal user -> can request transport (cadastrar candidatura)
+                const $req = $('<button>').addClass('encomenda-btn-request');
+                if (alreadyCandidate) {
+                    const st = myCandidate.status || 'pendente';
+                    if (st === 'aprovado') {
+                        $req.text('Pedido aprovado').prop('disabled', true);
+                    } else if (st === 'negado') {
+                        $req.text('Pedido negado').prop('disabled', true);
+                    } else {
+                        $req.text('Pedido enviado').prop('disabled', true);
+                    }
+                } else {
+                    $req.text('Pedir transporte');
+                    $req.on('click', async (ev) => {
+                        ev.preventDefault(); ev.stopPropagation();
+                        try {
+                            if (!currentUserId) { alert('Você precisa estar logado'); window.location.href='/pages/autenticacao/login.html'; return; }
+                            const candidate = {
+                                userId: currentUserId,
+                                status: 'pendente',
+                                timestamp: Date.now()
+                            };
+                            await addCandidate(encomenda.id, candidate);
+                            Swal.fire('Enviado','Sua solicitação foi enviada','success');
+                            // reload card by refreshing container
+                            await filterEncomendas($('.filter-tab.active').data('filter') || 'todos');
+                        } catch (err) {
+                            console.error(err); Swal.fire('Erro','Não foi possível enviar a solicitação','error');
+                        }
+                    });
+                }
+                $btns.append($req);
+            }
+        } else { // tipo === 'pedindo' -> others can offer to carry (se candidatar como transportador)
+            if (!currentUserId) {
+                const $login = $('<button>').addClass('encomenda-btn-offer').text('Entrar para oferecer').on('click', ()=> window.location.href = '/pages/autenticacao/login.html');
+                $btns.append($login);
+            } else if (isCreator) {
+                const $info = $('<span>').addClass('text-muted small').text(`${candidatos.length} candidato(s)`);
+                $btns.prepend($info);
+            } else {
+                const $offer = $('<button>').addClass('encomenda-btn-offer');
+                if (alreadyCandidate) {
+                    const st = myCandidate.status || 'pendente';
+                    if (st === 'aprovado') $offer.text('Aprovado').prop('disabled', true);
+                    else if (st === 'negado') $offer.text('Negado').prop('disabled', true);
+                    else $offer.text('Candidato (aguardando)').prop('disabled', true);
+                } else {
+                    $offer.text('Quero levar');
+                    $offer.on('click', async (ev) => {
+                        ev.preventDefault(); ev.stopPropagation();
+                        try {
+                            if (!currentUserId) { alert('Você precisa estar logado'); window.location.href='/pages/autenticacao/login.html'; return; }
+                            const candidate = {
+                                userId: currentUserId,
+                                status: 'pendente',
+                                timestamp: Date.now()
+                            };
+                            await addCandidate(encomenda.id, candidate);
+                            Swal.fire('Enviado','Sua candidatura foi enviada','success');
+                            await filterEncomendas($('.filter-tab.active').data('filter') || 'todos');
+                        } catch (err) {
+                            console.error(err); Swal.fire('Erro','Não foi possível enviar a candidatura','error');
+                        }
+                    });
+                }
+                $btns.append($offer);
+            }
+        }
+
+        $card.append($btns);
+        return $card;
+    }
+
+    // setup filters
     function setupFilters() {
         const $tabs = $('.filter-tab');
         $tabs.on('click', function () {
             $tabs.removeClass('active');
             $(this).addClass('active');
             const filtro = $(this).data('filter') || 'todos';
-            if (filtro === 'todos') loadencomendas();
-            else filterEncomendas(filtro);
+            if (filtro === 'todos') loadEncomendas(); else filterEncomendas(filtro);
         });
     }
 
-    // Build do card (padronizado)
-    function buildCard(encomenda) {
-        const user = encomenda.usuario || {};
-        const nome = user.nome || 'Usuário';
-
-        const origem = encomenda.origem || encomenda.partida || '—';
-        const destino = encomenda.destino || encomenda.chegada || '—';
-        const dataISO = encomenda.dataISO || (encomenda.dataViagem ? new Date(encomenda.dataViagem + 'T00:00:00').toISOString() : new Date().toISOString());
-        const dataTexto = encomenda.dataTexto || formatarDataTexto(dataISO) || '';
-        const horario = encomenda.horario || encomenda.horaPartida || '';
-
-        const tipo = encomenda.tipo || 'pedindo';
-        const isPedido = tipo === 'pedindo';
-        const isOferta = tipo === 'oferecendo';
-
-        const classeBtn = isPedido ? 'encomendas-pedido' : 'encomendas-oferta';
-        const textoBtn = isPedido ? 'Ver pedido' : 'Ver oferta';
-
-        const $card = el('div', 'viagens-box-locais p-3 rounded mb-3 position-relative');
-
-        // Texto principal conforme tipo
-        const textoPrincipal = isOferta
-            ? `${nome} está oferecendo transporte de encomenda.`
-            : `${nome} precisa que alguém leve uma encomenda.`;
-
-        const $p1 = $('<p>').addClass('mb-1').html(`<strong>${textoPrincipal}</strong>`);
-        const $p2 = $('<p>').addClass('encomendas-origem-destino').html(`De <strong>${origem}</strong> para <strong>${destino}</strong>.`);
-        const $p3 = $('<p>').addClass('viagens-data bi bi-calendar3').html(`<strong>Dia <time datetime="${dataISO}">${dataTexto}${horario ? ' às ' + horario : ''}.</time></strong>`);
-
-        const $btn = $(`<a class="btn ${classeBtn}">${textoBtn}</a>`);
-        $btn.attr('href', `/pages/encomendas/detalhes-encomenda.html?id=${encomenda.id}`);
-
-        $card.append($p1, $p2, $p3, $btn);
-        return $card;
-    }
-
-    // Inicializa
+    // Inicial
     setupFilters();
-    loadencomendas();
+    loadEncomendas();
 });
