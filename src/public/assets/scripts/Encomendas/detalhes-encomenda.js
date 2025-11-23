@@ -151,7 +151,7 @@ $(async function () {
             });
             if (!res.isConfirmed) return;
             await fetch(`${API}/encomendas/${encomenda.id}`, { method: 'DELETE' });
-            Swal.fire('Excluído','Encomenda removida','success').then(()=> window.location.href = '/pages/encomendas/encomendas.html');
+            Swal.fire('Excluído','Encomenda removida','success').then(()=> window.location.href = '/pages/encomendas/index.html');
         });
 
     } catch (err) {

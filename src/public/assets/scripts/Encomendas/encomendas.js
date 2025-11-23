@@ -92,7 +92,7 @@ $(function () {
     // build card
     function buildEncomendaCard(encomenda) {
         const tipo = encomenda.tipo === 'oferecendo' ? 'oferecendo' : 'pedindo';
-        const nome = encomenda.usuario?.nome || encomenda.usuario?.name || 'Usuário';
+        const nome = encomenda.usuario?.nome || encomenda.usuario?.name || encomenda.usuario?.usuario || 'Usuário';
         const avatar = encomenda.usuario?.avatar || 'https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png';
         const origem = encomenda.origem || '';
         const destino = encomenda.destino || '';
