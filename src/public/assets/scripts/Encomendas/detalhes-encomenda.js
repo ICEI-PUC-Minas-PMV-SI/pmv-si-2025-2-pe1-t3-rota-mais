@@ -9,6 +9,7 @@ $(async function () {
     }
 
     function buildRow(label, value, icon) {
+        if (!value) value = "Não informado";
         return `
             <div class="mb-3 p-3 border rounded bg-light">
                 <div class="d-flex align-items-center gap-2">
@@ -35,45 +36,79 @@ $(async function () {
 
     try {
         const encomenda = await fetchJSON(`${API_URL}/encomendas/${id}`);
-
-        // Tratamento de dados
         const user = encomenda.usuario || {};
-        const tipo = encomenda.tipo === "pedindo" ? "Pedido de Encomenda" : "Oferta de Transporte";
+        
+        // Tipo
+        const isPedido = encomenda.tipo === "pedindo";
+        const titulo = isPedido
+            ? "Pedido de Encomenda"
+            : "Oferta de Transporte";
 
-        const html = `
+        // Criador
+        const criadorNome = user.nome || "Usuário";
+        const criadorAvatar = user.avatar ||
+            "https://static.vecteezy.com/system/resources/thumbnails/019/879/186/small_2x/user-icon-on-transparent-background-free-png.png";
+
+        // Botões
+        const currentUserId = Number(localStorage.getItem("userId"));
+        const isCriador = encomenda.criadorId === currentUserId;
+
+        // Montagem
+        let html = `
             <div class="card shadow-sm">
                 <div class="card-body">
 
-                    <h4 class="fw-bold mb-4">${tipo}</h4>
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <img src="${criadorAvatar}" class="rounded-circle" style="width:55px; height:55px; object-fit:cover;">
+                        <div>
+                            <h4 class="fw-bold mb-0">${titulo}</h4>
+                            <small class="text-muted">Criado por ${criadorNome}</small>
+                        </div>
+                    </div>
 
-                    ${buildRow("Criado por", user.nome || "Usuário", "bi-person-circle")}
                     ${buildRow("Origem", encomenda.origem, "bi-geo-alt-fill")}
                     ${buildRow("Destino", encomenda.destino, "bi-geo")}
-                    ${buildRow("Data", encomenda.dataTexto || "", "bi-calendar3")}
-                    ${buildRow("Horário", encomenda.horario || "Não informado", "bi-clock")}
-                    
+                    ${buildRow("Data", encomenda.dataTexto, "bi-calendar3")}
+                    ${buildRow("Horário", encomenda.horario, "bi-clock")}
+        `;
+
+        // Caso seja oferta → exibir veículo se existir
+        if (!isPedido && encomenda.veiculo) {
+            html += buildRow("Veículo", encomenda.veiculo, "bi-car-front-fill");
+        }
+
+        // Fechar card
+        html += `
                 </div>
             </div>
+        `;
 
+        // Botões
+        html += `
             <div class="mt-4 d-flex flex-wrap gap-3">
                 <button id="btn-conversar" class="btn btn-primary">
                     <i class="bi bi-chat-dots"></i> Conversar
                 </button>
+        `;
 
+        if (isCriador) {
+            html += `
                 <button id="btn-excluir" class="btn btn-danger">
                     <i class="bi bi-trash"></i> Excluir
                 </button>
-            </div>
-        `;
+            `;
+        }
+
+        html += `</div>`;
 
         container.html(html);
 
-        // Botão conversar → placeholder
+        // Conversar
         $("#btn-conversar").on("click", () => {
-            Swal.fire("Em breve", "Função de conversa ainda não implementada.", "info");
+            Swal.fire("Em breve", "A conversa será habilitada futuramente.", "info");
         });
 
-        // Excluir
+        // Excluir (somente criador)
         $("#btn-excluir").on("click", async () => {
             const result = await Swal.fire({
                 title: "Excluir?",
@@ -93,6 +128,7 @@ $(async function () {
         });
 
     } catch (e) {
+        console.error(e);
         container.html(`<p class='text-danger'>Erro ao carregar detalhes.</p>`);
     }
 });
