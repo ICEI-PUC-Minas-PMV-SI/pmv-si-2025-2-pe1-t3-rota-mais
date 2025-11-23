@@ -20,6 +20,7 @@ As tabelas que se seguem apresentam os requisitos funcionais e não-funcionais q
 |RF-010| A aplicação deve permitir que o usuário faça login e visualize seu perfil | Silas | pages/index.html; autenticacao/login.html; autenticacao/register.html |
 |RF-011| A aplicação deve permitir ordenar e filtrar solicitações e ofertas por origem, destino e data | João Pedro e Angel | caronas/index.html; encomendas/index.html |
 |RF-012| A aplicação deve fornecer mensagens de alerta ou instruções nos formulários, garantindo que os campos obrigatórios sejam preenchidos | João Pedro, Marco, Silas e Angel | caronas/pedir-carona.html; encomendas/pedir-encomenda.html; encomendas/transporte-encomendas.html; utenticacao/login.html; autenticacao/register.html; comunidades/comunidade-cadastro.html |
+|RF-013| A aplicação deve possibilitar o cadastro dos locais existentes na comunidade | Angel | comunidades/index.html |
 
 
 ### Requisitos não Funcionais
@@ -40,10 +41,125 @@ As tabelas que se seguem apresentam os requisitos funcionais e não-funcionais q
 | | | |                                                    |
 |   |  |  |                                          |
 
+
+## Usuários
+
+| **Nome**      | **Tipo**          | **Descrição**                                 | **Exemplo**                  |
+|------------|---------------|--------------------------------------------|---------------------------|
+| id         | Número (Inteiro) | Identificador único do usuário            | 1                         |
+| name       | Texto         | Nome completo do usuário                   | Angel                     |
+| email      | Texto         | E-mail do usuário                          | angelcas98@outlook.com    |
+| senha      | Texto         | Senha do usuário                           | 6ef1ff7c                  |
+| usuario    | Texto         | Nome de usuário/login                      | angelcas98                |
+| username   | Texto         | Nome de usuário alternativo (username)     | angelcas98                |
+| telefone   | Texto         | Número de telefone                         | 31134141123               |
+| comunidade | Texto         | Comunidade à qual o usuário pertence       | Centro                    |
+| cidade     | Texto         | Cidade do usuário                          | SRS                       |
+| endereco   | Objeto        | Endereço completo do usuário               | Rua Raimundos, 164, Borges|
+
+---
+
+## Caronas
+
+| **Nome**      | **Tipo**          | **Descrição**                                 | **Exemplo**                  |
+|--------------------|-----------------|-------------------------------------------------------------|--------------------------------|
+| id                 | Número (Inteiro) | Identificador único da carona                                | 1763917816211                  |
+| tipo               | Texto            | Tipo da carona (pedindo ou oferecendo)                      | pedindo                        |
+| usuario            | Objeto           | Dados do usuário que criou ou solicitou a carona            | angelcas98                     |
+| criadorId          | Número (Inteiro) | ID do criador da carona                                      | 1                              |
+| passageiroId       | Número (Inteiro) | ID do passageiro (se houver)                                | 1                              |
+| motoristaId        | Número (Inteiro) | ID do motorista (se houver)                                  | null                           |
+| comunidadeId       | Número (Inteiro) | ID da comunidade da carona                                   | 1                              |
+| rota               | Objeto           | Origem e destino da carona                                   | { origem: "Mercado Central KTO", destino: "Hospital" } |
+| data               | Texto            | Data da carona                                               | 28/11/2025                     |
+| horario            | Texto            | Horário de saída                                             | 13:00                          |
+| tipoCarona         | Texto            | Tipo da carona                                               | comum                           |
+| precisaRetorno     | Booleano         | Indica se precisa de retorno                                  | false                          |
+| dataRetorno        | Texto            | Data do retorno (se aplicável)                                | ""                             |
+| horarioRetorno     | Texto            | Horário do retorno (se aplicável)                             | ""                             |
+| motoristasCandidatos| Array            | Lista de candidatos a motorista                               | []                             |
+| passageiros        | Array            | Lista de passageiros                                          | []                             |
+| encomendas         | Array            | Lista de encomendas associadas                                 | []                             |
+| statusViagem       | Texto            | Status da carona                                              | agendada                        |
+| veiculo            | Texto            | Tipo de veículo (para caronas oferecendo)                    | carro                          |
+| vagas              | Número (Inteiro) | Quantidade de vagas disponíveis                               | 1                              |
+| custo              | Texto            | Custo da carona                                               | Viagem gratuita                |
+| incluiRetorno      | Booleano         | Indica se inclui retorno                                      | false                          |
+| dataInicio         | Texto            | Data/hora de início da viagem (ISO)                           | 2025-11-23T17:31:51.936Z      |
+| dataConclusao      | Texto            | Data/hora de conclusão da viagem (ISO)                        | 2025-11-23T17:31:54.155Z      |
+
+---
+
+## Encomendas
+
+| **Nome**      | **Tipo**          | **Descrição**                                 | **Exemplo**                  |
+|-------------------|-----------------|----------------------------------------------------------|----------------------------------|
+| id                 | Número (Inteiro) | Identificador único da encomenda                          | 1                                |
+| tipo               | Texto            | Tipo da encomenda (pedindo ou oferecendo)                | pedindo                          |
+| descricao          | Texto            | Descrição do item a ser transportado                     | Saco de milho                     |
+| origem             | Texto            | Local de origem                                          | Centro                           |
+| destino            | Texto            | Local de destino                                        | Mercado Central                  |
+| localOrigem        | Texto            | Nome do local de origem                                   | Centro                           |
+| localDestino       | Texto            | Nome do local de destino                                  | Mercado Central                  |
+| destinatarioEhVoce | Booleano         | Indica se o destinatário é o próprio usuário             | true                             |
+| nomeDestinatario   | Texto            | Nome do destinatário                                      | Próprio solicitante              |
+| dataReceber        | Texto            | Data prevista para receber a encomenda                   | 26/09/2025                       |
+| horario            | Texto            | Horário previsto                                         | 14:00                            |
+| dataISO            | Texto            | Data em formato ISO                                      | 2025-09-26T03:00:00.000Z        |
+| dataTexto          | Texto            | Data em formato legível                                  | 26 de setembro de 2025           |
+| usuario            | Objeto           | Dados do usuário que solicitou a encomenda              | Gustavo                          |
+| criadorId          | Número (Inteiro) | ID do criador da encomenda                               | 2                                |
+| transportadorId    | Número (Inteiro) | ID do transportador aprovado                             | 1                                |
+| status             | Texto            | Status da encomenda                                      | em andamento                     |
+| candidatos         | Array            | Lista de candidatos a transportar a encomenda            | [{ userId: 1, status: "aprovado" }] |
+
+---
+
+## Locais
+
+| **Nome**      | **Tipo**          | **Descrição**                                 | **Exemplo**                  |
+|---------------|-------------|-----------------------------------------|----------------------------------------|
+| id            | Texto/Número| Identificador do local                   | 1                                      |
+| nome          | Texto       | Nome do local                             | Mercado Central KTO                     |
+| comunidadeId  | Número      | ID da comunidade                          | 1                                      |
+| comunidade    | Texto       | Nome da comunidade                        | Centro                                 |
+| tipo          | Texto       | Tipo do local                              | Mercado                                |
+| endereco      | Texto       | Endereço completo                          | Avenida Augusto de Lima, 744 - Centro |
+| imagem        | Texto       | URL ou descrição da imagem do local       | imagem do local                        |
+| criador       | Texto       | Quem cadastrou o local                     | Usuário da plataforma                  |
+| contato       | Texto       | Informações de contato                     | ""                                     |
+| quantidadeViagens | Número   | Quantidade de viagens realizadas           | 0                                      |
+| aprovado      | Booleano    | Indica se o local foi aprovado             | false                                  |
+| criadoEm      | Texto       | Data de criação do registro (ISO)         | 2025-11-21T21:50:39.992Z              |
+
+---
+
+## Comunidades
+
+| **Nome**      | **Tipo**          | **Descrição**                                 | **Exemplo**                  |
+|------|------|-----------|---------|
+| id   | Número (Inteiro) | Identificador único da comunidade | 1 |
+| nome | Texto | Nome da comunidade | Centro |
+
+---
+
+## Veículos
+
+| **Nome**      | **Tipo**          | **Descrição**                                 | **Exemplo**                  |
+|---------------|----------------|-----------------------------------------|-------------------------------|
+| id            | Número/Texto   | Identificador único do veículo           | 1763761718449                 |
+| motoristaId   | Número (Inteiro)| ID do motorista do veículo               | 1                             |
+| type          | Texto          | Tipo de veículo                           | CAR                           |
+| brand         | Texto          | Marca do veículo                           | Honda                         |
+| model         | Texto          | Modelo do veículo                          | Civic                         |
+| color         | Texto          | Cor do veículo                             | Preto                         |
+| licensePlate  | Texto          | Placa do veículo                           | ABC1234                       |
+| availableSeats| Número (Inteiro)| Quantidade de assentos disponíveis        | 4                             |
+
 ## Instruções para acesso e verificação da implementação:
 
 - Clonar o repositório para a máquina.
-- Utilizar o live server para exibir as páginas.
+- Utilizar o live JSON Server para exibir as páginas.
 
 1- pages/index.html:
  - Clique em "Cadastre-se Gratuitamente" ou "Entre na sua conta".
