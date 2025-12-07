@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
   
-  const listaTipos = ["Restaurante", "Mercado", "Posto de Saúde", "Escola", "Shopping", "Farmácia", "Hospital", "Loja", "Outro"];
+  const listaTipos = ["Restaurante", "Mercado", "Salão de Beleza","Posto de Saúde", "Escola", "Shopping", "Farmácia", "Hospital", "Loja", "Outro"];
 
   const selectComunidade = document.getElementById("select-comunidade");
   const selectTipo = document.getElementById("select-tipo");

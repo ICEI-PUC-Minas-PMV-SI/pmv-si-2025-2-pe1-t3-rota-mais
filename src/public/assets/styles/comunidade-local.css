@@ -96,7 +96,7 @@ body {
   margin-bottom: 20px;
 }
 
-/* Lista de caronas */
+/* Lista de caronas / encomendas */
 .secao-titulo {
   max-width: 1050px;
   margin-top: 12px;
@@ -104,14 +104,18 @@ body {
   color: var(--texto);
 }
 
-.lista-caronas {
+.lista-caronas,
+.lista-encomendas {
   display: flex;
   flex-direction: column;
   gap: 16px;
   max-width: 1050px;
 }
 
-/* Card de carona (simplificado) */
+/* ============================== */
+/* CARD DE CARONA                 */
+/* ============================== */
+
 .card-carona {
   display: flex;
   gap: 18px;
@@ -129,7 +133,7 @@ body {
   box-shadow: 0 6px 22px rgba(0,0,0,0.08);
 }
 
-.card-carona .carona-info {
+.carona-info {
   display: flex;
   gap: 12px;
   align-items: center;
@@ -158,7 +162,6 @@ body {
   align-items: center;
 }
 
-/* Botões no card */
 .btn-participar,
 .btn-detalhes {
   border-radius: 10px;
@@ -179,9 +182,79 @@ body {
   color: #374151;
 }
 
-/* Responsividade */
+/* ============================== */
+/* CARD DE ENCOMENDA (NOVO)       */
+/* ============================== */
+
+.card-encomenda {
+  display: flex;
+  gap: 18px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid var(--cinza-claro);
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.card-encomenda:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.08);
+}
+
+.encomenda-info {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex: 1;
+}
+
+.encomenda-dados {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.encomenda-detalhe {
+  font-size: 0.92rem;
+  color: #4b5563;
+}
+
+.encomenda-acao {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-encomenda,
+.btn-encomenda-detalhes {
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-encomenda {
+  background: var(--verde-primario);
+  color: #fff;
+}
+
+.btn-encomenda-detalhes {
+  background: transparent;
+  border: 1px solid var(--cinza-claro);
+  color: #374151;
+}
+
+/* ============================== */
+/* RESPONSIVIDADE                 */
+/* ============================== */
+
 @media (max-width: 768px) {
-  .local-banner img { height: 200px; }
+  .local-banner img {
+    height: 200px;
+  }
 
   .local-principal {
     flex-direction: column;
@@ -193,15 +266,16 @@ body {
     align-self: flex-start;
   }
 
-  .card-carona {
+  .card-carona,
+  .card-encomenda {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .carona-acao {
+  .carona-acao,
+  .encomenda-acao {
     width: 100%;
     justify-content: space-between;
     margin-top: 8px;
   }
 }
-
