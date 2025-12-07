@@ -3,28 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ======================================================================================
      BOTÃO: Entrar em contato (CORRIGIDO - interpolação template literal funcionando)
   ======================================================================================= */
-  const btnContato = document.getElementById("bnt-contato");
-  if (btnContato) {
-    btnContato.addEventListener("click", () => {
-      Swal.fire({
-        title: "Entrar em contato",
-        text: "Deseja abrir o WhatsApp para falar com o responsável?",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonText: "Sim, abrir WhatsApp",
-        cancelButtonText: "Cancelar",
-      }).then((result) => {
-        if (result.isConfirmed) {
+ 
 
-          const numeroWhatsApp = "5535984722078";
-          const mensagem = encodeURIComponent("Olá! Gostaria de mais informações.");
-          const link = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
-
-          window.open(link, "_blank");
-        }
-      });
-    });
-  }
 
 
   /* ======================================================================================

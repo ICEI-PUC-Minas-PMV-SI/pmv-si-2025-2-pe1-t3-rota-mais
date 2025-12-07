@@ -153,5 +153,28 @@ async function carregarPaginaLocal() {
 
 /* Inicializa a página */
 document.addEventListener('DOMContentLoaded', () => {
+  // proteção e correção de id: era "bnt-contato" (typo) — agora usa "btn-contato"
+  const btnContatoGlobal = document.getElementById("btn-contato");
+  if (btnContatoGlobal) {
+    btnContatoGlobal.addEventListener("click", () => {
+      Swal.fire({
+        title: "Entrar em contato",
+        text: "Deseja abrir o WhatsApp para falar com o responsável?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Sim, abrir WhatsApp",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const numeroWhatsApp = "5535984722078";
+          const mensagem = encodeURIComponent("Olá! Gostaria de mais informações.");
+          const link = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
+          window.open(link, "_blank");
+        }
+      });
+    });
+  }
+
+  // chama carregamento da página (carrega dados e configura comportamento do botão local)
   carregarPaginaLocal();
 });

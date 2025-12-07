@@ -145,6 +145,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const numero = getValue("numero-local");
     const bairro = getValue("bairro-local");
     const referencia = getValue("referencia-local");
+    const telefone = getValue("telefone-local");
 
     // Validação
     if (!nomeLocal) {
@@ -170,7 +171,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       endereco: `${rua}${rua && numero ? ", " : ""}${numero}${bairro ? " - " + bairro : ""}${referencia ? " (" + referencia + ")" : ""}`,
       imagem: imagem,
       criador: "Usuário da plataforma",
-      contato: "",
+      contato: telefone,
       quantidadeViagens: 0,
       aprovado: false,
       criadoEm: new Date().toISOString(),
